@@ -37,7 +37,7 @@ public class AccountController {
 		return "account/list.html";
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/update")
 	public ModelAndView saveOrUpdate (ModelMap model,
 			BindingResult result,
 			@PathVariable("id") Long userId,
@@ -67,17 +67,17 @@ public class AccountController {
 	
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit (ModelMap model,@PathVariable("id") Long userId) {
-		Optional<Account> optCategory =accService.findById(userId);
+		Optional<Account> optUser =accService.findById(userId);
 		Account acc = new Account();
 		
-		if (optCategory.isPresent()) {
-			Account entity =optCategory.get();
+		if (optUser.isPresent()) {
+			Account entity =optUser.get();
 			
 			BeanUtils.copyProperties(entity, acc);
 			
 			model.addAttribute("acc",acc);
 			
-			return new ModelAndView("account/add.html",model);
+			return new ModelAndView("account/edit.html",model);
 		}
 		model.addAttribute("message","Account is not existed");
 		return new ModelAndView("redirect:/admin/account",model);

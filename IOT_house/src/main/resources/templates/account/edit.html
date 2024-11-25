@@ -7,7 +7,7 @@
 <body>
 	<div th:insert="~{fragments/header}"></div>
 
-	<form th:action="@{/admin/account/save}" method="post"
+	<form th:action="@{/admin/account/update}" method="post"
 		enctype="multipart/form-data">
 
 		<label for="id_acc">ID Account:</label> <input type="text"
@@ -21,6 +21,7 @@
 		<label for="active">Đang hoạt động</label><br> <input
 			type="radio" id="inactive" name="status" value="0"
 			th:checked="${acc?.status == 0}" /> <label for="inactive">Khóa</label><br>
+			
 		<br> <input type="submit" value="Update" />
 
 	</form>
