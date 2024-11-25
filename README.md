@@ -2,21 +2,20 @@
 
 An interactive and user-friendly web application designed to control and monitor IoT-enabled smart home devices. This project integrates modern web technologies with IoT protocols to provide seamless management of home automation systems.
 
-## Features ✨
+## **Features** ✨
+- **Device Control**: Manage smart lights, thermostats, security cameras, and more with ease.
+- **Real-time Monitoring**: Get live updates from sensors like temperature, humidity, and motion detection.
+- **Customizable Dashboard**: Personalize your home control interface to suit your preferences.
+- **Remote Access**: Control your home devices from anywhere via the web.
+- **Secure Communication**: Implements robust security protocols to ensure privacy and data protection.
 
-Device Control: Manage smart lights, thermostats, security cameras, and more with ease.
-Real-time Monitoring: Get live updates from sensors like temperature, humidity, and motion detection.
-Customizable Dashboard: Personalize your home control interface to suit your preferences.
-Remote Access: Control your home devices from anywhere via the web.
-Secure Communication: Implements robust security protocols to ensure privacy and data protection.
+## **Technology Stack** 💻
+- **Frontend**: HTML, CSS, JavaScript (or React, Vue, Angular)
+- **Backend**: Node.js / Python Flask / Django
+- **Database**: MySQL / MongoDB
+- **IoT Protocols**: MQTT / CoAP
+- **Hardware**: Compatible with popular IoT platforms like Raspberry Pi, Arduino, and ESP32.
 
-## Technology Stack 💻
-
-Frontend: HTML, CSS, JavaScript (or React, Vue, Angular)
-Backend: Node.js / Python Flask / Django
-Database: MySQL / MongoDB
-IoT Protocols: MQTT / CoAP
-Hardware: Compatible with popular IoT platforms like Raspberry Pi, Arduino, and ESP32.
 
 ### Installing
 
