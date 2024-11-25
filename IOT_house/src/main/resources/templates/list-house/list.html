@@ -13,7 +13,7 @@
 		<button type="submit">Search</button>
 	</form>
 	<div th:insert="~{fragments/header}"></div>
-	<a th:href="@{/admin/list-house/add}">Add Category</a>
+	<a th:href="@{/admin/list-house/add/{id}(id=${id_acc})}">Add Category</a>
 	<table border="1" width="100%">
 		<tr>
 			<th>STT</th>
@@ -25,7 +25,7 @@
 			<th>Action</th>
 		</tr>
 
-		<tr th:each="cate, STT : ${listcate}">
+		<tr th:each="cate, STT : ${houses}">
 			<td th:text="${STT.index + 1}"></td>
 
 			<td th:text="${cate.id_house}"></td>

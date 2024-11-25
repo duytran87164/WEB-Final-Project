@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
 import IOT_house.repository.HouseRepository;
 
@@ -66,6 +67,12 @@ public <S extends Houses> S save(S entity) {
 public Optional<Houses> findById(long id) {
 	// TODO Auto-generated method stub
 	return houseRepository.findById(id);
+}
+
+@Override
+public List<Houses> findByAccount(Account account) {
+	// TODO Auto-generated method stub
+	return houseRepository.findByAcc(account);
 }
 
 

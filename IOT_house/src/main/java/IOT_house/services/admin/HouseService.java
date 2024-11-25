@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
 
 public interface HouseService {
@@ -26,5 +27,9 @@ public interface HouseService {
 	Optional<Houses> findById(long id);
 
 	Page<Houses> findAll(Pageable pageable);
+
+	List<Houses> findByAccount(Account account);
+	
+	
 
 }

@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jakarta.validation.Valid;
 import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
+import IOT_house.services.admin.AccountService;
 import IOT_house.services.admin.HouseService;
 
 
@@ -32,103 +33,142 @@ import IOT_house.services.admin.HouseService;
 public class ListHouseController {
 	@Autowired
 	HouseService houseService;
+	@Autowired
+	AccountService accService;
+	@RequestMapping("/{id}")
+	public String all(@PathVariable Long id, Model model) {
+        // Kiểm tra nếu `id` tồn tại
+        Optional<Account> acc = accService.findById(id);
+        if (acc.isPresent()) {
+            List<Houses> houses = houseService.findByAccount(acc.get());  // Sử dụng hàm findByAccount đã tạo trước đó
+            model.addAttribute("houses", houses);
+            model.addAttribute("id_acc", id);
+        } else {
+            model.addAttribute("message", "Account not found");
+        }
+        return "list-house/list.html"; // Trả về trang list.html
+    }
 	
-	@RequestMapping("")
-	public String all(Model model) {
-		List<Houses> list = houseService.findAll();
-		model.addAttribute("listcate", list);
-
-		return "list-house/list.html";
-	}
-	
-	@GetMapping("/add")
-	public String add(Model model) {
-
-		  Houses listHouse = new Houses(); 
-		  model.addAttribute("cate",listHouse); 
+	@GetMapping("/add/{id}")
+	public String add(@PathVariable Long id,Model model) {
+		  Houses listHouse = new Houses();
+		  model.addAttribute("id_acc", id);
+		  model.addAttribute("house",listHouse); 
 		  listHouse.setIsEdit(false);
 		  return "list-house/add.html";
 	}
 	
-	@PostMapping("/save")
-	public ModelAndView saveOrUpdate (ModelMap model,
-			@Valid @ModelAttribute("category") Houses cateModel, BindingResult result,
-			@RequestParam("imageFile") MultipartFile imageFile) {
-//		if(result.hasErrors()) {
-//			return new ModelAndView("category/add.html");
-//		}
-		Houses house = new Houses();
-		Account acc = new Account();
-		String uploadPath = "E:\\upload";
+	@PostMapping("/save/{id_acc}")
+	public ModelAndView saveOrUpdate(@PathVariable Long id_acc, ModelMap model,
+	        @Valid @ModelAttribute("house") Houses cateModel, BindingResult result,
+	        @RequestParam("imageFile") MultipartFile imageFile) {
+
+	    // If validation errors occur, return to the form page with error messages
+	    if (result.hasErrors()) {
+	        return new ModelAndView("category/add", model);
+	    }
+
+	    // Retrieve the account by ID
+	    Optional<Account> acc = accService.findById(id_acc);
+
+	    if (!acc.isPresent()) {
+	        model.addAttribute("message", "Account not found");
+	        return new ModelAndView("/admin/list-house/{id_acc}", model);
+	    }
+
+	    // Create a new house object
+	    Houses house = new Houses();
+
+	    // Define the upload path for images
+	    String uploadPath = "E:\\upload";
 	    File uploadDir = new File(uploadPath);
 	    if (!uploadDir.exists()) {
-	        uploadDir.mkdir();  // Tạo thư mục nếu chưa tồn tại
+	        uploadDir.mkdir();  // Create directory if not exists
 	    }
+
 	    try {
-	        // Kiểm tra nếu người dùng tải tệp ảnh lên
+	        // If the user uploaded an image, handle file upload
 	        if (!imageFile.isEmpty()) {
 	            String originalFilename = imageFile.getOriginalFilename();
 	            int index = originalFilename.lastIndexOf(".");
 	            String ext = originalFilename.substring(index + 1);
 
-	            // Đổi tên tệp để tránh trùng lặp
+	            // Generate a unique filename for the uploaded image
 	            String fname = System.currentTimeMillis() + "." + ext;
 
-	            // Lưu tệp vào thư mục
+	            // Save the image to the specified directory
 	            imageFile.transferTo(new File(uploadPath + "/" + fname));
 
-	            // Cập nhật đường dẫn ảnh vào đối tượng category
+	            // Update the category object with the image filename
 	            cateModel.setImage(fname);
-	            
 	        }
-	        // Lưu đối tượng vào database
-			BeanUtils.copyProperties(cateModel,house);
-			
-			houseService.save(house);
-			acc.getHouses().add(house);
+
+	        // Copy properties from the form data (cateModel) to the new house object
+	        BeanUtils.copyProperties(cateModel, house);
+
+	        // Set the account reference on the house object
+	        house.setAcc(acc.get());  // Linking the house to the account
+
+	        // Save the house to the database
+	        houseService.save(house);
 
 	        model.addAttribute("message", "Category saved successfully");
+
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        model.addAttribute("message", "Error saving category");
 	    }
 
-		String message="";
-		if(cateModel.getIsEdit()==true) {
-		message="Category is EDIT";
-		}
-		else {
-			message="Category is SAVE";
-		}
-		model.addAttribute("message", message);
-		return new ModelAndView("redirect:/admin/list-house",model);
+	    // Determine if the category was saved or edited
+	    String message = cateModel.getIsEdit() ? "Category is EDIT" : "Category is SAVE";
+	    model.addAttribute("message", message);
+
+	    // Redirect to the list of houses after saving the house
+	    return new ModelAndView("redirect:/admin/list-house/{id_acc}", model);  // Redirect to the list page without specific id
 	}
+
 	
 	@GetMapping("/edit/{id}")
-	public ModelAndView edit (ModelMap model,@PathVariable("id") Long categoryId) {
-		Optional<Houses> optCategory =houseService.findById(categoryId);
+	public ModelAndView edit (ModelMap model,@PathVariable("id") Long houseId) {
+		Optional<Houses> optHouse =houseService.findById(houseId);
 		Houses cateModel = new Houses();
 		
-		if (optCategory.isPresent()) {
-			Houses entity =optCategory.get();
+		if (optHouse.isPresent()) {
+			Houses entity =optHouse.get();
+			
 			
 			BeanUtils.copyProperties(entity, cateModel);
 			cateModel.setIsEdit(true);
+			Long id = cateModel.getAcc().getId();
 			
-			model.addAttribute("cate",cateModel);
-			
+			model.addAttribute("house",cateModel);
+			model.addAttribute("id_acc",id);
 			return new ModelAndView("list-house/add.html",model);
 		}
-		model.addAttribute("message","Category is not existed");
+		model.addAttribute("message","House is not existed");
 		return new ModelAndView("redirect:/admin/list-house",model);
 	}
-	
 	@GetMapping("/delete/{id}")
-	public ModelAndView delete(ModelMap model, @PathVariable("id") Long categoryId) {
-			houseService.deleteById(categoryId);
-			model.addAttribute("message", "Category is deleted");
-			return new ModelAndView("redirect:/admin/list-house", model);
-		}
+	public ModelAndView delete(ModelMap model, @PathVariable("id") Long houseId) {
+	    Optional<Houses> optHouse = houseService.findById(houseId);
+
+	    if (optHouse.isPresent()) {
+	        // Xóa nhà nếu tồn tại
+	        houseService.deleteById(houseId);
+	        
+	        Houses entity = optHouse.get(); // Lấy entity sau khi xóa
+	        Long id = entity.getAcc().getId();
+
+	        model.addAttribute("message", "Category is deleted");
+	        model.addAttribute("id_acc", id);
+	    } else {
+	        // Nếu không tìm thấy house, xử lý trường hợp lỗi
+	        model.addAttribute("message", "House not found");
+	    }
+
+	    return new ModelAndView("redirect:/admin/list-house/{id_acc}", model);
+	}
+
 //	@RequestMapping("/searchpaginated")
 //	  
 //	  public String search(ModelMap model,

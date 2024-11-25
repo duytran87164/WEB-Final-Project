@@ -38,15 +38,14 @@ public class AccountController {
 	}
 	
 	@PostMapping("/save")
-	public ModelAndView saveOrUpdate (ModelMap model,
-			BindingResult result,
-			@PathVariable("id") Long userId,
-			@PathVariable("status") int status
+	public ModelAndView saveOrUpdate (@RequestParam Long id,
+            @RequestParam int status,
+            ModelMap model
 			) {
 //		if(result.hasErrors()) {
 //			return new ModelAndView("category/add.html");
 //		}
-		Optional<Account> optAcc = accService.findById(userId);
+		Optional<Account> optAcc = accService.findById(id);
 		Account acc = new Account();
         // Lưu đối tượng vào database
 		if (optAcc.isPresent()) {
@@ -84,8 +83,8 @@ public class AccountController {
 	}
 	
 	@GetMapping("/delete/{id}")
-	public ModelAndView delete(ModelMap model, @PathVariable("id") Long categoryId) {
-			accService.deleteById(categoryId);
+	public ModelAndView delete(ModelMap model, @PathVariable("id") Long Id) {
+			accService.deleteById(Id);
 			model.addAttribute("message", "Account is deleted");
 			return new ModelAndView("redirect:/admin/account", model);
 		}
