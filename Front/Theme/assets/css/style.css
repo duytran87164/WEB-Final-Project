@@ -210,7 +210,7 @@ hr {
 }
 
 .bg-theme {
-	background-color: #68dff0;
+	background-color: #ff0000;
 }
 
 ul.top-menu > li > .logout {
@@ -218,10 +218,10 @@ ul.top-menu > li > .logout {
 	font-size: 12px;
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border: 1px solid #64c3c2 !important;
+	border: 1px solid #000000 !important;
 	padding: 5px 15px;
 	margin-right: 15px;
-	background: #68dff0;
+	background: #000000;
 	margin-top: 15px;
 }
 
@@ -2240,4 +2240,132 @@ label {
     min-height: 900px;
 }
 
+/*profile*/
+.profile-pic {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+.profile-pic img {
+    border: 2px solid #000000;
+    transition: border-color 0.3s ease;
+    border-radius: 50%;
+}
+
+.profile-pic:hover img {
+    border-color: #000000;
+}
+
+.username {
+    margin-right: 10px;
+    color: #000000;
+    font-weight: 500;
+}
+
+.profile-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    min-width: 160px;
+    display: none;
+    z-index: 1000;
+    margin-top: 5px;
+    border: none;
+    outline: none;
+}
+
+.profile-menu li a {
+    padding: 12px 20px;
+    display: block;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.profile-menu li a:hover {
+    background: #f8f9fa;
+}
+
+.profile-menu li a i {
+    margin-right: 10px;
+    color: #000000;
+}
+
+.dropdown:hover .profile-menu {
+    display: block;
+}
+/* */
+.top-menu .nav {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.top-menu .nav > li {
+    margin-left: 0;
+    margin-right: 10px;
+    float: left;
+}
+
+.top-menu .nav > li:last-child {
+    margin-right: 0;
+}
+
+
+/* Ensure the parent <a> tag is positioned relatively and uses flex to center items vertically */
+.top-menu .nav > li > a.inbox-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 10px; /* Add horizontal padding for spacing */
+}
+
+/* Style the badge as a smaller red dot */
+.badge.bg-theme {
+    position: absolute;
+    top: 0;            /* Align to the top of the envelope icon */
+    right: 0;          /* Align to the right of the envelope icon */
+    width: 8px;        /* Further reduced diameter */
+    height: 8px;
+    background-color: #ff0000; /* Red color */
+    border-radius: 50%;        /* Circular shape */
+    display: inline-block;
+    border: 1px solid #ffffff; /* White border for contrast */
+    color: transparent;        /* Hide text */
+    padding: 0;
+    z-index: 1001;
+}
+
+/* Responsive Adjustment for Larger Screens */
+@media (min-width: 768px) {
+    .badge.bg-theme {
+        width: 10px;    /* Slightly larger on bigger screens */
+        height: 10px;
+        top: -1px;      /* Fine-tune positioning */
+        right: -1px;
+    }
+}
+
+/* Ensure the envelope icon is vertically centered */
+.top-menu .nav > li > a.inbox-icon i {
+    line-height: normal; /* Prevents any vertical misalignment */
+}
+
+/* Visually hidden class for accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap; /* Prevents text wrapping */
+    border: 0;
+}
 
