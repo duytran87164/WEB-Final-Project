@@ -233,6 +233,7 @@ ul.top-menu > li > .logout {
     height: 100%;
     position: fixed;
     background: #424a5d;
+    z-index: 1000;
 }
 
 #sidebar h5 {
@@ -284,6 +285,7 @@ ul.sidebar-menu , ul.sidebar-menu li ul.sub{
 
 ul.sidebar-menu {
     margin-top: 75px;
+    z-index: 1000;
 }
 
 #sidebar > ul > li > ul.sub {
@@ -1410,6 +1412,7 @@ PANELS CONFIGURATIONS
 
 /* Calendar Configuration */
 #calendar {
+    margin-top: 20px;
 	color: white;
 	padding: 0px !important;
 }
@@ -2216,9 +2219,14 @@ label {
 
 /*footer*/
 .site-footer {
+    position: fixed;  /* Fix footer at bottom */
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: #68dff0;
     color: #fff;
     padding: 10px 0;
+    z-index: 900;
 }
 
 
@@ -2368,4 +2376,15 @@ label {
     white-space: nowrap; /* Prevents text wrapping */
     border: 0;
 }
-
+/* Background Image Styling */
+#login-page {
+    position: relative;
+    min-height: 100vh;
+    /* Updated image path and format for better quality */
+    background-image: url('assets/img/login.jpg'); /* Use your high-res image */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    filter: none; /* Ensure no filters are applied */
+}
