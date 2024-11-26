@@ -26,13 +26,8 @@ import lombok.NoArgsConstructor;
 public class Houses implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	
-	@Column(name="id")
-	private Long id;
-	
 	@Column(name="id_house", columnDefinition = "VARCHAR(500)")
-	private String id_house;
+	private String idHouse;
 	
 	@Column(name="password", columnDefinition = "VARCHAR(500)")
 	private String password;
@@ -53,6 +48,6 @@ public class Houses implements Serializable {
 	@JoinColumn(name = "Id_acc")
 	private Account acc;
 	
-	@OneToMany(mappedBy = "equip")
-	private List<Equipments> equip;
+	@OneToMany(mappedBy = "house")
+	private List<Equipments> equipments;
 }

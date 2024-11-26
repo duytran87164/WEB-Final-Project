@@ -13,7 +13,7 @@
 		<button type="submit">Search</button>
 	</form>
 	<div th:insert="~{fragments/header}"></div>
-	<a th:href="@{/admin/list-house/add/{id}(id=${id_acc})}">Add Category</a>
+	<a th:href="@{/admin/list-house/add/{id}(id=${id_acc})}">Add House</a>
 	<table border="1" width="100%">
 		<tr>
 			<th>STT</th>
@@ -28,7 +28,7 @@
 		<tr th:each="cate, STT : ${houses}">
 			<td th:text="${STT.index + 1}"></td>
 
-			<td th:text="${cate.id_house}"></td>
+			<td th:text="${cate.idHouse}"></td>
 			<td th:text="${cate.password}"></td>
 			<td><img
 				th:if="${cate.image != null && #strings.startsWith(cate.image, 'https')}"
@@ -42,8 +42,9 @@
 				th:text="${cate.status == 1 ? 'Đang hoạt động' : 'Khóa'}"></span></td>
 
 
-			<td><a th:href="@{/admin/list-house/edit/{id}(id=${cate.id})}">Sửa</a>
-				<a th:href="@{/admin/list-house/delete/{id}(id=${cate.id})}">Xóa</a>
+			<td><a th:href="@{/admin/list-house/edit/{id}(id=${cate.idHouse})}">Sửa</a>
+				<a th:href="@{/admin/list-house/delete/{id}(id=${cate.idHouse})}">Xóa</a>
+				<a th:href="@{/admin/equipments/{id}(id=${cate.idHouse})}">Equipments</a>
 			</td>
 		</tr>
 	</table>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Danh mục</title>
+</head>
+<body>
+	<form action="/admin/equipgories/searchpaginated" method="get">
+		<label for="name">Search by equipgory Name:</label> <input type="text"
+			id="name" name="name" placeholder="Enter equipgory name"> <input
+			type="hidden" name="page" value="1"> <input type="hidden"
+			name="size" value="3">
+		<button type="submit">Search</button>
+	</form>
+	<div th:insert="~{fragments/header}"></div>
+	<a th:href="@{/admin/equipments/add/{id}(id=${idHouse})}">Add equip</a>
+	<table border="1" width="100%">
+		<tr>
+			<th>STT</th>
+			<th>Sensor</th>
+			<th>Image</th>
+			<th>NSX</th>
+			<th>Description</th>
+			<th>Action</th>
+		</tr>
+
+		<tr th:each="equip, STT : ${equip}">
+			<td th:text="${STT.index + 1}"></td>
+			<td th:text="${equip.sensor}"></td>
+			<td><img
+				th:if="${equip.image != null && #strings.startsWith(equip.image, 'https')}"
+				th:src="${equip.image}" height="150" width="200" /> <img
+				th:if="${equip.image != null && !#strings.startsWith(equip.image, 'https')}"
+				th:src="@{/file/image(fname=${equip.image})}" height="150" width="200" />
+			</td>
+
+			<td th:text="${equip.nsx}"></td>
+			<td th:text="${equip.description}"></td>
+
+			<td><a th:href="@{/admin/equipments/edit/{id}(id=${equip.id})}">Sửa</a>	
+				<a th:href="@{/admin/equipments/delete/{id}(id=${equip.id})}">Xóa</a>
+			</td>
+		</tr>
+	</table>
+	<div th:insert="~{fragments/footer}"></div>
+</body>
+</html>

@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,24 +19,37 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name="Equipments")
-public class Equipments implements Serializable {/**
-	 * 
-	 */
+@Table(name = "equipments")
+public class Equipments implements Serializable {
+	/**
+	* 
+	*/
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="Id")
+	@Column(name = "id")
 	private Long id;
-	
-	@Column(name="tempurature")
-	private Long temp;
-	
-	@Column(name="bed_light", columnDefinition = "VARCHAR(500)")
-	private int bed_light;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_house")
-	private Houses equip;
+	private Houses house;
+
+	@Column(name = "sensor")
+	private String sensor;
 	
+	@Column(name = "NSX")
+	private String nsx;
+	
+	@Column(name = "description")
+	private String description;
+	
+	@Column(name = "image")
+	private String image;
+
+	@Column(name = "value", columnDefinition = "VARCHAR(500)")
+	private String value;
+	
+	@Transient
+	private Boolean isEdit = false;
+
 }

@@ -1,4 +1,4 @@
-package IOT_house.services.admin;
+package IOT_house.services.admin.Impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +12,7 @@ import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
 import IOT_house.repository.AccRepository;
 import IOT_house.repository.HouseRepository;
+import IOT_house.services.admin.AccountService;
 @Service
 public class AccountServiceImpl implements AccountService {
 	@Autowired

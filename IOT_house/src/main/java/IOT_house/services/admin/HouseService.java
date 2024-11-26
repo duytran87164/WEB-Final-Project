@@ -22,14 +22,13 @@ public interface HouseService {
 
 	long count();
 
-	void deleteById(Long id);
+	void deleteById(String houseId);
 
-	Optional<Houses> findById(long id);
+	Optional<Houses> findById(String houseId);
 
 	Page<Houses> findAll(Pageable pageable);
 
 	List<Houses> findByAccount(Account account);
-	
 	
 
 }

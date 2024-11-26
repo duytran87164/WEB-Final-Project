@@ -35,7 +35,7 @@ public class ListHouseController {
 	HouseService houseService;
 	@Autowired
 	AccountService accService;
-	@RequestMapping("/{id}")
+	@GetMapping("/{id}")
 	public String all(@PathVariable Long id, Model model) {
         // Kiểm tra nếu `id` tồn tại
         Optional<Account> acc = accService.findById(id);
@@ -129,7 +129,7 @@ public class ListHouseController {
 
 	
 	@GetMapping("/edit/{id}")
-	public ModelAndView edit (ModelMap model,@PathVariable("id") Long houseId) {
+	public ModelAndView edit (ModelMap model,@PathVariable("id") String houseId) {
 		Optional<Houses> optHouse =houseService.findById(houseId);
 		Houses cateModel = new Houses();
 		
@@ -149,7 +149,7 @@ public class ListHouseController {
 		return new ModelAndView("redirect:/admin/list-house",model);
 	}
 	@GetMapping("/delete/{id}")
-	public ModelAndView delete(ModelMap model, @PathVariable("id") Long houseId) {
+	public ModelAndView delete(ModelMap model, @PathVariable("id") String houseId) {
 	    Optional<Houses> optHouse = houseService.findById(houseId);
 
 	    if (optHouse.isPresent()) {

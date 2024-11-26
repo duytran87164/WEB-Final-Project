@@ -1,4 +1,4 @@
-package IOT_house.services.admin;
+package IOT_house.services.admin.Impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
 import IOT_house.repository.HouseRepository;
+import IOT_house.services.admin.HouseService;
 
 @Service
 public class HouseServiceImpl implements HouseService{
@@ -22,7 +23,7 @@ public HouseServiceImpl(HouseRepository houseRepository) {
 }
 
 @Override
-public void deleteById(Long id) {
+public void deleteById(String id) {
 	// TODO Auto-generated method stub
 	houseRepository.deleteById(id);
 	
@@ -64,7 +65,7 @@ public <S extends Houses> S save(S entity) {
 //}
 
 @Override
-public Optional<Houses> findById(long id) {
+public Optional<Houses> findById(String id) {
 	// TODO Auto-generated method stub
 	return houseRepository.findById(id);
 }

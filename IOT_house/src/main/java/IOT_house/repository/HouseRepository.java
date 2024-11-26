@@ -8,7 +8,6 @@ import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
 
 
-public interface HouseRepository extends JpaRepository<Houses, Long>  {
+public interface HouseRepository extends JpaRepository<Houses, String>  {
 	List<Houses> findByAcc(Account account);
-	
 }
