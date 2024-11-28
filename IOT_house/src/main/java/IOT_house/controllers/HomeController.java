@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import IOT_house.entity.Account;
 import IOT_house.services.user.UserService;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -40,7 +41,7 @@ public class HomeController {
     }
 
 	@PostMapping("/login")
-	public String processLogin(@ModelAttribute Account loginForm, Model model) {
+	public String processLogin(@ModelAttribute Account loginForm,HttpSession session, Model model) {
 	    // Kiểm tra xem email và mật khẩu có hợp lệ không
 	    Account account = userService.findbyUser(loginForm.getUsername()); // Giả sử bạn có service để lấy thông tin tài khoản
 	    
@@ -53,6 +54,7 @@ public class HomeController {
 		        model.addAttribute("loginForm", new Account());
 		        return "user/login.html"; // Quay lại trang đăng nhập
 		    }
+		    session.setAttribute("user", account);
 	        return "redirect:/home/";
 	    }
 	    else {
@@ -137,7 +139,6 @@ public class HomeController {
         model.addAttribute("message", "Password updated successfully");
         model.addAttribute("loginForm", new Account());
         return "user/login"; // Chuyển hướng tới trang đăng nhập
-
 	    }
 
 
