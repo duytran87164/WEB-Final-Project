@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import IOT_house.controllers.EmailService;
 import IOT_house.entity.Account;
 import IOT_house.services.user.UserService;
 
