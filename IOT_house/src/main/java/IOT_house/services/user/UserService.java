@@ -51,9 +51,9 @@ public class UserService implements IUserService {
 	}
 
 	@Override
-	public void UpdatePswbyUser(String user, String psw) {
+	public void UpdatePswbyEmail(String email, String psw) {
 		// TODO Auto-generated method stub
-		Optional<Account> accountOpt = userRepository.findByUsername(user);
+		Optional<Account> accountOpt = userRepository.findByEmail(email);
 	    if (accountOpt.isPresent()) {
 	        Account account = accountOpt.get();
 	        account.setPassword(psw);
@@ -88,6 +88,12 @@ public class UserService implements IUserService {
 	public Account findbyUser(String User) {
 		// TODO Auto-generated method stub
 		Optional<Account> accountOpt = userRepository.findByUsername(User);
+	    return accountOpt.orElse(null);
+	}
+
+	public Account findByEmail(String email) {
+		// TODO Auto-generated method stub
+		Optional<Account> accountOpt = userRepository.findByEmail(email);
 	    return accountOpt.orElse(null);
 	}
 }

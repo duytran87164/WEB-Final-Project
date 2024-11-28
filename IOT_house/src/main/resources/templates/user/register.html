@@ -74,8 +74,8 @@
             <h2 class="text-center">Register to IoT Platform</h2>
 
             <!-- Error message (if any) -->
-            <div th:if="${errorMessage}" class="alert alert-danger">
-                <p th:text="${errorMessage}">Please correct the errors below.</p>
+            <div th:if="${error}" class="alert alert-danger">
+                <p th:text="${error}">Please correct the errors below.</p>
             </div>
 
             <!-- Register Form -->

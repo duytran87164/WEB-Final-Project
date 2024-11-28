@@ -1,4 +1,4 @@
-package IOT_house.controllers.user;
+package IOT_house.controllers;
 
 import java.time.LocalDate;
 
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping(value = "/home")
-public class UserHomeController {
+public class HomeController {
 	@Autowired
 	UserService userService;
 	 @Autowired
@@ -43,15 +43,25 @@ public class UserHomeController {
 	public String processLogin(@ModelAttribute Account loginForm, Model model) {
 	    // Kiểm tra xem email và mật khẩu có hợp lệ không
 	    Account account = userService.findbyUser(loginForm.getUsername()); // Giả sử bạn có service để lấy thông tin tài khoản
-
+	    
+	    
 	    if (account != null && account.getPassword().equals(loginForm.getPassword())) {
 	        // Đăng nhập thành công, chuyển hướng đến trang chủ
+		    if (account.getStatus() == 0) {
+		        // Nếu thông tin đăng nhập sai, hiển thị thông báo lỗi
+		        model.addAttribute("error", "Account is locked");
+		        model.addAttribute("loginForm", new Account());
+		        return "user/login.html"; // Quay lại trang đăng nhập
+		    }
 	        return "redirect:/home/";
-	    } else {
-	        // Nếu thông tin đăng nhập sai, hiển thị thông báo lỗi
-	        model.addAttribute("error", "Invalid email or password");
-	        return "redirect:/home/login"; // Quay lại trang đăng nhập
 	    }
+	    else {
+	    	model.addAttribute("error", "ERROR user or password");
+	    	model.addAttribute("loginForm", new Account());
+	        return "user/login.html"; // Quay lại trang đăng nhập
+	    }
+	    
+
 	}
 	
 	// Hiển thị trang đăng ký
@@ -65,17 +75,22 @@ public class UserHomeController {
 	// Controller đăng ký tài khoản
 	@PostMapping("/register")
 	public String processRegister(@ModelAttribute Account registerForm, Model model) {
+		
+		if (userService.CheckUserExist(registerForm.getUsername())) {
+	        model.addAttribute("error", "user name đã tồn tại");
+	        model.addAttribute("registerForm", new Account());
+	        return "user/register.html"; // Quay lại trang đăng ký
+	    }
 	    // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
 	    if (userService.CheckEmailExist(registerForm.getEmail())) {
 	        model.addAttribute("error", "Email đã tồn tại");
-	        return "redirect:/home/register"; // Quay lại trang đăng ký
+	        model.addAttribute("registerForm", new Account());
+	        return "user/register.html"; // Quay lại trang đăng ký
 	    }
-	    if (userService.CheckUserExist(registerForm.getUsername())) {
-	        model.addAttribute("error", "user name đã tồn tại");
-	        return "redirect:/home/register"; // Quay lại trang đăng ký
-	    }
+	    
 	 // Gán ngày hiện tại vào trường crDate
 	    registerForm.setCrDate(LocalDate.now());
+	    registerForm.setStatus(1);
 	    // Nếu email chưa tồn tại, tiến hành lưu tài khoản mới
 	    userService.insert(registerForm); // Giả sử bạn có service để lưu tài khoản
 
@@ -88,15 +103,43 @@ public class UserHomeController {
     }
 
 	@PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam("email") String email, Model model) {
-        try {
-            emailService.sendEmail(email,"Welcome" , "xin chao Dkhai");
+    public String processForgotPassword(@RequestParam("username") String username, Model model) {
+		try {
+			Account account =  userService.findbyUser(username);
+        	if (account != null) {
+            emailService.sendResetPasswordEmail(account.getEmail());
             model.addAttribute("message", "An email with a reset link has been sent.");
+            }
+        	else {
+        		model.addAttribute("message", "User Name isn't exsit");
+        	}
         } catch (Exception e) {
             model.addAttribute("error", "There was an error sending the email. Please try again.");
         }
         return "user/forget_psw";
     }
+	@GetMapping("/reset-password")
+	public String resetPasswordPage(@RequestParam("email") String email, Model model) {
+	    model.addAttribute("email", email); // Truyền email vào model
+	    return "user/reset_psw"; // Trả về trang đổi mật khẩu
+	}
+	@PostMapping("/update-password")
+	public String updatePassword(@RequestParam("email") String email,
+	                             @RequestParam("newPassword") String newPassword,
+	                             @RequestParam("confirmPassword") String confirmPassword,
+	                             Model model) {
+	    if (!newPassword.equals(confirmPassword)) {
+	        model.addAttribute("error", "Passwords do not match");
+	        model.addAttribute("email", email);
+	        return "user/reset_psw"; // Trả về trang reset-password kèm lỗi
+	    }
+        userService.UpdatePswbyEmail(email, confirmPassword);
+        model.addAttribute("message", "Password updated successfully");
+        model.addAttribute("loginForm", new Account());
+        return "user/login"; // Chuyển hướng tới trang đăng nhập
+
+	    }
+
 
 	
 }

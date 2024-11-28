@@ -14,7 +14,7 @@ public interface IUserService {
 	
 	Account UpdateByUser(String user, String fullname, String phone);
 	
-	void UpdatePswbyUser(String user,String psw);
+	void UpdatePswbyEmail(String email,String psw);
 	
 	boolean CheckEmailExist(String Email);
 	
@@ -23,4 +23,6 @@ public interface IUserService {
 	boolean CheckUserExist(String User);
 	
 	Account findbyUser(String User);
+	
+	Account findByEmail(String email);
 }

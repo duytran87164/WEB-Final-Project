@@ -74,8 +74,8 @@
             <h2 class="text-center">Login to IoT Platform</h2>
 
             <!-- Error message (if any) -->
-            <div th:if="${errorMessage}" class="alert alert-danger">
-                <p th:text="${errorMessage}">Invalid email or password.</p>
+            <div th:if="${error}" class="alert alert-danger">
+                <p th:text="${error}">Invalid email or password.</p>
             </div>
 
             <!-- Login Form -->
