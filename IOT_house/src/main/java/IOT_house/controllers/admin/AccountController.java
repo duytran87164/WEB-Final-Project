@@ -34,7 +34,7 @@ public class AccountController {
 		List<Account> list = accService.findAll();
 		model.addAttribute("acc", list);
 
-		return "account/list.html";
+		return "account/list_acc_temp.html";
 	}
 	
 	@PostMapping("/update")

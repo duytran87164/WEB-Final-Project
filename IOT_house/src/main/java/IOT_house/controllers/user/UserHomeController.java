@@ -31,12 +31,12 @@ public class UserHomeController {
         model.addAttribute("deviceCount", 42);  // Replace with actual data
         model.addAttribute("dataPoints", 150); // Replace with actual data
         model.addAttribute("year", LocalDate.now().getYear());
-        return "user/home.html";  // Return the Thymeleaf template "home.html"
+        return "/user/home.html";  // Return the Thymeleaf template "home.html"
     }
 	@GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("loginForm", new Account()); // Thêm đối tượng LoginForm vào model
-        return "user/login.html"; // Điều chỉnh theo đường dẫn view của bạn
+        return "user/login_temp.html"; // Điều chỉnh theo đường dẫn view của bạn
     }
 
 	@PostMapping("/login")
@@ -58,7 +58,7 @@ public class UserHomeController {
 	@GetMapping("/register")
 	public String showRegisterForm(Model model) {
 	    model.addAttribute("registerForm", new Account()); // Tạo đối tượng Account trống để bind dữ liệu
-	    return "user/register.html"; // Trang đăng ký
+	    return "user/register_temp.html"; // Trang đăng ký
 	}
 
 
