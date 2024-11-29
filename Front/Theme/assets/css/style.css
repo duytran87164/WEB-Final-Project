@@ -2388,3 +2388,48 @@ label {
     background-attachment: fixed;
     filter: none; /* Ensure no filters are applied */
 }
+
+
+/* Định dạng container của thanh tìm kiếm */
+.search-bar {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto; /* Canh giữa */
+}
+
+/* Định dạng ô input */
+.search-bar input[type="text"] {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Hiệu ứng khi hover hoặc focus vào input */
+.search-bar input[type="text"]:focus {
+    border-color: #4e73df; /* Màu xanh chủ đạo của Dashgum */
+    box-shadow: 0px 2px 8px rgba(78, 115, 223, 0.5);
+}
+
+/* Icon tìm kiếm */
+.search-bar .search-icon {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: #aaa;
+    font-size: 18px;
+    pointer-events: none;
+    border: none;
+    border-radius: 10px 10px 10px 10px;
+}
+
+/* Khi input được focus, icon cũng đổi màu */
+.search-bar input[type="text"]:focus + .search-icon {
+    color: #4e73df;
+}
