@@ -25,15 +25,15 @@ public class HomeController {
 	 @Autowired
 	 private EmailService emailService;
 	@GetMapping("/")
-    public String homePage(Model model) {
-        model.addAttribute("websiteTitle", "IoT Platform");
-        model.addAttribute("welcomeMessage", "Welcome to the IoT Platform");
-        model.addAttribute("platformDescription", "Our platform allows you to monitor and manage all your IoT devices efficiently.");
-        model.addAttribute("deviceCount", 42);  // Replace with actual data
-        model.addAttribute("dataPoints", 150); // Replace with actual data
-        model.addAttribute("year", LocalDate.now().getYear());
-        return "user/home.html";  // Return the Thymeleaf template "home.html"
-    }
+	public String home(HttpSession session, Model model) {
+	    model.addAttribute("welcomeMessage", "Welcome to IoT Platform");
+	    model.addAttribute("platformDescription", "Our platform allows you to monitor and manage all your IoT devices efficiently.");
+	    model.addAttribute("deviceCount", 0); // Thay bằng dữ liệu thực tế
+	    model.addAttribute("dataPoints", 0); // Thay bằng dữ liệu thực tế
+	    model.addAttribute("year", 2024); // Thay bằng logic lấy năm hiện tại
+	    return "user/home.html"; // Trả về view tên "index.html"
+	}
+
 	@GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("loginForm", new Account()); // Thêm đối tượng LoginForm vào model
@@ -55,7 +55,7 @@ public class HomeController {
 		        return "user/login.html"; // Quay lại trang đăng nhập
 		    }
 		    session.setAttribute("user", account);
-	        return "redirect:/home/";
+	        return "redirect:/home/waiting";
 	    }
 	    else {
 	    	model.addAttribute("error", "ERROR user or password");
@@ -65,7 +65,34 @@ public class HomeController {
 	    
 
 	}
-	
+	@GetMapping("/waiting")
+	public String checkIfAdmin(HttpSession session, Model model) {
+	    // Lấy thông tin người dùng từ session
+	    Account account = (Account) session.getAttribute("user");
+	    
+	    if (account == null) {
+	        // Nếu không có thông tin người dùng trong session, chuyển hướng về trang đăng nhập
+	    	model.addAttribute("error", "Account isn't exsit");
+	    	model.addAttribute("loginForm", new Account());
+	        return "user/login.html"; // Quay lại trang đăng nhập
+	    }
+	    
+	    if (account.getIsAdmin() == true) {
+	        // Nếu là admin, chuyển hướng tới trang admin
+	        return "admin/admin_home.html";
+	    } else {
+	        // Nếu không phải admin, hiển thị thông báo
+	    	return "redirect:/user/home";
+	    }
+	}
+	@GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // Hủy toàn bộ session
+        session.invalidate();
+
+        // Chuyển hướng người dùng về trang chủ hoặc trang login
+        return "redirect:/home/";
+    }
 	// Hiển thị trang đăng ký
 	@GetMapping("/register")
 	public String showRegisterForm(Model model) {
@@ -93,6 +120,7 @@ public class HomeController {
 	 // Gán ngày hiện tại vào trường crDate
 	    registerForm.setCrDate(LocalDate.now());
 	    registerForm.setStatus(1);
+	    registerForm.setIsAdmin(false);
 	    // Nếu email chưa tồn tại, tiến hành lưu tài khoản mới
 	    userService.insert(registerForm); // Giả sử bạn có service để lưu tài khoản
 

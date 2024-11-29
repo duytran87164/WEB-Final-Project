@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -59,6 +60,10 @@ public class Account implements Serializable {/**
 	
 	@Column(name="status", columnDefinition = "VARCHAR(500)")
 	private int status;
+	
+	@Column(name = "is_admin", nullable = false)
+	private Boolean isAdmin = false;
+
 	
 	@OneToMany(mappedBy = "acc")
 	private List<Houses> houses;
