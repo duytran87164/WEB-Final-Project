@@ -1,6 +1,5 @@
 package IOT_house.controllers.user;
 
-import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,7 @@ public class HomeUserController {
 	UserService userService;
 	@Autowired
 	HouseService houseService;
+	private boolean ledStatus = false; // LED OFF ban đầu
 	@GetMapping("/home")
 	public String home(HttpSession session, Model model) {
 	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
@@ -36,4 +36,10 @@ public class HomeUserController {
 	    model.addAttribute("year", 2024); // Thay bằng logic lấy năm hiện tại
 	    return "user/home.html"; // Trả về view tên "index.html"
 	}
+	// API để trả về trang web điều khiển LED
+    @GetMapping("/led")
+    public String led(Model model) {
+        model.addAttribute("ledStatus", ledStatus ? 1 : 0); // Trạng thái LED ban đầu
+        return "TestESP/button_tg_led"; // Trả về trang HTML
+    }
 }
