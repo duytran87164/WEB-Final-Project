@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Dashboard">
+<meta name="keyword"
+	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+<title>DASHGUM - Bootstrap Admin Template</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="/assets/js/bootstrap-datepicker/css/datepicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="/assets/js/bootstrap-daterangepicker/daterangepicker.css" />
+
+<!-- Custom styles for this template -->
+<link href="/assets/css/style.css" rel="stylesheet">
+<link href="/assets/css/style-responsive.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<section id="container">
+		<!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+		<!--header start-->
+		<header class="header black-bg">
+			<div class="sidebar-toggle-box">
+				<div class="fa fa-bars tooltips" data-placement="right"
+					data-original-title="Toggle Navigation"></div>
+			</div>
+			<!--logo start-->
+			<a href="index.html" class="logo"><b>MOOSE HOME</b></a>
+			<!--logo end-->
+			<div class="top-menu">
+				<ul class="nav pull-right">
+
+					<!-- Profile Dropdown -->
+					<li class="dropdown"><a href="#"
+						class="dropdown-toggle profile-pic" data-toggle="dropdown"> <img
+							src="/assets/img/ui-sam.jpg" class="img-circle" width="40">
+							<span class="username"th:text="${fullname}">UserName</span>
+					</a>
+						<ul class="dropdown-menu profile-menu">
+							<li><a href="profile.html"><i class="fa fa-user"></i>
+									Profile</a></li>
+							<li><a href="home/logout"><i class="fa fa-sign-out"></i>
+									Logout</a></li>
+						</ul></li>
+				</ul>
+			</div>
+
+		</header>
+		<!--header end-->
+
+		<!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+		<!--sidebar start-->
+		<aside>
+			<div id="sidebar" class="nav-collapse ">
+				<!-- sidebar menu start-->
+				<ul class="sidebar-menu" id="nav-accordion">
+
+
+					<li class="mt"><a href="index.html"> <i
+							class="fa fa-dashboard"></i> <span>Dashboard</span>
+					</a></li>
+
+
+				</ul>
+				<!-- sidebar menu end-->
+			</div>
+		</aside>
+		<!--sidebar end-->
+
+		<!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!-- <h3><i class="fa fa-angle-right"></i> Form Components</h3> -->
+
+				<!-- BASIC FORM ELELEMNTS -->
+				<div class="row mt">
+					<div class="col-lg-12">
+						<div class="form-panel">
+							<h4 class="mb">
+								<div th:if="${house == null or !house.isEdit}">
+						            <i class="fa fa-angle-right"></i> Add House
+						        </div>
+						        <div th:if="${house != null and house.isEdit}">
+						            <i class="fa fa-angle-right"></i> Edit House
+							</h4>
+							<form class="form-horizontal style-form"
+								th:action="@{/admin/list-house/save/{id_acc}(id_acc=${id_acc})}"
+								method="post" enctype="multipart/form-data">
+								<input type="hidden" name="isEdit"
+									th:value="${house?.isEdit != null ? house.isEdit : false}">
+								<br>
+
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">ID house</label>
+									<div class="col-sm-5"	th:if="${house == null or !house.isEdit}">
+										<!-- Hiển thị ô nhập khi thêm mới -->
+										<input type="text" class="form-control round-form"
+											id="idhouse" name="idHouse" th:value="${house?.idHouse}" />
+									</div>
+									<div th:if="${house != null and house.isEdit}">
+									<!-- Hiển thị giá trị và gửi ngầm qua hidden field khi chỉnh sửa -->
+									<span th:text="${house?.idHouse}"></span> <input type="hidden"
+										name="idHouse" th:value="${house?.idHouse}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Password</label>
+									<div class="col-sm-5">
+										<input type="password" class="form-control round-form" placeholder=""	id="password" name="password" th:value="${house?.password}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+								    <!-- Images -->
+								    <label class="col-sm-2 col-sm-2 control-label">Images</label>
+								    <div class="col-sm-5">
+								        <!-- Hiển thị hình ảnh nếu chỉnh sửa hoặc đã có -->
+								        <div th:if="${house != null && house.image != null}">
+								            <img th:if="${#strings.startsWith(house.image, 'https')}" th:src="${house.image}" 
+								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
+								            <img th:if="${!#strings.startsWith(house.image, 'https')}" 
+								                 th:src="@{/file/image(fname=${house.image})}" 
+								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
+								        </div>
+								      
+								        <br>
+								        <!-- Chọn file hình ảnh -->
+								        <input type="file" class="btn btn-theme02" onchange="chooseFile(this)" id="imageFile" name="imageFile" /><br>
+								        <!-- Nhập URL hình ảnh -->
+								        <label class="control-label"> Or Type URL Image</label>
+								        <input type="text" class="form-control round-form" id="imageUrl" name="image" placeholder="Type URL Image Here"
+								               th:value="${house?.image ?: ''}" />
+								    </div>
+								</div>
+								
+
+								<script>
+									function chooseFile(input) {
+										if (input.files && input.files[0]) {
+											const reader = new FileReader();
+											reader.onload = function(e) {
+												const previewImage = document.getElementById("image");
+												previewImage.src = e.target.result;
+												previewImage.style.display = "block"; // Hiện ảnh sau khi tải
+											};
+											reader.readAsDataURL(input.files[0]);
+										}
+									}
+								</script>
+								
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Description</label>
+									<div class="col-sm-5">
+										<input	type="text" class="form-control round-form" id="description" name="description"
+											th:value="${house?.description}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+								    <!-- Chọn trạng thái bằng radio button -->
+								    <label class="col-sm-2 control-label" for="status">Status:</label>
+								    <div class="col-sm-5">
+								        <div>
+								            <input type="radio" id="active" name="status" value="1"
+								                   th:checked="${house?.status == 1}" />
+								            <label for="active">Active</label>
+								        </div>
+								        <div>
+								            <input type="radio" id="inactive" name="status" value="0"
+								                   th:checked="${house?.status == 0}" />
+								            <label for="inactive">Lock</label>
+								        </div>
+								    </div>
+								</div>
+						
+
+								<div class="form-group">
+								    <div class="col-sm-offset-3">
+								        <div th:if="${house == null or !house.isEdit}">
+								            <!-- Hiển thị nút Insert -->
+								            <button type="submit" class="btn btn-theme">Insert</button>
+								        </div>
+								        <div th:if="${house != null and house.isEdit}">
+								            <!-- Hiển thị nút Update -->
+								            <button type="submit" class="btn btn-theme">Update</button>
+								        </div>
+								    </div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- col-lg-12-->
+				</div>
+				<!-- /row -->
+			</section>
+		</section>
+		<!-- /MAIN CONTENT -->
+
+		<!--main content end-->
+		<!--footer start-->
+		<footer class="site-footer">
+			<div class="text-center">
+				2014 - Alvarez.is <a href="form_component.html#" class="go-top">
+					<i class="fa fa-angle-up"></i>
+				</a>
+			</div>
+		</footer>
+		<!--footer end-->
+	</section>
+
+	<!-- js placed at the end of the document so the pages load faster -->
+	<script src="/assets/js/jquery.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<script class="include" type="text/javascript"
+		src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="/assets/js/jquery.scrollTo.min.js"></script>
+	<script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+	<!--common script for all pages-->
+	<script src="/assets/js/common-scripts.js"></script>
+
+	<!--script for this page-->
+	<script src="/assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+	<!--custom switch-->
+	<script src="/assets/js/bootstrap-switch.js"></script>
+
+	<!--custom tagsinput-->
+	<script src="/assets/js/jquery.tagsinput.js"></script>
+
+	<!--custom checkbox & radio-->
+
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-daterangepicker/date.js"></script>
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
+
+	<script src="/assets/js/form-component.js"></script>
+
+
+	<script>
+		//custom select box
+
+		$(function() {
+			$('select.styled').customSelect();
+		});
+	</script>
+
+</body>
+</html>
