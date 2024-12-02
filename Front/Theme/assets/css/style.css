@@ -2610,3 +2610,32 @@ label {
 
 
         
+/* Sign Up Button with Rectangular Border */
+.sign-up-button {
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.sign-up-button:hover {
+    background-color: #68dff0;
+    color: #fff;
+}
+
+/* Log In Button without Border */
+.login-button {
+    border: none;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    color: #262424;
+}
+
+.login-button:hover {
+    color: #fff;
+    background-color: #68dff0;
+}
+
+
