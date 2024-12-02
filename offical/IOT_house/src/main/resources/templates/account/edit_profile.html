@@ -37,32 +37,13 @@
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
 		<!--header start-->
-		<div th:insert="~{fragments/admin/header}"></div>
+		<div th:insert="~{fragments/user/header}"></div>
 		<!--header end-->
 
 		<!-- **********************************************************************************************************************************************************
       MAIN SIDEBAR MENU
       *********************************************************************************************************************************************************** -->
 		<!--sidebar start-->
-		<aside>
-			<div id="sidebar" class="nav-collapse ">
-				<!-- sidebar menu start-->
-				<ul class="sidebar-menu" id="nav-accordion">
-
-					<!-- <p class="centered"><a href="profile.html"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-              	  <h5 class="centered">UserName</h5> -->
-
-					<li class="mt"><a  href="/admin/account"> <i
-							class="fa fa-user"></i> <span>List Account</span>
-					</a></li>
-
-					<li class="mt"><a href="/admin/house"> <i
-							class="fa fa-home"></i> <span>List House</span>
-					</a></li>
-				</ul>
-				<!-- sidebar menu end-->
-			</div>
-		</aside>
 		<!--sidebar end-->
 
 		<!-- **********************************************************************************************************************************************************
@@ -78,37 +59,56 @@
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<h4 class="mb">
-								<div th:if="${house == null or !house.isEdit}">
-						            <i class="fa fa-angle-right"></i> Add House
+								<div >
+						            <i class="fa fa-angle-right"></i> Edit Profile
 						        </div>
-						        <div th:if="${house != null and house.isEdit}">
-						            <i class="fa fa-angle-right"></i> Edit House
 							</h4>
 							<form class="form-horizontal style-form"
-								th:action="@{/admin/list-house/save/{id_acc}(id_acc=${id_acc})}"
+								th:action="@{/user/profile/save}"
 								method="post" enctype="multipart/form-data">
-								<input type="hidden" name="isEdit"
-									th:value="${house?.isEdit != null ? house.isEdit : false}">
-								<br>
-
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ID house</label>
-									<div class="col-sm-5"	th:if="${house == null or !house.isEdit}">
+								
+								<div class="col-sm-5">
 										<!-- Hiển thị ô nhập khi thêm mới -->
 										<input type="text" class="form-control round-form"
-											id="idhouse" name="idHouse" th:value="${house?.idHouse}" />
+											id="id" name="id" th:value="${acc?.id}"readonly/>
+										<input type="text" class="form-control round-form"
+											id="crDate" name="crDate" th:value="${acc?.crDate}" readonly/>
+										<input type="text" class="form-control round-form"
+											id="username" name="username" th:value="${acc?.username}" readonly/>		
 									</div>
-									<div th:if="${house != null and house.isEdit}">
-									<!-- Hiển thị giá trị và gửi ngầm qua hidden field khi chỉnh sửa -->
-									<span th:text="${house?.idHouse}"></span> <input type="hidden"
-										name="idHouse" th:value="${house?.idHouse}" />
+									
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Full Name</label>
+									<div class="col-sm-5">
+										<!-- Hiển thị ô nhập khi thêm mới -->
+										<input type="text" class="form-control round-form"
+											id="fullName" name="fullName" th:value="${acc?.fullName}" />
 									</div>
 								</div>
 								
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">Password</label>
 									<div class="col-sm-5">
-										<input type="password" class="form-control round-form" placeholder=""	id="password" name="password" th:value="${house?.password}" />
+										<input type="password" class="form-control round-form" placeholder=""	id="password" name="password" th:value="${acc?.password}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Email</label>
+									<div class="col-sm-5">
+										<!-- Hiển thị ô nhập khi thêm mới -->
+										<input type="text" class="form-control round-form"
+											id="email" name="email" th:value="${acc?.email}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Phone</label>
+									<div class="col-sm-5">
+										<!-- Hiển thị ô nhập khi thêm mới -->
+										<input type="text" class="form-control round-form"
+											id="phone" name="phone" th:value="${acc?.phone}" />
 									</div>
 								</div>
 								
@@ -117,21 +117,20 @@
 								    <label class="col-sm-2 col-sm-2 control-label">Images</label>
 								    <div class="col-sm-5">
 								        <!-- Hiển thị hình ảnh nếu chỉnh sửa hoặc đã có -->
-								        <div th:if="${house != null && house.image != null}">
-								            <img th:if="${#strings.startsWith(house.image, 'https')}" th:src="${house.image}" 
+								        <div th:if="${acc != null && acc.image != null}">
+								            <img th:if="${#strings.startsWith(acc.image, 'https')}" th:src="${acc.image}" 
 								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
-								            <img th:if="${!#strings.startsWith(house.image, 'https')}" 
-								                 th:src="@{/file/image(fname=${house.image})}" 
+								            <img th:if="${!#strings.startsWith(acc.image, 'https')}" 
+								                 th:src="@{/file/image(fname=${acc.image})}" 
 								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
 								        </div>
-								      
 								        <br>
 								        <!-- Chọn file hình ảnh -->
 								        <input type="file" class="btn btn-theme02" onchange="chooseFile(this)" id="imageFile" name="imageFile" /><br>
 								        <!-- Nhập URL hình ảnh -->
 								        <label class="control-label"> Or Type URL Image</label>
 								        <input type="text" class="form-control round-form" id="imageUrl" name="image" placeholder="Type URL Image Here"
-								               th:value="${house?.image ?: ''}" />
+								               th:value="${acc?.image ?: ''}" />
 								    </div>
 								</div>
 								
@@ -150,41 +149,10 @@
 									}
 								</script>
 								
-								
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">Description</label>
-									<div class="col-sm-5">
-										<input	type="text" class="form-control round-form" id="description" name="description"
-											th:value="${house?.description}" />
-									</div>
-								</div>
-								
-								<div class="form-group">
-								    <!-- Chọn trạng thái bằng radio button -->
-								    <label class="col-sm-2 control-label" for="status">Status:</label>
-								    <div class="col-sm-5">
-								        <div>
-								            <input type="radio" id="active" name="status" value="1"
-								                   th:checked="${house?.status == 1}" />
-								            <label for="active">Active</label>
-								        </div>
-								        <div>
-								            <input type="radio" id="inactive" name="status" value="0"
-								                   th:checked="${house?.status == 0}" />
-								            <label for="inactive">Lock</label>
-								        </div>
-								    </div>
-								</div>
-						
-
+					
 								<div class="form-group">
 								    <div class="col-sm-offset-3">
-								        <div th:if="${house == null or !house.isEdit}">
-								            <!-- Hiển thị nút Insert -->
-								            <button type="submit" class="btn btn-theme">Insert</button>
-								        </div>
-								        <div th:if="${house != null and house.isEdit}">
-								            <!-- Hiển thị nút Update -->
+								        <div>
 								            <button type="submit" class="btn btn-theme">Update</button>
 								        </div>
 								    </div>

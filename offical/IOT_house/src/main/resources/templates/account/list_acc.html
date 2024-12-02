@@ -37,17 +37,17 @@
       TOP BAR CONTENT & NOTIFICATIONS
       *********************************************************************************************************************************************************** -->
       <!--header start-->
-      <header class="header black-bg">
+<!--       <header class="header black-bg">
               <div class="sidebar-toggle-box">
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
-            <!--logo start-->
+            logo start
             <a href="index.html" class="logo"><b>MOOSE HOME</b></a>
-            <!--logo end-->
+            logo end
             <div class="top-menu">
                 <ul class="nav pull-right">
           
-                    <!-- Profile Dropdown -->
+                    Profile Dropdown
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle profile-pic" data-toggle="dropdown">
                             <img src="/assets/img/ui-sam.jpg" class="img-circle" width="40">
@@ -62,7 +62,8 @@
                 </ul>
             </div>
             
-        </header>
+        </header> -->
+        <div th:insert="~{fragments/admin/header}"></div>
       <!--header end-->
       
       <!-- **********************************************************************************************************************************************************
@@ -79,7 +80,7 @@
               	  	
                   <li class="mt">
                       <a class="active" href="/admin/account">
-                          <i class="fa fa-dashboard"></i>
+                          <i class="fa fa-user"></i>
                           <span>List Account</span>
                       </a>
                   </li>
@@ -123,6 +124,7 @@
 								<thead>
 									<tr>
 										<th>STT </th>
+										<th>ID Account </th>
 										<th>Full Name</th>
 										<th>User Name</th>
 										<th>Password</th>
@@ -134,8 +136,9 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="acc, STT : ${acc}">
-										<td th:text="${STT.index + 1}" style="vertical-align: middle;"></td>
+									<tr th:each="acc, STT : ${acc}" th:if="${acc.isAdmin == False}">
+										<td th:text="${STT.index}" style="vertical-align: middle;"></td>
+										<td th:text="${acc.id}" style="vertical-align: middle;"></td>
 										<td th:text="${acc.fullName}" style="vertical-align: middle;"></td>
 										<td th:text="${acc.username}" style=" vertical-align: middle;"></td>
 										<td th:text="${acc.password}" style=" vertical-align: middle;"></td>

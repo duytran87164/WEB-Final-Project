@@ -78,85 +78,22 @@
 					<div class="col-lg-12">
 						<div class="form-panel">
 							<h4 class="mb">
-								<div th:if="${house == null or !house.isEdit}">
-						            <i class="fa fa-angle-right"></i> Add House
-						        </div>
-						        <div th:if="${house != null and house.isEdit}">
-						            <i class="fa fa-angle-right"></i> Edit House
+						            <i class="fa fa-angle-right"></i> Edit User
 							</h4>
 							<form class="form-horizontal style-form"
-								th:action="@{/admin/list-house/save/{id_acc}(id_acc=${id_acc})}"
-								method="post" enctype="multipart/form-data">
-								<input type="hidden" name="isEdit"
-									th:value="${house?.isEdit != null ? house.isEdit : false}">
-								<br>
-
+								th:action="@{/admin/account/save}"
+								method="post">
+								
+								
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">ID house</label>
-									<div class="col-sm-5"	th:if="${house == null or !house.isEdit}">
+									<label class="col-sm-2 col-sm-2 control-label">ID Account</label>
+									<div class="col-sm-5">
 										<!-- Hiển thị ô nhập khi thêm mới -->
 										<input type="text" class="form-control round-form"
-											id="idhouse" name="idHouse" th:value="${house?.idHouse}" />
+											id="id" name="id" th:value="${acc?.id}" readonly/>
 									</div>
-									<div th:if="${house != null and house.isEdit}">
-									<!-- Hiển thị giá trị và gửi ngầm qua hidden field khi chỉnh sửa -->
-									<span th:text="${house?.idHouse}"></span> <input type="hidden"
-										name="idHouse" th:value="${house?.idHouse}" />
-									</div>
-								</div>
-								
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">Password</label>
-									<div class="col-sm-5">
-										<input type="password" class="form-control round-form" placeholder=""	id="password" name="password" th:value="${house?.password}" />
-									</div>
-								</div>
-								
-								<div class="form-group">
-								    <!-- Images -->
-								    <label class="col-sm-2 col-sm-2 control-label">Images</label>
-								    <div class="col-sm-5">
-								        <!-- Hiển thị hình ảnh nếu chỉnh sửa hoặc đã có -->
-								        <div th:if="${house != null && house.image != null}">
-								            <img th:if="${#strings.startsWith(house.image, 'https')}" th:src="${house.image}" 
-								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
-								            <img th:if="${!#strings.startsWith(house.image, 'https')}" 
-								                 th:src="@{/file/image(fname=${house.image})}" 
-								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
-								        </div>
-								      
-								        <br>
-								        <!-- Chọn file hình ảnh -->
-								        <input type="file" class="btn btn-theme02" onchange="chooseFile(this)" id="imageFile" name="imageFile" /><br>
-								        <!-- Nhập URL hình ảnh -->
-								        <label class="control-label"> Or Type URL Image</label>
-								        <input type="text" class="form-control round-form" id="imageUrl" name="image" placeholder="Type URL Image Here"
-								               th:value="${house?.image ?: ''}" />
-								    </div>
-								</div>
-								
-
-								<script>
-									function chooseFile(input) {
-										if (input.files && input.files[0]) {
-											const reader = new FileReader();
-											reader.onload = function(e) {
-												const previewImage = document.getElementById("image");
-												previewImage.src = e.target.result;
-												previewImage.style.display = "block"; // Hiện ảnh sau khi tải
-											};
-											reader.readAsDataURL(input.files[0]);
-										}
-									}
-								</script>
-								
-								
-								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">Description</label>
-									<div class="col-sm-5">
-										<input	type="text" class="form-control round-form" id="description" name="description"
-											th:value="${house?.description}" />
-									</div>
+<!-- 									<input type="hidden" name="id" th:value="${acc?.id}"> -->
+									
 								</div>
 								
 								<div class="form-group">
@@ -165,12 +102,12 @@
 								    <div class="col-sm-5">
 								        <div>
 								            <input type="radio" id="active" name="status" value="1"
-								                   th:checked="${house?.status == 1}" />
+								                   th:checked="${acc?.status == 1}" />
 								            <label for="active">Active</label>
 								        </div>
 								        <div>
 								            <input type="radio" id="inactive" name="status" value="0"
-								                   th:checked="${house?.status == 0}" />
+								                   th:checked="${acc?.status == 0}" />
 								            <label for="inactive">Lock</label>
 								        </div>
 								    </div>
@@ -179,14 +116,7 @@
 
 								<div class="form-group">
 								    <div class="col-sm-offset-3">
-								        <div th:if="${house == null or !house.isEdit}">
-								            <!-- Hiển thị nút Insert -->
-								            <button type="submit" class="btn btn-theme">Insert</button>
-								        </div>
-								        <div th:if="${house != null and house.isEdit}">
-								            <!-- Hiển thị nút Update -->
-								            <button type="submit" class="btn btn-theme">Update</button>
-								        </div>
+								            <button type="submit" class="btn btn-theme">Update</button>	        
 								    </div>
 								</div>
 							</form>

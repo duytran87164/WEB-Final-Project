@@ -60,15 +60,21 @@ public class AccountController {
 		acc.setStatus(status);
 		accService.save(acc);
 
-		String message = "";
-		message = "Account is EDIT";
-
-		model.addAttribute("message", message);
 		return new ModelAndView("redirect:/admin/account", model);
 	}
 
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit(ModelMap model, @PathVariable("id") Long userId) {
+		
+		
+		//session
+				Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+			    if (user != null && user instanceof Account) {
+			        model.addAttribute("fullname",user.getFullName());
+			        model.addAttribute("user", user);
+			    } else {
+			        model.addAttribute("fullname", "err");
+			    }
 		Optional<Account> optCategory = accService.findById(userId);
 		Account acc = new Account();
 
@@ -79,7 +85,7 @@ public class AccountController {
 
 			model.addAttribute("acc", acc);
 
-			return new ModelAndView("account/add.html", model);
+			return new ModelAndView("account/edit_account_admin.html", model);
 		}
 		model.addAttribute("message", "Account is not existed");
 		return new ModelAndView("redirect:/admin/account", model);

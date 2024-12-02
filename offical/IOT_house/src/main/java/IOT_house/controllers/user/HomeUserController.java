@@ -1,6 +1,9 @@
 package IOT_house.controllers.user;
 
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import IOT_house.entity.Account;
+import IOT_house.entity.Houses;
+import IOT_house.services.admin.AccountService;
 import IOT_house.services.admin.HouseService;
 import IOT_house.services.user.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -16,25 +21,39 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping(value = "/user")
 public class HomeUserController {
 	@Autowired
-	UserService userService;
-	@Autowired
 	HouseService houseService;
+	@Autowired
+	AccountService accService;
+	@Autowired
+	UserService userService;
 	private boolean ledStatus = false; // LED OFF ban đầu
+	
+	
 	@GetMapping("/home")
 	public String home(HttpSession session, Model model) {
 	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("fullname",user.getFullName());
+	        model.addAttribute("image",user.getImage());
 	        model.addAttribute("user", user);
+	        
 	    } else {
-	        model.addAttribute("fullname", "Welcome to IoT Platform");
+	        model.addAttribute("fullname", "err");
 	    }
-	//	    System.out.println("Welcome message: " + model.getAttribute("welcomeMessage"));
-//	    model.addAttribute("platformDescription", "Our platform allows you to monitor and manage all your IoT devices efficiently.");
-//	    model.addAttribute("deviceCount", 0); // Thay bằng dữ liệu thực tế
-//	    model.addAttribute("dataPoints", 0); // Thay bằng dữ liệu thực tế
-//	    model.addAttribute("year", 2024); // Thay bằng logic lấy năm hiện tại
-	    return "user/home_user_temp.html"; // Trả về view tên "index.html"
+	    
+	    long id=user.getId();
+	    
+	 // Kiểm tra nếu `id` tồn tại
+        Optional<Account> acc = accService.findById(id);
+        if (acc.isPresent()) {
+            List<Houses> houses = houseService.findByAccount(acc.get());  // Sử dụng hàm findByAccount đã tạo trước đó
+            model.addAttribute("houses", houses);
+            model.addAttribute("id_acc", id);
+        } else {
+            model.addAttribute("message", "Account not found");
+        }
+	    
+	    return "list-house/list_house_of_user.html"; 
 	}
 	// API để trả về trang web điều khiển LED
     @GetMapping("/led")

@@ -79,7 +79,7 @@ public class HomeController {
 	    
 	    if (account.getIsAdmin() == true) {
 	        // Nếu là admin, chuyển hướng tới trang admin
-	        return "redirect:/admin/home";
+	        return "redirect:/admin/account";
 	    } else {
 	        // Nếu không phải admin, hiển thị thông báo
 	    	return "redirect:/user/home";

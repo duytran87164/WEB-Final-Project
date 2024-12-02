@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header Fragment</title>
+</head>
+<body>
+
+      <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+              </div>
+            <!--logo start-->
+            <a href="/admin/account" class="logo"><b>MOOSE HOME</b></a>
+            <!--logo end-->
+            <div class="top-menu">
+                <ul class="nav pull-right">
+          
+                    <!-- Profile Dropdown -->
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle profile-pic" data-toggle="dropdown">
+                            <td>
+						    <img th:if="${user.image != null && #strings.startsWith(user.image, 'https')}" 
+						         th:src="${user.image}" class="img-circle" width="40" alt="User Avatar" />
+						    <img th:if="${user.image != null && !#strings.startsWith(user.image, 'https')}" 
+						         th:src="@{/file/image(fname=${user.image})}" class="img-circle" width="40" alt="User Avatar" />
+						    <img th:if="${user.image == null}" 
+						         src="/assets/img/ui-sam.jpg" class="img-circle" width="60" alt="Default Avatar" />
+						</td>
+                            <span class="username" th:text="${fullname}">UserName</span>
+                           
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+<!--                             <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li> -->
+                            <li><a href="/home/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+        </header>
+
+</body>
+</html>

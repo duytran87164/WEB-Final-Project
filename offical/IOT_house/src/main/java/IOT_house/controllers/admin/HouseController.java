@@ -30,15 +30,15 @@ import IOT_house.services.admin.HouseService;
 
 
 @Controller
-@RequestMapping("/admin/list-house")
-public class ListHouseController {
+@RequestMapping("/admin")
+public class HouseController {
 	@Autowired
 	HouseService houseService;
 	@Autowired
 	AccountService accService;
 	@Autowired
     private HttpSession session;
-	@GetMapping("/{id}")
+	@GetMapping("/list-house/{id}")
 	public String all(@PathVariable Long id, Model model) {
 		
 		
@@ -64,7 +64,7 @@ public class ListHouseController {
         return "list-house/list_house_of_acc.html"; // Trả về trang list.html
     }
 	
-	@GetMapping("/add/{id}")
+	@GetMapping("/list-house/add/{id}")
 	public String add(@PathVariable Long id,Model model) {
 		
 		//session
@@ -83,7 +83,7 @@ public class ListHouseController {
 		  return "list-house/add_edit_house.html";
 	}
 	
-	@PostMapping("/save/{id_acc}")
+	@PostMapping("/list-house/save/{id_acc}")
 	public ModelAndView saveOrUpdate(@PathVariable Long id_acc, ModelMap model,
 	        @Valid @ModelAttribute("house") Houses cateModel, BindingResult result,
 	        @RequestParam("imageFile") MultipartFile imageFile) {
@@ -153,7 +153,7 @@ public class ListHouseController {
 	}
 
 	
-	@GetMapping("/edit/{id}")
+	@GetMapping("/list-house/edit/{id}")
 	public ModelAndView edit (ModelMap model,@PathVariable("id") String houseId) {
 		
 		//session
@@ -182,7 +182,7 @@ public class ListHouseController {
 		model.addAttribute("message","House is not existed");
 		return new ModelAndView("redirect:/admin/list-house",model);
 	}
-	@GetMapping("/delete/{id}")
+	@GetMapping("/list-house/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") String houseId) {
 	    Optional<Houses> optHouse = houseService.findById(houseId);
 
@@ -201,6 +201,22 @@ public class ListHouseController {
 	    }
 
 	    return new ModelAndView("redirect:/admin/list-house/{id_acc}", model);
+	}
+	
+	@GetMapping("/house")
+	public String home(HttpSession session, Model model) {
+	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("fullname",user.getFullName());
+	        model.addAttribute("user", user);
+	    } else {
+	        model.addAttribute("fullname", "err");
+	    }
+	    
+	    List<Houses> houses = houseService.findAll();
+	    model.addAttribute("houses", houses);
+
+	    return "admin/home_admin_temp.html"; // Trả về view tên "index.html"
 	}
 
 //	@RequestMapping("/searchpaginated")
