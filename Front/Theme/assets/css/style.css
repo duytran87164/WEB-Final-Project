@@ -2223,10 +2223,11 @@ label {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #68dff0;
+    background: #212529;
     color: #fff;
     padding: 10px 0;
     z-index: 900;
+    text-align: left;
 }
 
 
@@ -2433,3 +2434,179 @@ label {
 .search-bar input[type="text"]:focus + .search-icon {
     color: #4e73df;
 }
+
+
+/* Custom Navbar Styling */
+.custom-navbar {
+    background-color: #343a40;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.custom-navbar .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.custom-navbar .nav-link {
+    color: #fff;
+    font-size: 16px;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #68dff0;
+}
+
+.login-btn {
+    background-color: #68dff0;
+    color: #fff !important;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #58c9f3;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* Main Content Adjustment */
+#main-content {
+    padding: 20px;
+}
+
+.form-panel {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+
+.custom-navbar {
+    background-color: #343a40;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.custom-navbar .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.custom-navbar .nav-link {
+    color: #fff;
+    font-size: 16px;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #68dff0;
+}
+
+.login-btn {
+    background-color: #68dff0;
+    color: #fff !important;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #58c9f3;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* Main Content Adjustment */
+#main-content {
+    padding: 20px;
+}
+
+.form-panel {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .login-btn {
+        padding: 6px 15px;
+        font-size: 14px;
+    }
+}
+
+
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #68dff0;
+        }
+        main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 25px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #212529; /* Dark Blue */
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        footer a {
+            color: #68dff0;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        @media (max-width: 600px) {
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+            footer {
+                position: static;
+            }
+        }
+
+
+        
