@@ -39,7 +39,7 @@
           <div class="top-menu">
               <ul class="nav pull-right">
                     <a href="login.html" class="button login-button">Login</a>
-                    <a href="register.html" class="button sign-up-button">Registration</a>
+                    <a href="register.html" class="button sign-up-button">Sign up</a>
               </ul>
           </div>
           
@@ -48,9 +48,17 @@
 
     <!-- Main Content -->
     <main>
-        <h2>Welcome to MOOSE SMARTHOME</h2>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to MOOSE SMARTHOME</h1>
+                <p>Build one project that runs natively on all your users' devices</p>
+                <a href="login.html" class="button">Get Started</a>
+            </div>
+        </section>
+        <!-- <h2>Welcome to MOOSE SMARTHOME</h2>
         <p>Your smart home solution for a connected and secure living.</p>
-        <a href="#services" class="button">Our Services</a>
+        <a href="#services" class="button">Our Services</a> -->
     </main>
 
 <!-- Footer -->
@@ -81,6 +89,15 @@
     </div>
 </footer>
 <!-- End Footer -->
+    <!-- js placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>
+    <script>
+        $.backstretch("assets/img/home.jpg", {speed: 500});
+    </script>
 </body>
 </html>
