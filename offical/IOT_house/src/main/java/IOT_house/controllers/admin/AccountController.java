@@ -43,6 +43,26 @@ public class AccountController {
 
 		return "account/list_acc.html";
 	}
+	
+	
+	@GetMapping("/find")
+	public String findUsername(Model model, @RequestParam String userfind) {
+	    // Lấy user từ session
+	    Account user = (Account) session.getAttribute("user");
+	    if (user != null) {
+	        model.addAttribute("fullname", user.getFullName());
+	        model.addAttribute("user", user);
+	    } else {
+	        model.addAttribute("fullname", "err");
+	    }
+
+	    // Tìm kiếm user theo username
+	    Optional<Account> acc = accService.findByUsername(userfind);
+	    acc.ifPresentOrElse(
+	        account -> model.addAttribute("acc", account),() -> model.addAttribute("acc", null) );
+	    return "account/list_acc";
+	}
+
 
 	@PostMapping("/save")
 	public ModelAndView saveOrUpdate(@RequestParam Long id, @RequestParam int status, ModelMap model) {

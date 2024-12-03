@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="Dashboard">
+    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+    <title>MOOSE SMARTHOME | Home</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/zabuto_calendar.css">
+    <link rel="stylesheet" type="text/css" href="/assets/js/gritter/css/jquery.gritter.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/lineicons/style.css">    
+    
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style-responsive.css" rel="stylesheet">
+
+    <script src="/assets/js/chart-master/Chart.js"></script>
+    
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header black-bg">
+          <a th:if="${user != null and !user.isAdmin}" href="/user/home" class="logo"><b>MOOSE HOME</b></a>
+			<a th:if="${user != null and user.isAdmin}" href="/admin/account" class="logo"><b>MOOSE HOME</b></a>
+			<a th:if="${user == null}" href="/home/" class="logo"><b>MOOSE HOME</b></a>
+          <div class="top-menu">
+              <ul class="nav pull-right" style="margin-top: 12px;">
+                    <div th:if="${user != null}">
+                    	 <span style="font-size: 18px; color: #4e73df; font-weight: bold;">Hello <span th:text="${fullname}">Fullname</span></span>
+			            <a href="/home/logout" class="btn btn-danger">Logout</a>
+			        </div>
+			        <div th:unless="${user != null}">
+			            <a href="/home/login" class="btn btn-primary"><i class="fa fa-sign-in"></i> Login</a>
+			            <a href="/home/register" class="btn btn-success"><i class="fa fa-plus"></i> Sign Up</a>
+			        </div>
+              </ul>
+          </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+       <section class="hero">
+            <div class="hero-content">
+                <h1 style="margin-top: 85px; color: rgb(255, 128, 0); font-size: 36px; font-weight: bold; text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); padding: 10px; border-radius: 5px;">WELCOME TO MOOSE SMARTHOME</h1>
+
+               
+            </div>
+        </section>
+    </main>
+
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>About us</h3>
+                <p>Email: <a href="mailto:info@moosesmarthome.com">ptchc@hcmute.edu.vn</a><br>
+                Phone: +84 (028) 389-68641 <br>
+                Address: So 1, Vo Van Ngan, Linh Chieu, Ho Chi Minh</p>
+                <p>&copy; 2024 MOOSE SMARTHOME. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-4">
+                <h3>Our Contacts</h3>
+                <p>Le Quoc Cuong - 21146070 <a href="mailto:info@metronic.com">21146070@student.hcmute.edu.vn</a></p>
+                <p>Tran Hoang Duy - 21146073 <a href="mailto:info@metronic.com">21146073@student.hcmute.edu.vn</a></p>
+            </div>
+            <div class="col-md-3">
+                <p style="margin-top: 55px;">Ho Xuan Huy - 21146465 <a href="mailto:info@metronic.com">21146465@student.hcmute.edu.vn</a></p>
+                <p>Vo Duy Khai - 21146474 <a href="mailto:info@metronic.com">21146474@student.hcmute.edu.vn</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- js placed at the end of the document -->
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <!--BACKSTRETCH-->
+    <script type="text/javascript" src="/assets/js/jquery.backstretch.min.js"></script>     <script>
+        $.backstretch("/assets/img/iot6.jpg", {speed: 500});
+    </script>
+</body>
+</html>

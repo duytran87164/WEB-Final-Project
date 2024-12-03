@@ -26,18 +26,27 @@ public class HomeController {
 	 private EmailService emailService;
 	@GetMapping("/")
 	public String home(HttpSession session, Model model) {
+		
+		//session
+		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("fullname",user.getFullName());
+	        model.addAttribute("user", user);
+	    } else {
+	        model.addAttribute("fullname", "err");
+	    }
 	    model.addAttribute("welcomeMessage", "Welcome to IoT Platform");
 	    model.addAttribute("platformDescription", "Our platform allows you to monitor and manage all your IoT devices efficiently.");
 	    model.addAttribute("deviceCount", 0); // Thay bằng dữ liệu thực tế
 	    model.addAttribute("dataPoints", 0); // Thay bằng dữ liệu thực tế
 	    model.addAttribute("year", 2024); // Thay bằng logic lấy năm hiện tại
-	    return "user/home.html"; // Trả về view tên "index.html"
+	    return "home_temp.html"; // Trả về view tên "index.html"
 	}
 
 	@GetMapping("/login")
     public String showLoginPage(Model model) {
         model.addAttribute("loginForm", new Account()); // Thêm đối tượng LoginForm vào model
-        return "user/login_temp.html"; // Điều chỉnh theo đường dẫn view của bạn
+        return "login_temp.html"; // Điều chỉnh theo đường dẫn view của bạn
     }
 
 	@PostMapping("/login")
@@ -52,7 +61,7 @@ public class HomeController {
 		        // Nếu thông tin đăng nhập sai, hiển thị thông báo lỗi
 		        model.addAttribute("error", "Account is locked");
 		        model.addAttribute("loginForm", new Account());
-		        return "user/login_temp.html"; // Quay lại trang đăng nhập
+		        return "login_temp.html"; // Quay lại trang đăng nhập
 		    }
 		    session.setAttribute("user", account);
 	        return "redirect:/home/waiting";
@@ -60,7 +69,7 @@ public class HomeController {
 	    else {
 	    	model.addAttribute("error", "ERROR user or password");
 	    	model.addAttribute("loginForm", new Account());
-	        return "user/login_temp.html"; // Quay lại trang đăng nhập
+	        return "login_temp.html"; // Quay lại trang đăng nhập
 	    }
 	    
 
@@ -74,7 +83,7 @@ public class HomeController {
 	        // Nếu không có thông tin người dùng trong session, chuyển hướng về trang đăng nhập
 	    	model.addAttribute("error", "Account isn't exsit");
 	    	model.addAttribute("loginForm", new Account());
-	        return "user/login_temp.html"; // Quay lại trang đăng nhập
+	        return "login_temp.html"; // Quay lại trang đăng nhập
 	    }
 	    
 	    if (account.getIsAdmin() == true) {
@@ -91,13 +100,13 @@ public class HomeController {
         session.invalidate();
 
         // Chuyển hướng người dùng về trang chủ hoặc trang login
-        return "redirect:/home/login";
+        return "redirect:/home/";
     }
 	// Hiển thị trang đăng ký
 	@GetMapping("/register")
 	public String showRegisterForm(Model model) {
 	    model.addAttribute("registerForm", new Account()); // Tạo đối tượng Account trống để bind dữ liệu
-	    return "user/register_temp.html"; // Trang đăng ký
+	    return "register_temp.html"; // Trang đăng ký
 	}
 
 
@@ -108,13 +117,13 @@ public class HomeController {
 		if (userService.CheckUserExist(registerForm.getUsername())) {
 	        model.addAttribute("error", "user name đã tồn tại");
 	        model.addAttribute("registerForm", new Account());
-	        return "user/register_temp.html"; // Quay lại trang đăng ký
+	        return "register_temp.html"; // Quay lại trang đăng ký
 	    }
 	    // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
 	    if (userService.CheckEmailExist(registerForm.getEmail())) {
 	        model.addAttribute("error", "Email đã tồn tại");
 	        model.addAttribute("registerForm", new Account());
-	        return "user/register_temp.html"; // Quay lại trang đăng ký
+	        return "register_temp.html"; // Quay lại trang đăng ký
 	    }
 	    
 	 // Gán ngày hiện tại vào trường crDate
@@ -129,7 +138,7 @@ public class HomeController {
 	}
 	@GetMapping("/forgot-password")
     public String showForgotPasswordForm() {
-        return "user/forget_psw.html";
+        return "forget_psw.html";
     }
 
 	@PostMapping("/forgot-password")
@@ -146,12 +155,12 @@ public class HomeController {
         } catch (Exception e) {
             model.addAttribute("error", "There was an error sending the email. Please try again.");
         }
-        return "user/login_temp.html";
+        return "login_temp.html";
     }
 	@GetMapping("/reset-password")
 	public String resetPasswordPage(@RequestParam("email") String email, Model model) {
 	    model.addAttribute("email", email); // Truyền email vào model
-	    return "user/reset_psw_temp.html"; // Trả về trang đổi mật khẩu
+	    return "reset_psw_temp.html"; // Trả về trang đổi mật khẩu
 	}
 	@PostMapping("/update-password")
 	public String updatePassword(@RequestParam("email") String email,
@@ -161,12 +170,12 @@ public class HomeController {
 	    if (!newPassword.equals(confirmPassword)) {
 	        model.addAttribute("error", "Passwords do not match");
 	        model.addAttribute("email", email);
-	        return "user/reset_psw_temp.html"; // Trả về trang reset-password kèm lỗi
+	        return "reset_psw_temp.html"; // Trả về trang reset-password kèm lỗi
 	    }
         userService.UpdatePswbyEmail(email, confirmPassword);
         model.addAttribute("message", "Password updated successfully");
         model.addAttribute("loginForm", new Account());
-        return "user/login_temp.html"; // Chuyển hướng tới trang đăng nhập
+        return "login_temp.html"; // Chuyển hướng tới trang đăng nhập
 	    }
 
 

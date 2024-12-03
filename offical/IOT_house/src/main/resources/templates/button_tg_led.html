@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IoT Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>LED Control</h1>
+
+        <div id="ledContainer">
+            <!-- Lặp qua danh sách thiết bị được truyền từ backend -->
+            <div th:each="equip : ${button}" class="mb-3">
+                <button th:id="'ledStatus_' + ${equip.id}" 
+                        class="btn btn-primary"
+                        th:onclick="'toggleLED(' + ${equip.id} + ')'"
+                >ON</button>
+                <p th:id="'ledStatus_' + ${equip.id}">
+                    LED <span th:text="${equip.sensor}">Name</span> status unknown
+                </p>
+            </div>
+        </div>
+
+        <h2>Temperature from ESP</h2>
+        <p id="temperatureStatus">Loading temperature...</p> <!-- Hiển thị nhiệt độ từ ESP -->
+
+        <h2>Humidity from ESP</h2>
+        <p id="humidityStatus">Loading humidity...</p> <!-- Hiển thị độ ẩm từ ESP -->
+    </div>
+
+    <script>
+        // Hàm gửi yêu cầu POST để toggle trạng thái LED
+        function toggleLED(equipId) {
+    fetch(`/api/toggleLed/${equipId}`, { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+            // Cập nhật trạng thái LED dựa trên equipId
+            if (equipId === 14) {
+                const statusElement14 = document.getElementById('ledStatus_14');
+                statusElement14.textContent = `LED 14 is ${data.ledStatus14 === 1 ? 'ON' : 'OFF'}`;
+            } else if (equipId === 15) {
+                const statusElement15 = document.getElementById('ledStatus_15');
+                statusElement15.textContent = `LED 15 is ${data.ledStatus15 === 1 ? 'ON' : 'OFF'}`;
+            }else if (equipId === 17) {
+                const statusElement17 = document.getElementById('ledStatus_17');
+                statusElement17.textContent = `LED 17 is ${data.ledStatus17 === 1 ? 'ON' : 'OFF'}`;
+            }
+        })
+        .catch(error => console.error(`Error toggling LED ${equipId}:`, error));
+}
+
+        // Hàm làm mới trạng thái nhiệt độ và độ ẩm
+        function updateStatus() {
+            fetch('/api/getTemperature')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('temperatureStatus').textContent = `Temperature: ${data.temperature} °C`;
+                    document.getElementById('humidityStatus').textContent = `Humidity: ${data.humidity} %`;
+                })
+                .catch(error => console.error('Error fetching temperature:', error));
+
+        }
+
+        // Làm mới trạng thái nhiệt độ và độ ẩm mỗi 5 giây
+        setInterval(updateStatus, 500);
+
+        // Gọi updateStatus ngay khi trang được tải
+        window.onload = updateStatus;
+    </script>
+</body>
+</html>

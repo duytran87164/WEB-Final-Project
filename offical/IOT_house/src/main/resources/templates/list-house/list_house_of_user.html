@@ -57,7 +57,7 @@
       *********************************************************************************************************************************************************** -->
 		<!--main content start-->
 		<section id="main-content">
-			<section class="wrapper">
+			<section class="wrapper site-min-heigh">
 
 				<div class="row mt">
 					<div class="col-md-12">
@@ -66,31 +66,40 @@
 						</h4>
 								
 						<div class="container mt">
-							    <div class="row d-flex flex-nowrap overflow-auto" th:each="house, STT : ${houses}">
-							        <div class="col-md-6 col-sm-4 col-6 mb-4" style="flex: 0 0 auto;">
-							            <div class="card_iot">
-							                <div class="card_header d-flex justify-content-between align-items-center">
-							                    <!-- ID House -->
-							                    <h5 class="card-title"><span th:text="${house.idHouse}"></span></h5>
-							                    <!-- Trạng thái -->
-							                    <span th:class="${house.status == 1 ? 'btn btn-round btn-success' : 'btn btn-round btn-danger'}"
-											th:text="${house.status == 1 ? 'Active' : 'Lock'}"></span>
-							                </div>
-							                <div class="card-body">
-							                    <!-- Mô tả -->
-							                    <p class="card-text" th:text="${house.description}"></p>
-							                    
-							                    <!-- Nút hành động -->
-							                    <a th:href="@{/admin/equipments/{id}(id=${house.idHouse})}" class="btn btn-info btn-sm">
-							                        <i class="fa fa-cogs"></i> Control
-							                    </a>
-							                </div>
-							            </div>
-							        </div>
-							    </div>
+							<div class="content">
+								    <div class="row justify-content-center" th:each="house, STT : ${houses}">
+								        <div class="col-md-6" style="flex: 0 0 auto;">
+								            <div class="card_iot">
+								                <div class="card_header">
+								                    <!-- ID House -->
+								                    <h5 class="card-title">ID House:<span th:text="${house.idHouse}"></span></h5>
+								                    <!-- Trạng thái -->
+								                    <span th:class="${house.status == 1 ? 'btn btn-round btn-success' : 'btn btn-round btn-danger'}"
+													th:text="${house.status == 1 ? 'Active' : 'Lock'}"></span>
+								                </div>
+								                <div class="card-body">
+								                    <!-- Mô tả -->
+								                    <p class="card-text">Description: <span th:text="${house.description}"></span></p>
+								                    <br>
+								                    <!-- Nút hành động -->
+								                    <a  th:if="${house.status}" 
+								                    th:href="@{/user/monitor/{id}(id=${house.idHouse})}" class="btn btn-info btn-sm">
+								                        <i class="fa fa-desktop"></i> Monitor
+								                    </a>
+								                    <a  th:if="!${house.status}" >
+								                         House is locked! Can't monitor!
+								                    </a>
+								                    <br>
+								                    <br>
+								                    <a th:href="@{/user/equipments/{id}(id=${house.idHouse})}" class="btn btn-info btn-sm">
+								                        <i class="fa fa-cogs"></i> List equipment
+								                    </a>
+								                </div>
+								            </div>
+								        </div>
+								    </div>
+								</div>
 							</div>
-
-
 						</div>
 						<!-- /content-panel -->
 					</div>
@@ -98,16 +107,10 @@
 				<!-- /row -->
 			</section>
 		</section>
-
+		
 		<!--main content end-->
 		<!--footer start-->
-		<footer class="site-footer">
-			<div class="text-center">
-				2024 MOOSE HOME. All rights reserved. <a href="index.html#"
-					class="go-top"> <i class="fa fa-angle-up"></i>
-				</a>
-			</div>
-		</footer>
+		<div th:insert="~{fragments/user/footer}"></div>
 		<!--footer end-->
 	</section>
 

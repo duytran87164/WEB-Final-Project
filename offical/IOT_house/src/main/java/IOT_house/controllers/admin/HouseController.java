@@ -137,15 +137,15 @@ public class HouseController {
 	        // Save the house to the database
 	        houseService.save(house);
 
-	        model.addAttribute("message", "Category saved successfully");
+	        model.addAttribute("message", "House saved successfully");
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        model.addAttribute("message", "Error saving category");
+	        model.addAttribute("message", "Error saving House");
 	    }
 
 	    // Determine if the category was saved or edited
-	    String message = cateModel.getIsEdit() ? "Category is EDIT" : "Category is SAVE";
+	    String message = cateModel.getIsEdit() ? "House is EDIT" : "House is SAVE";
 	    model.addAttribute("message", message);
 
 	    // Redirect to the list of houses after saving the house
@@ -193,7 +193,7 @@ public class HouseController {
 	        Houses entity = optHouse.get(); // Lấy entity sau khi xóa
 	        Long id = entity.getAcc().getId();
 
-	        model.addAttribute("message", "Category is deleted");
+	        model.addAttribute("message", "House is deleted");
 	        model.addAttribute("id_acc", id);
 	    } else {
 	        // Nếu không tìm thấy house, xử lý trường hợp lỗi
@@ -216,7 +216,24 @@ public class HouseController {
 	    List<Houses> houses = houseService.findAll();
 	    model.addAttribute("houses", houses);
 
-	    return "admin/home_admin_temp.html"; // Trả về view tên "index.html"
+	    return "list-house/home_admin_temp.html"; // Trả về view tên "index.html"
+	}
+	
+	@GetMapping("/house/find")
+	public String findidhouse(Model model, @RequestParam String idhousefind) {
+	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("fullname",user.getFullName());
+	        model.addAttribute("user", user);
+	    } else {
+	        model.addAttribute("fullname", "err");
+	    }
+	    
+	    Optional<Houses> houses = houseService.findById(idhousefind);
+	    houses.ifPresentOrElse(
+	    		house -> model.addAttribute("houses", house),() -> model.addAttribute("houses", null) );
+
+	    return "list-house/home_admin_temp.html"; // Trả về view tên "index.html"
 	}
 
 //	@RequestMapping("/searchpaginated")

@@ -17,6 +17,7 @@ body {
     padding: 0px !important;
     margin: 0px !important;
     font-size:13px;
+    height: 100%;
 }
 
 ul li {
@@ -38,8 +39,9 @@ a, a:hover, a:focus {
 }
 
 #container {
-    width: 100%;
-    height: 100%;
+     width: 100%; 
+     height: 100%;
+     
 }
 
 /* Bootstrap Modifications */
@@ -2219,14 +2221,17 @@ label {
 
 /*footer*/
 .site-footer {
-    position: fixed;  /* Fix footer at bottom */
-    bottom: 0;
+    position: fixed;  /*Fix footer at bottom */
+    bottom:0;
     left: 0;
     right: 0;
-    background: #68dff0;
+    background: #212529;
     color: #fff;
-    padding: 10px 0;
+    padding: 0 0;
     z-index: 900;
+    text-align: left;
+    margin-top: auto;
+    /* position: relative; */
 }
 
 
@@ -2433,3 +2438,238 @@ label {
 .search-bar input[type="text"]:focus + .search-icon {
     color: #4e73df;
 }
+
+
+/* Custom Navbar Styling */
+.custom-navbar {
+    background-color: #343a40;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.custom-navbar .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.custom-navbar .nav-link {
+    color: #fff;
+    font-size: 16px;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #68dff0;
+}
+
+.login-btn {
+    background-color: #68dff0;
+    color: #fff !important;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #58c9f3;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* Main Content Adjustment */
+#main-content {
+    padding: 20px;
+}
+
+.form-panel {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+
+.custom-navbar {
+    background-color: #343a40;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.custom-navbar .navbar-brand {
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.custom-navbar .nav-link {
+    color: #fff;
+    font-size: 16px;
+}
+
+.custom-navbar .nav-link:hover {
+    color: #68dff0;
+}
+
+.login-btn {
+    background-color: #68dff0;
+    color: #fff !important;
+    border-radius: 20px;
+    padding: 8px 20px;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #58c9f3;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+/* Main Content Adjustment */
+#main-content {
+    padding: 20px;
+}
+
+.form-panel {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 30px;
+    border-radius: 8px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) {
+    .navbar-brand {
+        font-size: 20px;
+    }
+
+    .login-btn {
+        padding: 6px 15px;
+        font-size: 14px;
+    }
+}
+
+
+        /* Basic Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #68dff0;
+        }
+        main {
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 25px;
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #212529; /* Dark Blue */
+            color: #fff;
+            padding: 15px 0;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        footer a {
+            color: #68dff0;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: #fff;
+        }
+        @media (max-width: 600px) {
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+            footer {
+                position: static;
+            }
+        }
+
+
+        
+/* Sign Up Button with Rectangular Border */
+.sign-up-button {
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.sign-up-button:hover {
+    background-color: #68dff0;
+    color: #fff;
+}
+
+/* Log In Button without Border */
+.login-button {
+    border: none;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    color: #262424;
+}
+
+.login-button:hover {
+    color: #fff;
+    background-color: #68dff0;
+}
+
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px 20px;
+    position: relative;
+  }
+  
+  .hero-content h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+  
+  .hero-content p {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 30px;
+  }
+  
+  
+#main-content {
+    flex: 1; /* Cho phép main-content chiếm không gian còn lại */
+    padding-bottom: 200px; /* Đảm bảo footer không che mất nội dung */
+}
+
+  

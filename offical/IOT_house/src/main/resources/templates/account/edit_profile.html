@@ -66,17 +66,16 @@
 							<form class="form-horizontal style-form"
 								th:action="@{/user/profile/save}"
 								method="post" enctype="multipart/form-data">
-								
-								<div class="col-sm-5">
-										<!-- Hiển thị ô nhập khi thêm mới -->
-										<input type="text" class="form-control round-form"
-											id="id" name="id" th:value="${acc?.id}"readonly/>
-										<input type="text" class="form-control round-form"
+								<div class="form-group">
+									<div class="col-sm-5">
+										<input class="form-control round-form"
+											id="id" name="id" th:value="${acc?.id}"readonly type="hidden"/>
+										<input type="hidden" class="form-control round-form"
 											id="crDate" name="crDate" th:value="${acc?.crDate}" readonly/>
-										<input type="text" class="form-control round-form"
+										<input type="hidden" class="form-control round-form"
 											id="username" name="username" th:value="${acc?.username}" readonly/>		
 									</div>
-									
+								</div>
 								
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">Full Name</label>
@@ -169,13 +168,7 @@
 
 		<!--main content end-->
 		<!--footer start-->
-		<footer class="site-footer">
-			<div class="text-center">
-				2014 - Alvarez.is <a href="form_component.html#" class="go-top">
-					<i class="fa fa-angle-up"></i>
-				</a>
-			</div>
-		</footer>
+		<div th:insert="~{fragments/user/footer}"></div>
 		<!--footer end-->
 	</section>
 

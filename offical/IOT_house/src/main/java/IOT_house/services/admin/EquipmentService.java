@@ -23,4 +23,6 @@ public interface EquipmentService {
 	Page<Equipments> findAll(Pageable pageable);
 	
 	List<Equipments> findByHouseId(String idHouse);
+
+	List<Equipments> findBySensor(List<Equipments> equip, String sensor);
 }

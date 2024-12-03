@@ -57,7 +57,7 @@
               	  <h5 class="centered">UserName</h5> -->
 
 					<li class="mt"><a  href="/admin/account"> <i
-							class="fa fa-dashboard"></i> <span>List Account</span>
+							class="fa fa-user"></i> <span>List Account</span>
 					</a></li>
 
 					<li class="mt"><a href="/admin/house"> <i
@@ -85,7 +85,7 @@
 								</h4>
 
 
-								<div class="search-bar">
+<!-- 								<div class="search-bar">
 									<form action="login.html#myModal" method="POST">
 										<input type="text" name="search_acc"
 											placeholder="Search House...">
@@ -93,21 +93,21 @@
 											<i class="fa fa-search"></i>
 										</button>
 									</form>
-								</div>
-								
-								<div>
+								</div> -->
+								<br>
+								<div style="transform: translateX(20px);">
 									<a th:href="@{/admin/equipments/add/{id}(id=${idHouse})}"
 										class="btn btn-theme"> <i class="fa fa-plus"
 										style="font-size: 20px;"></i> Add Equipment
 									</a>
 								</div>
-								<hr>
+								<br>
 								<thead>
 									<tr>
 										<th>STT</th>
 										<th>Sensor</th>
 										<th>Image</th>
-										<th>NSX</th>
+										<th>Manufacturer</th>
 										<th>Description</th>
 										<th>Action</th>
 									</tr>
@@ -121,7 +121,7 @@
 										<td th:text="${equip.sensor}" style="vertical-align: middle;"></td>
 
 										<!-- Hình ảnh -->
-										<td ><img
+										<td  ><img
 											th:if="${equip.image != null && #strings.startsWith(equip.image, 'https')}"
 											th:src="${equip.image}" height="150" width="200" /> <img
 											th:if="${equip.image != null && !#strings.startsWith(equip.image, 'https')}"
@@ -157,13 +157,7 @@
 
 		<!--main content end-->
 		<!--footer start-->
-		<footer class="site-footer">
-			<div class="text-center">
-				2024 MOOSE HOME. All rights reserved. <a href="index.html#"
-					class="go-top"> <i class="fa fa-angle-up"></i>
-				</a>
-			</div>
-		</footer>
+		<div th:insert="~{fragments/admin/footer}"></div>
 		<!--footer end-->
 	</section>
 

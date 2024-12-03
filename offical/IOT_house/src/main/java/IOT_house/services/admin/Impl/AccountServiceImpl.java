@@ -65,6 +65,13 @@ public class AccountServiceImpl implements AccountService {
 		return accRepository.findAll(pageable);
 	}
 
+
+	@Override
+	public Optional<Account> findByUsername(String userName) {
+		// TODO Auto-generated method stub
+		return accRepository.findByUsername(userName);
+	}
+
 	
 
 }
