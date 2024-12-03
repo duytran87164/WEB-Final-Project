@@ -146,7 +146,7 @@ public class HomeController {
         } catch (Exception e) {
             model.addAttribute("error", "There was an error sending the email. Please try again.");
         }
-        return "user/forget_psw";
+        return "user/login";
     }
 	@GetMapping("/reset-password")
 	public String resetPasswordPage(@RequestParam("email") String email, Model model) {

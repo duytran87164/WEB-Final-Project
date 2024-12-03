@@ -61,5 +61,11 @@ public class EquipmentServiceImpl implements EquipmentService {
 	public List<Equipments> findByHouseId(String idHouse) {
         return equipRepository.findByHouse_idHouse(idHouse);
     }
+
+	@Override
+	public List<Equipments> findBySensor(String sensor) {
+		// TODO Auto-generated method stub
+		return equipRepository.findBySensor(sensor);
+	}
 	
 }

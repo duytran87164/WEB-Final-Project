@@ -1,8 +1,11 @@
 package IOT_house.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,13 +13,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import IOT_house.entity.Equipments;
+import IOT_house.services.admin.EquipmentService;
+
 @RestController
 @RequestMapping("/api")
 public class LedController {
-
+	@Autowired
+    private EquipmentService equipService; // Service để làm việc với cơ sở dữ liệu
+	private Equipments equip;
     private boolean ledStatus = false; // LED OFF ban đầu
     private double temperature = 0.0; // Nhiệt độ giả định
     private double humidity = 0.0;    // Biến lưu trữ độ ẩm
+    
+ // API để lấy danh sách LED
+    @GetMapping("/getLedList")
+    public ResponseEntity<List<Map<String, Long>>> getLedList() {
+        // Lấy danh sách thiết bị từ service với điều kiện sensor là "BUTTON"
+        List<Equipments> leds = equipService.findBySensor("BUTTON");
+
+     // Chuyển danh sách LED thành dạng Map (chỉ bao gồm ID)
+        List<Map<String, Long>> response = leds.stream()
+            .map(equip -> Map.of(
+                "id", equip.getId() // Chỉ lấy ID của thiết bị
+            ))
+            .collect(Collectors.toList());
+
+
+        return ResponseEntity.ok(response);
+    }
 
     // API để lấy trạng thái LED
     @GetMapping("/ledStatus")
