@@ -8,6 +8,7 @@
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
     <title>MOOSE SMARTHOME | Home</title>
+    <link rel="icon" type="image/png" th:href="@{/assets/img/smhome3.png}">
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -31,18 +32,29 @@
           <a th:if="${user != null and !user.isAdmin}" href="/user/home" class="logo"><b>MOOSE HOME</b></a>
 			<a th:if="${user != null and user.isAdmin}" href="/admin/account" class="logo"><b>MOOSE HOME</b></a>
 			<a th:if="${user == null}" href="/home/" class="logo"><b>MOOSE HOME</b></a>
-          <div class="top-menu">
-              <ul class="nav pull-right" style="margin-top: 12px;">
-                    <div th:if="${user != null}">
-                    	 <span style="font-size: 18px; color: #4e73df; font-weight: bold;">Hello <span th:text="${fullname}">Fullname</span></span>
-			            <a href="/home/logout" class="btn btn-danger">Logout</a>
-			        </div>
-			        <div th:unless="${user != null}">
+
+          <div class="top-menu" style="margin-top: 6px;">
+            <ul class="nav pull-right">
+      			<div th:if="${user != null}">
+                <!-- Profile Dropdown -->
+                <li class="dropdown">
+                    <a style="margin-top: 5px;" href="#" class="dropdown-toggle profile-pic" data-toggle="dropdown">
+                        <span style="vertical-align: middle; font-size: 18px; color: #4e73df; font-weight: bold;" class="fullname" th:text="${fullname}">FullName</span>
+                       <i class="fa fa-chevron-down" style="font-size: 14px; margin-left: 5px;vertical-align: middle;"></i>
+                    </a>
+                    <ul class="dropdown-menu profile-menu">
+<!--                             <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li> -->
+						<li><a th:if="!${user.isAdmin}"  th:href="@{/user/profile/edit/{id}(id=${user.id})}"><i class="fa fa-user"></i> Profile</a></li>
+                        <li><a href="/home/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    </ul>
+                </li>
+                </div>
+                <div th:unless="${user != null}" style="margin-top: 6px;">
 			            <a href="/home/login" class="btn btn-primary"><i class="fa fa-sign-in"></i> Login</a>
 			            <a href="/home/register" class="btn btn-success"><i class="fa fa-plus"></i> Sign Up</a>
-			        </div>
-              </ul>
-          </div>
+			    </div>
+            </ul>
+        </div>
     </header>
 
     <!-- Main Content -->

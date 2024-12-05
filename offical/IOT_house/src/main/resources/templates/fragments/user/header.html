@@ -25,7 +25,7 @@
           
                     <!-- Profile Dropdown -->
                     <li class="dropdown">
-                        <a style="margin-top: 5px;" href="#" class="dropdown-toggle profile-pic" data-toggle="dropdown">
+                        <a style="margin-top: 5px;" href="#" class="dropdown-toggle profile-pic dropdown-menu-end" data-toggle="dropdown">
                             <span style="vertical-align: middle; font-size: 18px; color: #4e73df; font-weight: bold;" class="fullname" th:text="${fullname}">FullName</span>
                            <i class="fa fa-chevron-down" style="font-size: 14px; margin-left: 5px;vertical-align: middle;"></i>
                         </a>
@@ -63,10 +63,10 @@
 						</div>
 						
 					
-		            <h5 ><strong>User Name:</strong> <span th:text="${user.username}">User Name</span></h5>
-		            <h5><strong>Full Name:</strong> <span th:text="${user.fullName}">Full Name</span></h5>
-	                <h5><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></h5>
-	                <h5><strong>Phone:</strong> <span th:text="${user.phone}">+123456789</span></h5>
+		            <h5 ><strong>User Name:</strong><br><span style="color: #FFD700;" th:text="${user.username}">User Name</span></h5>
+		            <h5><strong>Full Name:</strong><br> <span style="color: #FFD700;" th:text="${user.fullName}">Full Name</span></h5>
+	                <h5><strong>Email:</strong><br> <span style="color: #FFD700;" th:text="${user.email}">user@example.com</span></h5>
+	                <h5><strong>Phone:</strong> <br><span style="color: #FFD700;" th:text="${user.phone}">+123456789</span></h5>
 		            </div>
 		            
 		        </ul>

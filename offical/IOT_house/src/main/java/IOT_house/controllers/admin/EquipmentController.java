@@ -132,7 +132,7 @@ public class EquipmentController {
 		}
 
 		// Determine if the category was saved or edited
-		String message = cateModel.getIsEdit() ? "Equipment is EDIT" : "Category is SAVE";
+		String message = cateModel.getIsEdit() ? "Equipment is EDIT" : "Equipment is SAVE";
 		model.addAttribute("message", message);
 
 		// Redirect to the list of houses after saving the house

@@ -29,8 +29,8 @@ public class Houses implements Serializable {
 	@Column(name="id_house", columnDefinition = "VARCHAR(500)")
 	private String idHouse;
 	
-	@Column(name="password", columnDefinition = "VARCHAR(500)")
-	private String password;
+//	@Column(name="password", columnDefinition = "VARCHAR(500)")
+//	private String password;
 	
 	@Column(name="image", columnDefinition = "VARCHAR(500)")
 	private String image;

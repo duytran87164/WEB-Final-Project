@@ -46,8 +46,8 @@ public class Equipments implements Serializable {
 	@Column(name = "image")
 	private String image;
 
-	@Column(name = "value", columnDefinition = "VARCHAR(500)")
-	private String value;
+//	@Column(name = "value", columnDefinition = "VARCHAR(500)")
+//	private String value;
 	
 	@Transient
 	private Boolean isEdit = false;

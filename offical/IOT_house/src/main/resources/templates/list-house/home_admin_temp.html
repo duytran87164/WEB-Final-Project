@@ -88,7 +88,7 @@
                   <li  class="mt">
                       <a class="active" href="/admin/house">
                           <i class="fa fa-home"></i>
-                          <span>List House</span>
+                          <span style=" font-weight: bold;">List House</span>
                       </a>
                   </li>
               </ul>
@@ -127,8 +127,9 @@
 								<thead>
 									<tr>
 										<th>STT</th>
+										<th>ID Account</th>
 										<th>ID House</th>
-										<th>Password</th>
+<!-- 										<th>Password</th> -->
 										<th>Image</th>
 										<th>Description</th>
 										<th>Status</th>
@@ -140,11 +141,12 @@
 										<!-- Số thứ tự -->
 										<td th:text="${STT.index + 1}" style="vertical-align: middle;"></td>
 
+										<td th:text="${house.acc.id}" style="vertical-align: middle;"></td>
 										<!-- ID House -->
 										<td th:text="${house.idHouse}" style="vertical-align: middle;"></td>
 
 										<!-- Password -->
-										<td th:text="${house.password}" style="vertical-align: middle;"></td>
+<!-- 										<td th:text="${house.password}" style="vertical-align: middle;"></td> -->
 
 										<!-- Hình ảnh -->
 										<td><img

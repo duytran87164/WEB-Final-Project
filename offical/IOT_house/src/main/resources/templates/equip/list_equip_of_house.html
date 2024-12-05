@@ -105,7 +105,8 @@
 								<thead>
 									<tr>
 										<th>STT</th>
-										<th>Sensor</th>
+										<th>ID</th>
+										<th>Equipment</th>
 										<th>Image</th>
 										<th>Manufacturer</th>
 										<th>Description</th>
@@ -116,6 +117,9 @@
 									<tr th:each="equip, STT : ${equip}">
 										<!-- Số thứ tự -->
 										<td th:text="${STT.index + 1}" style="vertical-align: middle;"></td>
+										
+										<!-- Sensor -->
+										<td th:text="${equip.id}" style="vertical-align: middle;"></td>
 
 										<!-- Sensor -->
 										<td th:text="${equip.sensor}" style="vertical-align: middle;"></td>

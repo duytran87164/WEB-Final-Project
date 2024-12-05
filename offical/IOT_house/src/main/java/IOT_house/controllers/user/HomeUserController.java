@@ -99,10 +99,12 @@ public class HomeUserController {
 	    }
     	
     	List<Equipments> equip = equipService.findByHouseId(idHouse);
-    	List<Equipments> button = equipService.findBySensor(equip,"button");
+    	List<Equipments> button = equipService.findBySensor(equip,"Switch");
+    	List<Equipments> dht11 = equipService.findBySensor(equip,"DHT11");
     	model.addAttribute("button", button);
+    	model.addAttribute("dht11", dht11);
     	model.addAttribute("idHouse", idHouse);
         model.addAttribute("ledStatus", ledStatus ? 1 : 0); // Trạng thái LED ban đầu
-        return "/control"; // Trả về trang HTML
+        return "/monitor"; // Trả về trang HTML
     }
 }

@@ -21,9 +21,10 @@ import IOT_house.services.admin.EquipmentService;
 public class LedController {
 	@Autowired
 	EquipmentService equipService;
-    private boolean ledStatus14 = false; // LED OFF ban đầu
-    private boolean ledStatus15 = false; // LED OFF ban đầu
-    private boolean ledStatus17 = false; // LED OFF ban đầu
+    private boolean ledStatus2 = false; // LED OFF ban đầu
+    private boolean ledStatus3 = false; // LED OFF ban đầu
+    private boolean ledStatus4 = false; // LED OFF ban đầu
+    private boolean ledStatus5 = false; // LED OFF ban đầu
     private double temperature = 0.0; // Nhiệt độ giả định
     private double humidity = 0.0;    // Biến lưu trữ độ ẩm
 
@@ -33,9 +34,10 @@ public class LedController {
         // Giả sử bạn có một phương thức getLedStatusByEquipId để lấy trạng thái LED của thiết bị theo id
 
         Map<String, Object> response = new HashMap<>();
-        response.put("ledStatus14", ledStatus14 ? 1 : 0);  // Trạng thái LED (1: ON, 0: OFF)
-        response.put("ledStatus15", ledStatus15 ? 1 : 0);  // Trạng thái LED (1: ON, 0: OFF)
-        response.put("ledStatus17", ledStatus17 ? 1 : 0); 
+        response.put("ledStatus2", ledStatus2 ? 1 : 0);  // Trạng thái LED (1: ON, 0: OFF)
+        response.put("ledStatus3", ledStatus3 ? 1 : 0);  // Trạng thái LED (1: ON, 0: OFF)
+        response.put("ledStatus4", ledStatus4 ? 1 : 0); 
+        response.put("ledStatus5", ledStatus5 ? 1 : 0); 
         return ResponseEntity.ok(response);
     }
     
@@ -46,17 +48,21 @@ public class LedController {
 		// Lấy thiết bị theo ID
         Optional<Equipments> equipment = equipService.findById(equipId);
         Map<String, Object> response = new HashMap<>();
-       if (equipId == 14){
-    	   ledStatus14 =!ledStatus14;
-           response.put("ledStatus"+equipId, ledStatus14 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
+       if (equipId == 2){
+    	   ledStatus2 =!ledStatus2;
+           response.put("ledStatus"+equipId, ledStatus2 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
        }
-       else if (equipId == 15) {
-    	   ledStatus15 =!ledStatus15;
-           response.put("ledStatus"+equipId, ledStatus15 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
+       else if (equipId == 3) {
+    	   ledStatus3 =!ledStatus3;
+           response.put("ledStatus"+equipId, ledStatus3 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
        }
-       else if (equipId == 17) {
-    	   ledStatus17 =!ledStatus17;
-    	   response.put("ledStatus"+equipId, ledStatus17 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
+       else if (equipId == 4) {
+    	   ledStatus4 =!ledStatus4;
+    	   response.put("ledStatus"+equipId, ledStatus4 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
+       }
+       else if (equipId == 5) {
+    	   ledStatus5 =!ledStatus5;
+    	   response.put("ledStatus"+equipId, ledStatus5 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
        }
         // Tạo phản hồi
        

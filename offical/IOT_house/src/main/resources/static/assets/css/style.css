@@ -231,7 +231,7 @@ ul.top-menu > li > .logout {
 /*sidebar navigation*/
 
 #sidebar {
-    width: 210px;
+    width: 220px;
     height: 100%;
     position: fixed;
     background: #424a5d;
@@ -2258,6 +2258,7 @@ label {
     display: flex;
     align-items: center;
     padding: 5px;
+    
 }
 
 .profile-pic img {
@@ -2279,6 +2280,7 @@ label {
 .profile-menu {
     position: absolute;
     top: 100%;
+    left: auto;
     right: 0;
     background: #fff;
     border-radius: 4px;
