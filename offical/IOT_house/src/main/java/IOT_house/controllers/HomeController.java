@@ -35,11 +35,6 @@ public class HomeController {
 	    } else {
 	        model.addAttribute("fullname", "err");
 	    }
-	    model.addAttribute("welcomeMessage", "Welcome to IoT Platform");
-	    model.addAttribute("platformDescription", "Our platform allows you to monitor and manage all your IoT devices efficiently.");
-	    model.addAttribute("deviceCount", 0); // Thay bằng dữ liệu thực tế
-	    model.addAttribute("dataPoints", 0); // Thay bằng dữ liệu thực tế
-	    model.addAttribute("year", 2024); // Thay bằng logic lấy năm hiện tại
 	    return "home_temp.html"; // Trả về view tên "index.html"
 	}
 
@@ -67,7 +62,7 @@ public class HomeController {
 	        return "redirect:/home/waiting";
 	    }
 	    else {
-	    	model.addAttribute("error", "ERROR user or password");
+	    	model.addAttribute("error", "The Username or Password is Incorrect");
 	    	model.addAttribute("loginForm", new Account());
 	        return "login_temp.html"; // Quay lại trang đăng nhập
 	    }
@@ -115,13 +110,13 @@ public class HomeController {
 	public String processRegister(@ModelAttribute Account registerForm, Model model) {
 		
 		if (userService.CheckUserExist(registerForm.getUsername())) {
-	        model.addAttribute("error", "user name đã tồn tại");
+	        model.addAttribute("error", "Username is existed");
 	        model.addAttribute("registerForm", new Account());
 	        return "register_temp.html"; // Quay lại trang đăng ký
 	    }
 	    // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
 	    if (userService.CheckEmailExist(registerForm.getEmail())) {
-	        model.addAttribute("error", "Email đã tồn tại");
+	        model.addAttribute("error", "Email is existed");
 	        model.addAttribute("registerForm", new Account());
 	        return "register_temp.html"; // Quay lại trang đăng ký
 	    }
@@ -150,7 +145,7 @@ public class HomeController {
             model.addAttribute("message", "An email with a reset link has been sent.");
             }
         	else {
-        		model.addAttribute("message", "User Name isn't exsit");
+        		model.addAttribute("message", "UserName isn't exsit");
         	}
         } catch (Exception e) {
             model.addAttribute("error", "There was an error sending the email. Please try again.");

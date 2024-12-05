@@ -31,7 +31,7 @@
                 <h2 class="form-login-heading">REGISTER</h2>
                 <div class="login-wrap">
                     <!-- User ID Field -->
-                    <input type="text" class="form-control" placeholder="User ID" name="username" required autofocus>
+                    <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
                     <br>
                     <!-- Email Field -->
                     <input type="email" class="form-control" placeholder="Email" name="email" required>
@@ -52,6 +52,9 @@
                             Sign In
                         </a>
                     </div>
+                    <div th:if="${error}" class="alert alert-danger">
+						<p th:text="${error}"></p>
+					</div>
         
                 </div>
               </form>	  	
