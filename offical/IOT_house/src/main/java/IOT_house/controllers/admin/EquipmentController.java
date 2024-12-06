@@ -41,16 +41,11 @@ public class EquipmentController {
 	@GetMapping("/{id}")
 	public String find_id(@PathVariable String id, Model model) {
 		
-		
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		// Trực tiếp lấy nhà theo id
 		List<Equipments> equip = equipService.findByHouseId(id); // Lấy danh sách Equipments theo id_house
 		model.addAttribute("equip", equip); // Thêm danh sách Equipments vào model
@@ -64,10 +59,7 @@ public class EquipmentController {
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 		  Equipments listequip = new Equipments();
 		  model.addAttribute("idHouse", id);
@@ -145,10 +137,7 @@ public class EquipmentController {
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 			    
 		Optional<Equipments> optHouse =equipService.findById(Id);

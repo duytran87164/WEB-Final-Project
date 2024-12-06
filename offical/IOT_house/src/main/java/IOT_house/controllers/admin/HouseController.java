@@ -40,18 +40,11 @@ public class HouseController {
     private HttpSession session;
 	@GetMapping("/list-house/{id}")
 	public String all(@PathVariable Long id, Model model) {
-		
-		
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
-		
         // Kiểm tra nếu `id` tồn tại
         Optional<Account> acc = accService.findById(id);
         if (acc.isPresent()) {
@@ -70,12 +63,8 @@ public class HouseController {
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		  Houses listHouse = new Houses();
 		  model.addAttribute("id_acc", id);
 		  model.addAttribute("house",listHouse); 
@@ -159,10 +148,7 @@ public class HouseController {
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 		Optional<Houses> optHouse =houseService.findById(houseId);
 		Houses cateModel = new Houses();
@@ -207,10 +193,7 @@ public class HouseController {
 	public String home(HttpSession session, Model model) {
 	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 	    
 	    List<Houses> houses = houseService.findAll();
@@ -223,10 +206,7 @@ public class HouseController {
 	public String findidhouse(Model model, @RequestParam String idhousefind) {
 	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 	    
 	    Optional<Houses> houses = houseService.findById(idhousefind);

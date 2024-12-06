@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/user/profile")
-public class ProfleController {
+public class ProfileUserController {
 	
 	@Autowired
     private HttpSession session;
@@ -38,23 +38,15 @@ public class ProfleController {
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		Account acc = new Account();
-
-			BeanUtils.copyProperties(user, acc);
-
-			model.addAttribute("acc", acc);
-			model.addAttribute("id_acc", acc.getId());
-
-			return new ModelAndView("account/edit_profile.html", model);
+		BeanUtils.copyProperties(user, acc);
+		model.addAttribute("acc", acc);
+		model.addAttribute("id_acc", acc.getId());
+		return new ModelAndView("account/edit_profile.html", model);
 
 	}
-	
 	
 	@PostMapping("/save")
 	public ModelAndView saveOrUpdate(ModelMap model, @Valid @ModelAttribute("acc") Account cateModel, 
@@ -64,9 +56,7 @@ public class ProfleController {
 	        // Nếu có lỗi xác thực, trả về lại form với các lỗi hiển thị
 	        return new ModelAndView("account/edit_profile", model);
 	    }
-
 	    Account acc = new Account();
-
 	 // Define the upload path for images
 	    String uploadPath = "D:\\upload";
 	    File uploadDir = new File(uploadPath);
@@ -92,12 +82,11 @@ public class ProfleController {
 	        }
 		BeanUtils.copyProperties(cateModel, acc);
 	    acc.setStatus(1);
-	    
 	    accService.save(acc);
 	    session.setAttribute("user", acc);
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        model.addAttribute("message", "Error saving category");
+	        model.addAttribute("message", "Error saving profile");
 	    }
 	    return new ModelAndView("redirect:/user/home", model);
 	}

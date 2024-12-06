@@ -40,14 +40,8 @@ public class HomeUserController {
 	public String home(HttpSession session, Model model) {
 	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
-	        model.addAttribute("image",user.getImage());
 	        model.addAttribute("user", user);
-	        
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-	    
 	    long id=user.getId();
 	    
 	 // Kiểm tra nếu `id` tồn tại
@@ -71,12 +65,8 @@ public class HomeUserController {
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		// Trực tiếp lấy nhà theo id
 		List<Equipments> equip = equipService.findByHouseId(id); // Lấy danh sách Equipments theo id_house
 		model.addAttribute("equip", equip); // Thêm danh sách Equipments vào model
@@ -92,10 +82,7 @@ public class HomeUserController {
     	//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
     	
     	List<Equipments> equip = equipService.findByHouseId(idHouse);

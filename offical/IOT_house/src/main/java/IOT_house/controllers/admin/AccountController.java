@@ -32,10 +32,7 @@ public class AccountController {
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 	    
 		List<Account> list = accService.findAll();
@@ -50,10 +47,7 @@ public class AccountController {
 	    // Lấy user từ session
 	    Account user = (Account) session.getAttribute("user");
 	    if (user != null) {
-	        model.addAttribute("fullname", user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 
 	    // Tìm kiếm user theo username
@@ -66,9 +60,6 @@ public class AccountController {
 
 	@PostMapping("/save")
 	public ModelAndView saveOrUpdate(@RequestParam Long id, @RequestParam int status, ModelMap model) {
-//		if(result.hasErrors()) {
-//			return new ModelAndView("category/add.html");
-//		}
 		Optional<Account> optAcc = accService.findById(id);
 		Account acc = new Account();
 		// Lưu đối tượng vào database
@@ -88,13 +79,10 @@ public class AccountController {
 		
 		
 		//session
-				Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
-			    if (user != null && user instanceof Account) {
-			        model.addAttribute("fullname",user.getFullName());
-			        model.addAttribute("user", user);
-			    } else {
-			        model.addAttribute("fullname", "err");
-			    }
+		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("user", user);
+	    }
 		Optional<Account> optCategory = accService.findById(userId);
 		Account acc = new Account();
 
