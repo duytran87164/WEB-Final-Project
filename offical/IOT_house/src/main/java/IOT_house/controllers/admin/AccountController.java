@@ -35,6 +35,7 @@ public class AccountController {
 
 	@RequestMapping("")
 	public String all(Model model) {
+<<<<<<< HEAD
 	    // Lấy thông tin người dùng từ SecurityContext
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    
@@ -54,6 +55,12 @@ public class AccountController {
 	        }
 	    } else {
 	        model.addAttribute("fullname", "User not authenticated");
+=======
+		//session
+		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("user", user);
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 	    }
 	    
 	    // Lấy danh sách tất cả tài khoản và thêm vào model
@@ -73,10 +80,7 @@ public class AccountController {
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null) {
-	        model.addAttribute("fullname", user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 
 	    // Tìm kiếm user theo username
@@ -88,10 +92,14 @@ public class AccountController {
 
 
 	@PostMapping("/save")
+<<<<<<< HEAD
 	public ModelAndView saveOrUpdate(@RequestParam Long id, @RequestParam boolean status, ModelMap model) {
 //		if(result.hasErrors()) {
 //			return new ModelAndView("category/add.html");
 //		}
+=======
+	public ModelAndView saveOrUpdate(@RequestParam Long id, @RequestParam int status, ModelMap model) {
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 		Optional<Account> optAcc = accService.findById(id);
 		Account acc = new Account();
 		// Lưu đối tượng vào database
@@ -111,6 +119,7 @@ public class AccountController {
 		
 		
 		//session
+<<<<<<< HEAD
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
@@ -120,6 +129,12 @@ public class AccountController {
 			    } else {
 			        model.addAttribute("fullname", "err");
 			    }
+=======
+		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("user", user);
+	    }
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 		Optional<Account> optCategory = accService.findById(userId);
 		Account acc = new Account();
 

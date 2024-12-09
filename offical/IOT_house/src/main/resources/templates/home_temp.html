@@ -7,8 +7,8 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>MOOSE SMARTHOME | Home</title>
-    <link rel="icon" type="image/png" th:href="@{/assets/img/smhome3.png}">
+    <title>MOOSE HOME | Home</title>
+    <link rel="icon" type="image/png" th:href="@{/assets/img/smhome2.png}">
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -43,7 +43,11 @@
                     </a>
                     <ul class="dropdown-menu profile-menu">
 <!--                             <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li> -->
+<<<<<<< HEAD
 						<li><a  th:href="@{/user/profile/edit/{id}(id=${user.id})}"><i class="fa fa-user"></i> Profile</a></li>
+=======
+						<!-- <li><a th:if="!${user.isAdmin}"  th:href="@{/user/profile/edit/{id}(id=${user.id})}"><i class="fa fa-user"></i> Profile</a></li> -->
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
                         <li><a href="/home/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
                     </ul>
                 </li>

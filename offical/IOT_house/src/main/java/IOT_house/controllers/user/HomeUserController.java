@@ -38,6 +38,7 @@ public class HomeUserController {
 	
 	
 	@GetMapping("/home")
+<<<<<<< HEAD
 	public String home(Model model) {
 	    // Lấy thông tin người dùng từ SecurityContext
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -65,6 +66,26 @@ public class HomeUserController {
 	    }
 
 	    return "list-house/list_house_of_user.html";
+=======
+	public String home(HttpSession session, Model model) {
+	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("user", user);
+	    }
+	    long id=user.getId();
+	    
+	 // Kiểm tra nếu `id` tồn tại
+        Optional<Account> acc = accService.findById(id);
+        if (acc.isPresent()) {
+            List<Houses> houses = houseService.findByAccount(acc.get());  // Sử dụng hàm findByAccount đã tạo trước đó
+            model.addAttribute("houses", houses);
+            model.addAttribute("id_acc", id);
+        } else {
+            model.addAttribute("message", "Account not found");
+        }
+	    
+	    return "list-house/list_house_of_user.html"; 
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 	}
 
 
@@ -78,12 +99,8 @@ public class HomeUserController {
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		// Trực tiếp lấy nhà theo id
 		List<Equipments> equip = equipService.findByHouseId(id); // Lấy danh sách Equipments theo id_house
 		model.addAttribute("equip", equip); // Thêm danh sách Equipments vào model
@@ -100,10 +117,7 @@ public class HomeUserController {
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
     	
     	List<Equipments> equip = equipService.findByHouseId(idHouse);

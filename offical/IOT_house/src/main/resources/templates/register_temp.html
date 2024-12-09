@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MOOSE SMARTHOME | Register</title>
+    <title>MOOSE HOME | Register</title>
+    <link rel="icon" type="image/png" th:href="@{/assets/img/smhome2.png}">
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap.css" rel="stylesheet">
@@ -31,7 +32,7 @@
                 <h2 class="form-login-heading">REGISTER</h2>
                 <div class="login-wrap">
                     <!-- User ID Field -->
-                    <input type="text" class="form-control" placeholder="User ID" name="username" required autofocus>
+                    <input type="text" class="form-control" placeholder="Username" name="username" required autofocus>
                     <br>
                     <!-- Email Field -->
                     <input type="email" class="form-control" placeholder="Email" name="email" required>
@@ -52,6 +53,9 @@
                             Sign In
                         </a>
                     </div>
+                    <div th:if="${error}" class="alert alert-danger">
+						<p th:text="${error}"></p>
+					</div>
         
                 </div>
               </form>	  	

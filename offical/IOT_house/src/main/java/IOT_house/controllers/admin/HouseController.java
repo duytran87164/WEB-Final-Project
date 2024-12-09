@@ -43,19 +43,19 @@ public class HouseController {
 
 	@GetMapping("/list-house/{id}")
 	public String all(@PathVariable Long id, Model model) {
+<<<<<<< HEAD
 		
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
+=======
+		//session
+		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
-		
         // Kiểm tra nếu `id` tồn tại
         Optional<Account> acc = accService.findById(id);
         if (acc.isPresent()) {
@@ -75,12 +75,8 @@ public class HouseController {
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		  Houses listHouse = new Houses();
 		  model.addAttribute("id_acc", id);
 		  model.addAttribute("house",listHouse); 
@@ -165,10 +161,7 @@ public class HouseController {
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 		Optional<Houses> optHouse =houseService.findById(houseId);
 		Houses cateModel = new Houses();
@@ -215,10 +208,7 @@ public class HouseController {
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 	    
 	    List<Houses> houses = houseService.findAll();
@@ -233,10 +223,7 @@ public class HouseController {
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 	    
 	    Optional<Houses> houses = houseService.findById(idhousefind);

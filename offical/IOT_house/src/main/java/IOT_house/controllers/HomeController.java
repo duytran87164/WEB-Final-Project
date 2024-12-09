@@ -66,6 +66,7 @@ public class HomeController {
     }
 
 	@PostMapping("/login")
+<<<<<<< HEAD
 	public String processLogin(@RequestParam String username, 
 	                           @RequestParam String password, 
 	                           Model model) {
@@ -77,6 +78,30 @@ public class HomeController {
 	            return "login_temp";  // Quay lại trang đăng nhập nếu tài khoản bị khóa
 	        }
 	        
+=======
+	public String processLogin(@ModelAttribute Account loginForm,HttpSession session, Model model) {
+	    // Kiểm tra xem email và mật khẩu có hợp lệ không
+	    Account account = userService.findbyUser(loginForm.getUsername()); // Giả sử bạn có service để lấy thông tin tài khoản
+	    
+	    
+	    if (account != null && account.getPassword().equals(loginForm.getPassword())) {
+	        // Đăng nhập thành công, chuyển hướng đến trang chủ
+		    if (account.getStatus() == 0) {
+		        // Nếu thông tin đăng nhập sai, hiển thị thông báo lỗi
+		        model.addAttribute("error", "Account is locked");
+		        model.addAttribute("loginForm", new Account());
+		        return "login_temp.html"; // Quay lại trang đăng nhập
+		    }
+		    session.setAttribute("user", account);
+	        return "redirect:/home/waiting";
+	    }
+	    else {
+	    	model.addAttribute("error", "The Username or Password is Incorrect");
+	    	model.addAttribute("loginForm", new Account());
+	        return "login_temp.html"; // Quay lại trang đăng nhập
+	    }
+	    
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 
 	    }
 	    return "redirect:/home/waiting";  // Chuyển hướng đến trang waiting sau khi đăng nhập thành công
@@ -132,13 +157,13 @@ public class HomeController {
 	public String processRegister(@ModelAttribute Account registerForm, Model model) {
 		
 		if (userService.CheckUserExist(registerForm.getUsername())) {
-	        model.addAttribute("error", "user name đã tồn tại");
+	        model.addAttribute("error", "Username is existed");
 	        model.addAttribute("registerForm", new Account());
 	        return "register_temp.html"; // Quay lại trang đăng ký
 	    }
 	    // Kiểm tra xem email đã tồn tại trong cơ sở dữ liệu chưa
 	    if (userService.CheckEmailExist(registerForm.getEmail())) {
-	        model.addAttribute("error", "Email đã tồn tại");
+	        model.addAttribute("error", "Email is existed");
 	        model.addAttribute("registerForm", new Account());
 	        return "register_temp.html"; // Quay lại trang đăng ký
 	    }
@@ -169,7 +194,7 @@ public class HomeController {
             model.addAttribute("message", "An email with a reset link has been sent.");
             }
         	else {
-        		model.addAttribute("message", "User Name isn't exsit");
+        		model.addAttribute("message", "UserName isn't exsit");
         	}
         } catch (Exception e) {
             model.addAttribute("error", "There was an error sending the email. Please try again.");
