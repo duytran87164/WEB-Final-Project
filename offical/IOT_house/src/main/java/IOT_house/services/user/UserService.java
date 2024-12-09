@@ -3,19 +3,29 @@ package IOT_house.services.user;
 import java.util.List;
 import java.util.Optional;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import IOT_house.entity.Account;
+
 import IOT_house.repository.AccRepository;
+import IOT_house.services.MyUserService;
 import IOT_house.services.user.impl.IUserService;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import jakarta.transaction.Transactional;
+
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
-public class UserService implements IUserService {
+@Transactional
+public class UserService implements IUserService,UserDetailsService {
 	@Autowired
 	AccRepository userRepository;
+	@Autowired
+	PasswordEncoder passwordEncoder;
 	public UserService() {
 	}
 
@@ -56,7 +66,8 @@ public class UserService implements IUserService {
 		Optional<Account> accountOpt = userRepository.findByEmail(email);
 	    if (accountOpt.isPresent()) {
 	        Account account = accountOpt.get();
-	        account.setPassword(psw);
+	        String hashedPassword =passwordEncoder.encode(psw);
+	        account.setPassword(hashedPassword);
 	        userRepository.save(account); // Lưu mật khẩu mới
 	    }
 	}
@@ -90,11 +101,22 @@ public class UserService implements IUserService {
 		Optional<Account> accountOpt = userRepository.findByUsername(User);
 	    return accountOpt.orElse(null);
 	}
-
+	@Override
 	public Account findByEmail(String email) {
 		// TODO Auto-generated method stub
 		Optional<Account> accountOpt = userRepository.findByEmail(email);
 	    return accountOpt.orElse(null);
 	}
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		Account user = userRepository.getUserByUsername(username);
+		
+		if (user == null) {
+			throw new UsernameNotFoundException("Could not find user");
+		}
+		return user;
+	}
+
+
 }
 

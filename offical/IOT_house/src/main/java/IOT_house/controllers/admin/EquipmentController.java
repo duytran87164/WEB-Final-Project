@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,6 +26,7 @@ import IOT_house.entity.Equipments;
 import IOT_house.entity.Houses;
 import IOT_house.services.admin.EquipmentService;
 import IOT_house.services.admin.HouseService;
+import IOT_house.services.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -36,6 +39,8 @@ public class EquipmentController {
 	HouseService houseService;
 	@Autowired
     private HttpSession session;
+	@Autowired
+	UserService userService;
 	
 	
 	@GetMapping("/{id}")
@@ -43,7 +48,9 @@ public class EquipmentController {
 		
 		
 		//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
@@ -61,8 +68,9 @@ public class EquipmentController {
 	@GetMapping("/add/{id}")
 	public String add(@PathVariable String id,Model model) {
 		
-		//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
@@ -142,8 +150,9 @@ public class EquipmentController {
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit (ModelMap model,@PathVariable("id") Long Id) {
 		
-		//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);

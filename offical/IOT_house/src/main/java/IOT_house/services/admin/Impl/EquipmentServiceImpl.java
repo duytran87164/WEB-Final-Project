@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import IOT_house.entity.Equipments;
-import IOT_house.entity.Houses;
+
 import IOT_house.repository.EquipRepository;
 import IOT_house.services.admin.EquipmentService;
 

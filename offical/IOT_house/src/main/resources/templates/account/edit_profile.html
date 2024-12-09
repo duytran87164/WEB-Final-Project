@@ -70,6 +70,7 @@
 									<div class="col-sm-5">
 										<input class="form-control round-form"
 											id="id" name="id" th:value="${acc?.id}"readonly type="hidden"/>
+
 										<input type="hidden" class="form-control round-form"
 											id="crDate" name="crDate" th:value="${acc?.crDate}" readonly/>
 										<input type="hidden" class="form-control round-form"
@@ -89,7 +90,7 @@
 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">Password</label>
 									<div class="col-sm-5">
-										<input type="password" class="form-control round-form" placeholder=""	id="password" name="password" th:value="${acc?.password}" />
+										<input type="password" class="form-control round-form" placeholder="Nhập nếu muốn đổi mật khẩu"	id="password" name="password" th:value="${acc?.password}" />
 									</div>
 								</div>
 								
