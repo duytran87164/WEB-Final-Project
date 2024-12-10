@@ -48,8 +48,8 @@
           </div>
         <!--logo start-->
 <!--         <a href="/admin/account" class="logo"><b>MOOSE HOME</b></a> -->
-			<a th:if="!${user.isAdmin}" href="/user/home" class="logo"><b>MOOSE HOME</b></a>
-			<a th:if="${user.isAdmin}" href="/admin/account" class="logo"><b>MOOSE HOME</b></a>
+			<a href="/user/home" class="logo"><b>MOOSE HOME</b></a>
+
         <!--logo end-->
         <div class="top-menu">
             <ul class="nav pull-right">
@@ -62,7 +62,7 @@
                     </a>
                     <ul class="dropdown-menu profile-menu">
 <!--                             <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li> -->
-						<li><a th:if="!${user.isAdmin}"  th:href="@{/user/profile/edit/{id}(id=${user.id})}"><i class="fa fa-user"></i> Profile</a></li>
+						<li><a  th:href="@{/user/profile/edit/{id}(id=${user.id})}"><i class="fa fa-user"></i> Profile</a></li>
                         <li><a href="/home/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
                     </ul>
                 </li>

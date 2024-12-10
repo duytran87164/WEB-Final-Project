@@ -103,12 +103,12 @@
 								    <div class="col-sm-5">
 								        <div>
 								            <input type="radio" id="active" name="status" value="1"
-								                   th:checked="${acc?.status == 1}" />
+								                   th:checked="${acc?.status == true}" />
 								            <label for="active">Active</label>
 								        </div>
 								        <div>
 								            <input type="radio" id="inactive" name="status" value="0"
-								                   th:checked="${acc?.status == 0}" />
+								                   th:checked="${acc?.status == false}" />
 								            <label for="inactive">Lock</label>
 								        </div>
 								    </div>

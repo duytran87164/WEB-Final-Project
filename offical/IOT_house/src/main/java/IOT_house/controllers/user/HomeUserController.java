@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,12 +34,39 @@ public class HomeUserController {
 	UserService userService;
 	@Autowired
 	EquipmentService equipService;
-	@Autowired
-    private HttpSession session;
 	private boolean ledStatus = false; // LED OFF ban đầu
 	
 	
 	@GetMapping("/home")
+<<<<<<< HEAD
+	public String home(Model model) {
+	    // Lấy thông tin người dùng từ SecurityContext
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    if (authentication != null && authentication.isAuthenticated()) {
+	        String username = authentication.getName();
+	        Account user=userService.findbyUser(username);
+	            model.addAttribute("fullname", user.getFullName());
+	            model.addAttribute("image", user.getImage());
+	            model.addAttribute("user", user);
+
+	            long id = user.getId();
+
+	            // Kiểm tra nếu `id` tồn tại
+	            Optional<Account> acc = accService.findById(id);
+	            if (acc.isPresent()) {
+	                List<Houses> houses = houseService.findByAccount(acc.get());  // Sử dụng hàm findByAccount đã tạo trước đó
+	                model.addAttribute("houses", houses);
+	                model.addAttribute("id_acc", id);
+	            } else {
+	                model.addAttribute("message", "Account not found");
+	            }
+	     
+	    } else {
+	        model.addAttribute("message", "User is not authenticated");
+	    }
+
+	    return "list-house/list_house_of_user.html";
+=======
 	public String home(HttpSession session, Model model) {
 	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
 	    if (user != null && user instanceof Account) {
@@ -55,15 +85,19 @@ public class HomeUserController {
         }
 	    
 	    return "list-house/list_house_of_user.html"; 
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 	}
+
+
 	
 	
 	@GetMapping("/equipments/{id}")
 	public String find_id(@PathVariable String id, Model model) {
 		
 		
-		//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
@@ -79,8 +113,9 @@ public class HomeUserController {
     @GetMapping("/monitor/{idHouse}")
     public String led(Model model,@PathVariable String idHouse) {
     	
-    	//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }

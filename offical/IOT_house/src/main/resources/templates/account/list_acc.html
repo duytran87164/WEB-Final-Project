@@ -134,7 +134,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:each="acc, STT : ${acc}" th:if="${acc.isAdmin == False}">
+									<tr th:each="acc, STT : ${acc}">
 										<td th:text="${STT.index}" style="vertical-align: middle;"></td>
 										<td th:text="${acc.id}" style="vertical-align: middle;"></td>
 										<td th:text="${acc.fullName}" style="vertical-align: middle;"></td>
@@ -146,8 +146,8 @@
 
 										<td th:text="${acc.crDate}" style=" vertical-align: middle;"></td>
 										<td style=" vertical-align: middle;">
-                                            <span th:class="${acc.status == 1 ? 'btn btn-round btn-success' : 'btn btn-round btn-danger'}"
-                                            th:text="${acc.status == 1 ? 'Active' : 'Lock'}"></span>
+                                            <span th:class="${acc.status == true ? 'btn btn-round btn-success' : 'btn btn-round btn-danger'}"
+                                            th:text="${acc.status == true ? 'Active' : 'Lock'}"></span>
                                         </td>
 										<td>
                                         <a th:href="@{/admin/account/edit/{id}(id=${acc.id})}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a>
