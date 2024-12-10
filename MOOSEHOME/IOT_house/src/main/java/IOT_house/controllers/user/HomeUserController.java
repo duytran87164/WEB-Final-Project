@@ -21,7 +21,7 @@ import IOT_house.entity.Roles;
 import IOT_house.services.admin.AccountService;
 import IOT_house.services.admin.EquipmentService;
 import IOT_house.services.admin.HouseService;
-import IOT_house.services.user.UserService;
+import IOT_house.services.user.impl.UserService;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -98,19 +98,18 @@ public class HomeUserController {
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
-    	
     	List<Equipments> equip = equipService.findByHouseId(idHouse);
     	List<Equipments> button = equipService.findBySensor(equip,"Switch");
     	List<Equipments> dht11 = equipService.findBySensor(equip,"DHT11");
     	
-        Set<Roles> roles = user.getRoles(); // Lấy danh sách vai trò từ người dùng
+        Set<Roles> roles = user.getRoles();
         
         // Thêm roles vào model
         model.addAttribute("roles", roles);
     	model.addAttribute("button", button);
     	model.addAttribute("dht11", dht11);
     	model.addAttribute("idHouse", idHouse);
-        model.addAttribute("ledStatus", ledStatus ? 1 : 0); // Trạng thái LED ban đầu
-        return "/monitor"; // Trả về trang HTML
+        model.addAttribute("ledStatus", ledStatus ? 1 : 0);
+        return "/monitor"; 
     }
 }

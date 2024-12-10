@@ -26,8 +26,7 @@ import IOT_house.entity.Equipments;
 import IOT_house.entity.Houses;
 import IOT_house.services.admin.EquipmentService;
 import IOT_house.services.admin.HouseService;
-import IOT_house.services.user.UserService;
-import jakarta.servlet.http.HttpSession;
+import IOT_house.services.user.impl.UserService;
 import jakarta.validation.Valid;
 
 @Controller
@@ -37,8 +36,6 @@ public class EquipmentController {
 	EquipmentService equipService;
 	@Autowired
 	HouseService houseService;
-	@Autowired
-    private HttpSession session;
 	@Autowired
 	UserService userService;
 	
@@ -99,7 +96,6 @@ public class EquipmentController {
 		if (!uploadDir.exists()) {
 			uploadDir.mkdir(); // Create directory if not exists
 		}
-
 		try {
 			// If the user uploaded an image, handle file upload
 			if (!imageFile.isEmpty()) {
@@ -148,23 +144,19 @@ public class EquipmentController {
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
-			    
-		Optional<Equipments> optHouse =equipService.findById(Id);
-		Equipments cateModel = new Equipments();
-		
-		if (optHouse.isPresent()) {
-			Equipments entity =optHouse.get();
+		Optional<Equipments> optEquip =equipService.findById(Id);
+		Equipments equipModel = new Equipments();
+		if (optEquip.isPresent()) {
+			Equipments entity =optEquip.get();
+			BeanUtils.copyProperties(entity, equipModel);
+			equipModel.setIsEdit(true);
+			String id = equipModel.getHouse().getIdHouse();
 			
-			
-			BeanUtils.copyProperties(entity, cateModel);
-			cateModel.setIsEdit(true);
-			String id = cateModel.getHouse().getIdHouse();
-			
-			model.addAttribute("equip",cateModel);
+			model.addAttribute("equip",equipModel);
 			model.addAttribute("idHouse",id);
 			return new ModelAndView("equip/add_edit_equip.html",model);
 		}
-		model.addAttribute("message","House is not existed");
+		model.addAttribute("message","Equipment is not existed");
 		return new ModelAndView("redirect:/admin/equipment",model);
 	}
 

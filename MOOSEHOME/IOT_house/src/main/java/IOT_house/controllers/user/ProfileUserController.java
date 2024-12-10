@@ -26,7 +26,7 @@ import IOT_house.entity.Account;
 import IOT_house.entity.Roles;
 import IOT_house.repository.RoleRepository;
 import IOT_house.services.admin.AccountService;
-import IOT_house.services.user.UserService;
+import IOT_house.services.user.impl.UserService;
 import jakarta.validation.Valid;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -59,7 +59,6 @@ public class ProfileUserController {
 	    BeanUtils.copyProperties(user, acc);
 	    model.addAttribute("acc", acc);
 	    model.addAttribute("id_acc", acc.getId());
-//	    model.addAttribute("role", user.getRoles());
 	    return new ModelAndView("account/edit_profile.html", model);
 	}
 	
@@ -77,7 +76,6 @@ public class ProfileUserController {
 	    if (!uploadDir.exists()) {
 	        uploadDir.mkdir();
 	    }
-
 	    try {
 	        // Xử lý hình ảnh nếu có
 	        if (!imageFile.isEmpty()) {

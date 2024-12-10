@@ -20,7 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import IOT_house.services.CustomUserDetailsService;
-import IOT_house.services.user.UserService;
+import IOT_house.services.user.impl.UserService;
 
 @Configuration
 @EnableWebSecurity
@@ -51,14 +51,6 @@ public class WebSecurityConfig {
 		auth.userDetailsService(customUserDetailsService)
 			.passwordEncoder(passwordEncoder());
 	}
-//    // Cấu hình AuthenticationManager
-//    @Bean
-//    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-//        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-//        authenticationManagerBuilder.userDetailsService(customUserDetailsService)
-//            .passwordEncoder(passwordEncoder());
-//        return authenticationManagerBuilder.build();
-//    }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         final List<GlobalAuthenticationConfigurerAdapter> configurers = new ArrayList<>();

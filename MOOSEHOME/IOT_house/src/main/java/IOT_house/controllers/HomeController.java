@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import IOT_house.entity.Account;
 import IOT_house.entity.Roles;
 import IOT_house.repository.RoleRepository;
-import IOT_house.services.user.UserService;
+import IOT_house.services.user.impl.UserService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PostMapping;

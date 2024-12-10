@@ -80,10 +80,10 @@
 						<div class="form-panel">
 							<h4 class="mb">
 								<div th:if="${equip == null or !equip.isEdit}">
-						            <i class="fa fa-angle-right"></i> Add Equip
+						            <i class="fa fa-angle-right"></i> Add Equipment
 						        </div>
 						        <div th:if="${equip != null and equip.isEdit}">
-						            <i class="fa fa-angle-right"></i> Edit Equip
+						            <i class="fa fa-angle-right"></i> Edit Equipment
 							</h4>
 							<form class="form-horizontal style-form"
 								th:action="@{/admin/equipments/save/{id}(id=${idHouse})}"
@@ -95,7 +95,7 @@
 
 
 								<div class="form-group">
-									<label class="col-sm-2 col-sm-2 control-label">Sensor</label>
+									<label class="col-sm-2 col-sm-2 control-label">Name Equipment</label>
 									<div class="col-sm-5">
 										<!-- Hiển thị ô nhập khi thêm mới -->
 										<input type="text" class="form-control round-form" id="sensor" name="sensor" th:value="${equip?.sensor}" />

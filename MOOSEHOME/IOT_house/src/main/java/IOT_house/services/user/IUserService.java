@@ -1,4 +1,4 @@
-package IOT_house.services.user.impl;
+package IOT_house.services.user;
 
 import java.util.List;
 import java.util.Optional;

@@ -20,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import IOT_house.entity.Account;
 import IOT_house.repository.RoleRepository;
 import IOT_house.services.admin.AccountService;
-import IOT_house.services.user.UserService;
+import IOT_house.services.user.impl.UserService;
 
 
 @Controller
@@ -133,9 +133,9 @@ public class AccountController {
 
 	@GetMapping("/delete/{id}")
 	public ModelAndView delete(ModelMap model, @PathVariable("id") Long Id) {
-		Optional<Account> optCategory = accService.findById(Id);
-		optCategory.get().getRoles().clear();
-		accService.save(optCategory.get());
+		Optional<Account> optAccount = accService.findById(Id);
+		optAccount.get().getRoles().clear();
+		accService.save(optAccount.get());
 		accService.deleteById(Id);
 		model.addAttribute("message", "Account is deleted");
 		return new ModelAndView("redirect:/admin/account", model);

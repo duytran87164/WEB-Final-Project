@@ -1,4 +1,4 @@
-package IOT_house.services.user;
+package IOT_house.services.user.impl;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +11,7 @@ import IOT_house.entity.Account;
 
 import IOT_house.repository.AccRepository;
 import IOT_house.services.MyUserService;
-import IOT_house.services.user.impl.IUserService;
+import IOT_house.services.user.IUserService;
 import jakarta.transaction.Transactional;
 
 import org.springframework.security.core.userdetails.UserDetails;

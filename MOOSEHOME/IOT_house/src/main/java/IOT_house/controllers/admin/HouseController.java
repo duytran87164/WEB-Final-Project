@@ -28,7 +28,7 @@ import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
 import IOT_house.services.admin.AccountService;
 import IOT_house.services.admin.HouseService;
-import IOT_house.services.user.UserService;
+import IOT_house.services.user.impl.UserService;
 
 
 @Controller
@@ -43,8 +43,6 @@ public class HouseController {
 
 	@GetMapping("/list-house/{id}")
 	public String all(@PathVariable Long id, Model model) {
-		
-		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
@@ -65,7 +63,6 @@ public class HouseController {
 	
 	@GetMapping("/list-house/add/{id}")
 	public String add(@PathVariable Long id,Model model) {
-		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
@@ -81,12 +78,12 @@ public class HouseController {
 	
 	@PostMapping("/list-house/save/{id_acc}")
 	public ModelAndView saveOrUpdate(@PathVariable Long id_acc, ModelMap model,
-	        @Valid @ModelAttribute("house") Houses cateModel, BindingResult result,
+	        @Valid @ModelAttribute("house") Houses houseModel, BindingResult result,
 	        @RequestParam("imageFile") MultipartFile imageFile) {
 
 	    // If validation errors occur, return to the form page with error messages
 	    if (result.hasErrors()) {
-	        return new ModelAndView("category/add", model);
+	        return new ModelAndView("admin/list-house", model);
 	    }
 
 	    // Retrieve the account by ID
@@ -96,7 +93,6 @@ public class HouseController {
 	        model.addAttribute("message", "Account not found");
 	        return new ModelAndView("/admin/list-house/{id_acc}", model);
 	    }
-
 	    // Create a new house object
 	    Houses house = new Houses();
 
@@ -121,11 +117,11 @@ public class HouseController {
 	            imageFile.transferTo(new File(uploadPath + "/" + fname));
 
 	            // Update the category object with the image filename
-	            cateModel.setImage(fname);
+	            houseModel.setImage(fname);
 	        }
 
 	        // Copy properties from the form data (cateModel) to the new house object
-	        BeanUtils.copyProperties(cateModel, house);
+	        BeanUtils.copyProperties(houseModel, house);
 
 	        // Set the account reference on the house object
 	        house.setAcc(acc.get());  // Linking the house to the account
@@ -141,7 +137,7 @@ public class HouseController {
 	    }
 
 	    // Determine if the category was saved or edited
-	    String message = cateModel.getIsEdit() ? "House is EDIT" : "House is SAVE";
+	    String message = houseModel.getIsEdit() ? "House is EDIT" : "House is SAVE";
 	    model.addAttribute("message", message);
 
 	    // Redirect to the list of houses after saving the house
@@ -209,7 +205,7 @@ public class HouseController {
 	    List<Houses> houses = houseService.findAll();
 	    model.addAttribute("houses", houses);
 
-	    return "list-house/home_admin_temp.html"; // Trả về view tên "index.html"
+	    return "list-house/home_admin_temp.html";
 	}
 	
 	@GetMapping("/house/find")
@@ -224,7 +220,7 @@ public class HouseController {
 	    Optional<Houses> houses = houseService.findById(idhousefind);
 	    model.addAttribute("houses", houses.get());
 
-	    return "list-house/home_admin_temp.html"; // Trả về view tên "index.html"
+	    return "list-house/home_admin_temp.html";
 	}
 
 
