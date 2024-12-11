@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao Diện Điều Khiển IoT</title>
+    <!-- Bootstrap và Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Tùy chỉnh UI */
+        body {
+            background-color: #f4f5f7;
+            font-family: 'Arial', sans-serif;
+        }
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+        .card-body {
+            padding: 25px;
+            background-color: #fff;
+        }
+        .icon-large {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+        .btn-control {
+            font-size: 20px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            display: block;
+            margin: 0 auto;
+        }
+        .btn-control:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        .btn-control:active {
+            background-color: #1e7e34;
+            transform: translateY(2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn-control.off {
+            background-color: #dc3545;
+        }
+        .btn-control.off:hover {
+            background-color: #c82333;
+        }
+        .row {
+            margin-top: 50px;
+        }
+        .col-md-2, .col-md-4 {
+            display: flex;
+            justify-content: center;
+        }
+        .row .col-md-2 .card, .col-md-4 .card {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Hàng trên (2 card chiếm 4 cột mỗi card) -->
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-thermometer-half icon-large"></i> Nhiệt độ
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 id="temperature">25°C</h5>
+                        <p>Nhiệt độ hiện tại của phòng</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-tint icon-large"></i> Độ ẩm
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 id="humidity">60%</h5>
+                        <p>Độ ẩm hiện tại trong phòng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hàng dưới (5 card, mỗi card chiếm 2 cột) -->
+        <div class="row">
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb icon-large"></i> Công tắc đèn 1
+                    </div>
+                    <div class="card-body text-center">
+                        <button class="btn-control" id="lightSwitch">Bật đèn</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb icon-large"></i> Công tắc đèn 2
+                    </div>
+                    <div class="card-body text-center">
+                        <button class="btn-control" id="lightSwitch2">Bật đèn</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb icon-large"></i> Công tắc đèn 3
+                    </div>
+                    <div class="card-body text-center">
+                        <button class="btn-control" id="lightSwitch3">Bật đèn</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb icon-large"></i> Công tắc đèn 4
+                    </div>
+                    <div class="card-body text-center">
+                        <button class="btn-control" id="lightSwitch4">Bật đèn</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-lightbulb icon-large"></i> Công tắc đèn 5
+                    </div>
+                    <div class="card-body text-center">
+                        <button class="btn-control" id="lightSwitch5">Bật đèn</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Giả lập cập nhật dữ liệu
+        function updateSensorData() {
+            document.getElementById('temperature').innerText = `${(Math.random() * 10 + 20).toFixed(1)}°C`;
+            document.getElementById('humidity').innerText = `${(Math.random() * 20 + 50).toFixed(1)}%`;
+        }
+
+        // Cập nhật dữ liệu mỗi 5 giây
+        setInterval(updateSensorData, 5000);
+
+        // Điều khiển công tắc đèn
+        function toggleLight(button) {
+            if (button.innerText === 'Bật đèn') {
+                button.innerText = 'Tắt đèn';
+                button.classList.add('off');
+            } else {
+                button.innerText = 'Bật đèn';
+                button.classList.remove('off');
+            }
+        }
+
+        // Lắng nghe sự kiện click
+        document.querySelectorAll('.btn-control').forEach(button => {
+            button.addEventListener('click', () => toggleLight(button));
+        });
+    </script>
+</body>
+</html>

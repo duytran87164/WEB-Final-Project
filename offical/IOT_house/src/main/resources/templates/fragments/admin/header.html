@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Header Fragment</title>
+</head>
+<body>
+
+      <header class="header black-bg">
+              <div class="sidebar-toggle-box">
+                  <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
+              </div>
+            <!--logo start-->
+            <a href="/home/" class="logo"><b>MOOSE HOME</b></a>
+            <!--logo end-->
+            <div class="top-menu">
+                <ul class="nav pull-right">
+          
+                    <!-- Profile Dropdown -->
+                    <li class="dropdown">
+                        <a style="margin-top: 5px;" href="#" class="dropdown-toggle profile-pic" data-toggle="dropdown">
+                            <span style="vertical-align: middle; font-size: 18px; color: #4e73df; font-weight: bold;" class="fullname" th:text="${user.fullName}">FullName</span>
+                           <i class="fa fa-chevron-down" style="font-size: 14px; margin-left: 5px;vertical-align: middle;"></i>
+                        </a>
+                        <ul class="dropdown-menu profile-menu">
+<!--                             <li><a href="profile.html"><i class="fa fa-user"></i> Profile</a></li> -->
+                            <li><a href="/home/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            
+        </header>
+
+</body>
+</html>

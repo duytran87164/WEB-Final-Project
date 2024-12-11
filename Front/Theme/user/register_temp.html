@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MOOSE SMARTHOME | Register</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <!-- External CSS -->
+    <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        
+    <!-- Custom styles for this template -->
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+      <!-- MAIN CONTENT -->
+      <div id="register-page">
+          <div class="container">
+          
+              <form class="form-login" action="register.html" method="POST">
+                <h2 class="form-login-heading">REGISTER</h2>
+                <div class="login-wrap">
+                    <!-- User ID Field -->
+                    <input type="text" class="form-control" placeholder="User ID" name="userid" required autofocus>
+                    <br>
+                    <!-- Email Field -->
+                    <input type="email" class="form-control" placeholder="Email" name="email" required>
+                    <br>
+                    <!-- Password Field -->
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                    <br>
+                    <!-- Confirm Password Field -->
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirm_password" required>
+                    <br>
+                    <!-- Register Button -->
+                    <button class="btn btn-theme btn-block" type="submit">
+                        <i class="fa fa-user-plus"></i> SIGN UP
+                    </button>
+                    <hr>
+
+                    <!-- Link to Login Page -->
+                    <div class="registration">
+                        Already have an account?<br/>
+                        <a href="login.html">
+                            Sign In
+                        </a>
+                    </div>
+        
+                </div>
+              </form>	  	
+          
+          </div>
+      </div>
+
+    <!-- JS placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="assets/js/jquery.backstretch.min.js"></script>
+    <script>
+        $.backstretch("assets/img/login2.jpg", {speed: 500});
+    </script>
+
+  </body>
+</html>
