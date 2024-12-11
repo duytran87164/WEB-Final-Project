@@ -40,10 +40,8 @@ public class AccountController {
 	    // Kiểm tra nếu người dùng đã đăng nhập
 	    if (authentication != null && authentication.isAuthenticated()) {
 	        String username = authentication.getName();
-	        
 	        // Tìm tài khoản người dùng từ cơ sở dữ liệu
 	        Account user = userService.findbyUser(username);
-	        
 	        if (user != null) {
 	            // Thêm thông tin người dùng vào model
 	            model.addAttribute("fullname", user.getFullName());
@@ -73,11 +71,13 @@ public class AccountController {
 	    if (user != null) {
 	        model.addAttribute("user", user);
 	    }
-	    // Tìm kiếm user theo username
+
 	    Optional<Account> acc = accService.findByUsername(userfind);
-	    model.addAttribute("acc", acc.get());
-//	    acc.ifPresentOrElse(
-//	        account -> model.addAttribute("acc", account),() -> model.addAttribute("acc", null) );
+	    if (acc.isPresent()) {
+	        model.addAttribute("acc", acc.get());
+	    } else {
+	        model.addAttribute("acc", null);
+	    }
 	    return "account/list_acc";
 	}
 
@@ -100,9 +100,6 @@ public class AccountController {
 
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit(ModelMap model, @PathVariable("id") Long userId) {
-		
-		
-		//session
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
@@ -115,11 +112,11 @@ public class AccountController {
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
-		Optional<Account> optCategory = accService.findById(userId);
+		Optional<Account> optAccount = accService.findById(userId);
 		Account acc = new Account();
 
-		if (optCategory.isPresent()) {
-			Account entity = optCategory.get();
+		if (optAccount.isPresent()) {
+			Account entity = optAccount.get();
 
 			BeanUtils.copyProperties(entity, acc);
 

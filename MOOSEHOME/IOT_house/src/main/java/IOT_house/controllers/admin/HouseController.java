@@ -80,55 +80,33 @@ public class HouseController {
 	public ModelAndView saveOrUpdate(@PathVariable Long id_acc, ModelMap model,
 	        @Valid @ModelAttribute("house") Houses houseModel, BindingResult result,
 	        @RequestParam("imageFile") MultipartFile imageFile) {
-
-	    // If validation errors occur, return to the form page with error messages
 	    if (result.hasErrors()) {
 	        return new ModelAndView("admin/list-house", model);
 	    }
-
-	    // Retrieve the account by ID
 	    Optional<Account> acc = accService.findById(id_acc);
-
 	    if (!acc.isPresent()) {
 	        model.addAttribute("message", "Account not found");
 	        return new ModelAndView("/admin/list-house/{id_acc}", model);
 	    }
-	    // Create a new house object
 	    Houses house = new Houses();
-
-	    // Define the upload path for images
 	    String uploadPath = "D:\\upload";
 	    File uploadDir = new File(uploadPath);
 	    if (!uploadDir.exists()) {
-	        uploadDir.mkdir();  // Create directory if not exists
+	        uploadDir.mkdir();
 	    }
-
 	    try {
-	        // If the user uploaded an image, handle file upload
 	        if (!imageFile.isEmpty()) {
 	            String originalFilename = imageFile.getOriginalFilename();
 	            int index = originalFilename.lastIndexOf(".");
 	            String ext = originalFilename.substring(index + 1);
-
-	            // Generate a unique filename for the uploaded image
 	            String fname = System.currentTimeMillis() + "." + ext;
-
-	            // Save the image to the specified directory
 	            imageFile.transferTo(new File(uploadPath + "/" + fname));
 
-	            // Update the category object with the image filename
 	            houseModel.setImage(fname);
 	        }
-
-	        // Copy properties from the form data (cateModel) to the new house object
 	        BeanUtils.copyProperties(houseModel, house);
-
-	        // Set the account reference on the house object
-	        house.setAcc(acc.get());  // Linking the house to the account
-
-	        // Save the house to the database
+	        house.setAcc(acc.get());
 	        houseService.save(house);
-
 	        model.addAttribute("message", "House saved successfully");
 
 	    } catch (Exception e) {
@@ -155,17 +133,17 @@ public class HouseController {
 	        model.addAttribute("user", user);
 	    }
 		Optional<Houses> optHouse =houseService.findById(houseId);
-		Houses cateModel = new Houses();
+		Houses houseModel = new Houses();
 		
 		if (optHouse.isPresent()) {
 			Houses entity =optHouse.get();
 			
 			
-			BeanUtils.copyProperties(entity, cateModel);
-			cateModel.setIsEdit(true);
-			Long id = cateModel.getAcc().getId();
+			BeanUtils.copyProperties(entity, houseModel);
+			houseModel.setIsEdit(true);
+			Long id = houseModel.getAcc().getId();
 			
-			model.addAttribute("house",cateModel);
+			model.addAttribute("house",houseModel);
 			model.addAttribute("id_acc",id);
 			return new ModelAndView("list-house/add_edit_house.html",model);
 		}
@@ -216,10 +194,12 @@ public class HouseController {
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
-	    
 	    Optional<Houses> houses = houseService.findById(idhousefind);
-	    model.addAttribute("houses", houses.get());
-
+	    if (houses.isPresent()) {
+	        model.addAttribute("houses", houses.get());
+	    } else {
+	        model.addAttribute("houses", null); // Gán null nếu không tìm thấy nhà
+	    }
 	    return "list-house/home_admin_temp.html";
 	}
 

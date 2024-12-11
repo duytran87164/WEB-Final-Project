@@ -63,21 +63,19 @@ public class ProfileUserController {
 	}
 	
 	@PostMapping("/save")
-	public ModelAndView saveOrUpdate(ModelMap model, @Valid @ModelAttribute("acc") Account cateModel, 
+	public ModelAndView saveOrUpdate(ModelMap model, @Valid @ModelAttribute("acc") Account accModel, 
 	        BindingResult result,
 	        @RequestParam("imageFile") MultipartFile imageFile) {
 	    if (result.hasErrors()) {
 	        return new ModelAndView("account/edit_profile", model);
 	    }
 	    Account acc = new Account();
-	 // Define the upload path for images
 	    String uploadPath = "D:\\upload";
 	    File uploadDir = new File(uploadPath);
 	    if (!uploadDir.exists()) {
 	        uploadDir.mkdir();
 	    }
 	    try {
-	        // Xử lý hình ảnh nếu có
 	        if (!imageFile.isEmpty()) {
 	            String originalFilename = imageFile.getOriginalFilename();
 	            int index = originalFilename.lastIndexOf(".");
@@ -85,29 +83,19 @@ public class ProfileUserController {
 
 	            String fname = System.currentTimeMillis() + "." + ext;
 	            imageFile.transferTo(new File(uploadPath + "/" + fname));
-	            cateModel.setImage(fname);
+	            accModel.setImage(fname);
 	        }
-	        // Sao chép thông tin từ cateModel vào đối tượng acc
-	        if (!cateModel.getPassword().equals(userService.findbyUser(cateModel.getUsername()).getPassword())) {
-	        	String hashedPassword = passwordEncoder.encode(cateModel.getPassword());
-				cateModel.setPassword(hashedPassword);
+	        if (!accModel.getPassword().equals(userService.findbyUser(accModel.getUsername()).getPassword())) {
+	        	String hashedPassword = passwordEncoder.encode(accModel.getPassword());
+	        	accModel.setPassword(hashedPassword);
 			}
-	        BeanUtils.copyProperties(cateModel, acc);
-	        
-	        acc.setStatus(true); // Đảm bảo người dùng không bị khóa
-
-	        // Lấy role và gán cho người dùng
+	        BeanUtils.copyProperties(accModel, acc);
+	        acc.setStatus(true);
 	        Roles role = roleRepository.findByName("USER").get();
 	        acc.setRoles(Collections.singleton(role));
-
-	        // Lưu người dùng vào cơ sở dữ liệu
 	        accService.save(acc);
-
-	        // Cập nhật thông tin authentication trong Spring Security
 	        Authentication authentication = new UsernamePasswordAuthenticationToken(
-	                cateModel.getUsername(),cateModel.getPassword(),cateModel.getAuthorities());
-
-	        // Cập nhật authentication vào SecurityContext
+	        		accModel.getUsername(),accModel.getPassword(),accModel.getAuthorities());
 	        SecurityContextHolder.getContext().setAuthentication(authentication);
 	     
 	    } catch (Exception e) {
@@ -117,7 +105,4 @@ public class ProfileUserController {
 
 	    return new ModelAndView("redirect:/user/home", model);
 	}
-
-
-
 }

@@ -39,18 +39,12 @@ public class HomeUserController {
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-	    // Lấy thông tin người dùng từ SecurityContext
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication != null && authentication.isAuthenticated()) {
 	        String username = authentication.getName();
 	        Account user=userService.findbyUser(username);
-	            model.addAttribute("fullname", user.getFullName());
-	            model.addAttribute("image", user.getImage());
 	            model.addAttribute("user", user);
-
 	            long id = user.getId();
-
-	            // Kiểm tra nếu `id` tồn tại
 	            Optional<Account> acc = accService.findById(id);
 	            if (acc.isPresent()) {
 	                List<Houses> houses = houseService.findByAccount(acc.get());  // Sử dụng hàm findByAccount đã tạo trước đó
@@ -59,21 +53,14 @@ public class HomeUserController {
 	            } else {
 	                model.addAttribute("message", "Account not found");
 	            }
-	     
 	    } else {
 	        model.addAttribute("message", "User is not authenticated");
 	    }
-
 	    return "list-house/list_house_of_user.html";
 	}
 
-
-	
-	
 	@GetMapping("/equipments/{id}")
 	public String find_id(@PathVariable String id, Model model) {
-		
-		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
@@ -86,7 +73,6 @@ public class HomeUserController {
 		model.addAttribute("idHouse", id); // Thêm id_house vào model
 		return "equip/list_equip_of_house_user.html"; // Trả về trang list.html
 	}
-	
 	
 	// API để trả về trang web điều khiển LED
     @GetMapping("/monitor/{idHouse}")
@@ -103,8 +89,6 @@ public class HomeUserController {
     	List<Equipments> dht11 = equipService.findBySensor(equip,"DHT11");
     	
         Set<Roles> roles = user.getRoles();
-        
-        // Thêm roles vào model
         model.addAttribute("roles", roles);
     	model.addAttribute("button", button);
     	model.addAttribute("dht11", dht11);

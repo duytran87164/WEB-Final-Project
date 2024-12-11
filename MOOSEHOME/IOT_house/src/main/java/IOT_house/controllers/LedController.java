@@ -32,7 +32,6 @@ public class LedController {
     @GetMapping("/ledStatus")
     public ResponseEntity<Map<String, Object>> getLedStatus() {
         // Giả sử bạn có một phương thức getLedStatusByEquipId để lấy trạng thái LED của thiết bị theo id
-
         Map<String, Object> response = new HashMap<>();
         response.put("ledStatus2", ledStatus2 ? 1 : 0);  // Trạng thái LED (1: ON, 0: OFF)
         response.put("ledStatus3", ledStatus3 ? 1 : 0);  // Trạng thái LED (1: ON, 0: OFF)
@@ -44,8 +43,6 @@ public class LedController {
     // API để toggle LED
     @PostMapping("/toggleLed/{equipId}")
     public ResponseEntity<Map<String, Object>> toggleLedFromWeb(@PathVariable Long equipId) {
-        
-		// Lấy thiết bị theo ID
         Optional<Equipments> equipment = equipService.findById(equipId);
         Map<String, Object> response = new HashMap<>();
        if (equipId == 2){
@@ -64,8 +61,6 @@ public class LedController {
     	   ledStatus5 =!ledStatus5;
     	   response.put("ledStatus"+equipId, ledStatus5 ? 1 : 0); // Trạng thái LED mới (1: ON, 0: OFF)
        }
-        // Tạo phản hồi
-       
         response.put("id", equipment.get().getId());
         response.put("name", equipment.get().getSensor());
         return ResponseEntity.ok(response);
