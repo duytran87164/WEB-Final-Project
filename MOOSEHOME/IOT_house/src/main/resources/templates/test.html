@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+
+    
+<!-- Hiển thị thông tin người dùng đăng nhập -->
+<div>
+    <p th:text="'Logged in as: ' + ${user.username}"></p>
+</div>
+
+<!-- Hiển thị kết quả tìm kiếm -->
+<div th:if="${acc != null}">
+    <p th:text="'Found user: ' + ${acc.username}"></p>
+</div>
+
+<!-- Nếu không tìm thấy người dùng -->
+<div th:if="${acc == null}">
+    <p th:text="${message}"></p>  <!-- Hiển thị thông báo nếu không tìm thấy -->
+</div>
+
+<!-- Hiển thị thông báo lỗi nếu có -->
+<div th:if="${error}">
+    <p th:text="${error}"></p>
+</div>
+
+
+
+</body>
+</html>
