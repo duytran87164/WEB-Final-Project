@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+x`# IoT Smart Home Website 🌐🏠
+=======
 # MooseHome - Website Quản Lý Nhà Thông Minh IoT 🏠🌐
+>>>>>>> 4dc39803c2dcb6f3caa4c0e37ce372b8e3c3a04d
 
 MooseHome là một ứng dụng web tương tác và thân thiện với người dùng, được thiết kế để kiểm soát và giám sát các thiết bị nhà thông minh hỗ trợ IoT. Dự án tích hợp các công nghệ web hiện đại cùng các giao thức IoT để cung cấp khả năng quản lý hệ thống tự động hóa nhà cửa một cách liền mạch.
 

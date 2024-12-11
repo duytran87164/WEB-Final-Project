@@ -82,7 +82,7 @@ public class WebSecurityConfig {
                 .loginPage("/home/login") // Trang login
                 .loginProcessingUrl("/home/login") // URL xử lý đăng nhập
                 .defaultSuccessUrl("/home/waiting", true) // Thành công chuyển hướng đến /home/waiting
-                .failureUrl("/home/login?error=Invalid User or Password") // Nếu đăng nhập thất bại, quay lại trang login với lỗi
+                .failureUrl("/home/login?error=Incorrect User or Password") // Nếu đăng nhập thất bại, quay lại trang login với lỗi
                 .permitAll()
             )
             .logout(logout -> logout

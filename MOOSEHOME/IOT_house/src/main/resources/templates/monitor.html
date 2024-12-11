@@ -121,7 +121,6 @@
                                 </div>
                             </div>
                         </div>
-        
                         <!-- Độ ẩm -->
                         <div class="col-md-4">
                             <div class="card_iot">
@@ -135,11 +134,9 @@
                             </div>
                         </div>
                     </div>
-                    </div>
-                    
-                    
+                 </div>
+
                     <div class="row">
-                        <!-- Công tắc đèn -->
                         <div th:each="equip : ${button}">
 	                        <div class="col-md-3">
 	                            <div class="card_iot">
@@ -227,26 +224,6 @@
             console.log('nav ' + nav + ' to: ' + to.month + '/' + to.year);
         }
     </script>
-
-<!-- <script>
-
-    // Hàm điều khiển công tắc đèn
-    function toggleLight(button) {
-            if (button.innerText === 'ON') {
-                button.innerText = 'OFF';
-                button.classList.add('off');
-            } else {
-                button.innerText = 'ON';
-                button.classList.remove('off');
-            }
-        }
-
-        // Lắng nghe sự kiện click
-        document.querySelectorAll('.btn-control').forEach(button => {
-            button.addEventListener('click', () => toggleLight(button));
-        });
-
-</script> -->
 
 
 <script>

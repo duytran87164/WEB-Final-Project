@@ -101,7 +101,6 @@ public class HomeController {
 	    return "register_temp.html"; // Trang đăng ký
 	}
 
-
 	// Controller đăng ký tài khoản
 	@PostMapping("/register")
 	public String processRegister(@ModelAttribute Account registerForm, Model model) {
@@ -130,10 +129,6 @@ public class HomeController {
 	    // Chuyển hướng tới trang đăng nhập sau khi đăng ký thành công
 	    return "redirect:/home/login";
 	}
-	@GetMapping("/forgot-password")
-    public String showForgotPasswordForm() {
-        return "forget_psw.html";
-    }
 
 	@PostMapping("/forgot-password")
     public String processForgotPassword(@RequestParam("username") String username, Model model) {
