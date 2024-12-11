@@ -38,7 +38,7 @@ public class LedController {
         response.put("ledStatus4", ledStatus4 ? 1 : 0); 
         response.put("ledStatus5", ledStatus5 ? 1 : 0); 
         return ResponseEntity.ok(response);
-    }
+    } 
     
     // API để toggle LED
     @PostMapping("/toggleLed/{equipId}")
