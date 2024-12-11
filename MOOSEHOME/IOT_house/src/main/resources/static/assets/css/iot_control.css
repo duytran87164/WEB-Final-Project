@@ -1,0 +1,153 @@
+
+.content {
+    margin-left: 350px;
+    padding: 10px;
+}
+.card_iot {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    transition: transform 0.3s ease-in-out;
+    width: 100%; /* Điều chỉnh chiều rộng */
+    max-width: 400px; /* Giới hạn chiều rộng tối đa */
+    min-height: 200px; /* Đảm bảo chiều cao tối thiểu */
+    min-width: 175px;
+}
+.card_iot:hover {
+    transform: scale(1.05);
+}
+.card_header {
+    background-color: #4e73df;
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+}
+.card-body {
+    padding: 20px;
+    background-color: #fff;
+    text-align: center;
+    
+}
+.card-body h5 {
+    font-size: 42px;
+    margin-bottom: 20px;
+    color: #4e73df;
+}
+.card-body p {
+    font-size: 18px;
+    color: #6c757d;
+}
+.btn-control {
+    font-size: 22px;
+    padding: 14px 28px;
+    border-radius: 50px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+.btn-control :hover {
+    background-color: #218838;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+.btn-control :active {
+    background-color: #1e7e34;
+    transform: translateY(3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-control.off {
+    background-color: #ff0000;
+}
+.btn-control.off:hover {
+    background-color: #ff0000;
+}
+
+/* Neon glow effect */
+.btn-control :focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.8), 0 0 25px rgba(40, 167, 69, 0.8);
+}
+/* Waves animation */
+.btn-control :active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(40, 167, 69, 0.2);
+    border-radius: 50%;
+    animation: wave-animation 0.6s linear;
+    transform: translate(-50%, -50%);
+}
+@keyframes wave-animation {
+    to {
+        width: 0;
+        height: 0;
+        opacity: 0;
+    }
+}
+.icon-large {
+    font-size: 60px;
+    margin-bottom: 25px;
+}
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+
+/* .btn-control_off {
+    font-size: 22px;
+    padding: 14px 28px;
+    border-radius: 50px;
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+}
+.btn-control_off:hover {
+    background-color: #a63d04;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+}
+.btn-control_off:active {
+    background-color: #ff0000;
+    transform: translateY(3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+Neon glow effect
+.btn-control_off :focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(40, 167, 69, 0.8), 0 0 25px rgba(40, 167, 69, 0.8);
+}
+Waves animation
+.btn-control_off :active::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background-color: rgba(40, 167, 69, 0.2);
+    border-radius: 50%;
+    animation: wave-animation 0.6s linear;
+    transform: translate(-50%, -50%);
+} */
+

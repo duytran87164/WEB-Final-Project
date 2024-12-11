@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MOOSE HOME | Reset Password</title>
+    <link rel="icon" type="image/png" th:href="@{/assets/img/smhome2.png}">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/css/bootstrap.css" rel="stylesheet">
+    <!-- External CSS -->
+    <link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        
+    <!-- Custom styles for this template -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+    <link href="/assets/css/style-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+      <!-- MAIN CONTENT -->
+      <div id="register-page">
+          <div class="container">
+          
+              <form class="form-login" action="/home/update-password" method="post">
+                <h2 class="form-login-heading">Reset Your Password</h2>
+                <div class="login-wrap">
+                    <!-- User ID Field -->
+                     <input type="hidden" name="email" th:value="${email}" />
+                    <input type="password" class="form-control" placeholder="New Password" name="newPassword" required autofocus>
+                    <br>
+                    <!-- Confirm Password Field -->
+                    <input type="password" class="form-control" placeholder="Confirm Password" name="confirmPassword" required>
+                    <br>
+                    <!-- Register Button -->
+                    <button class="btn btn-theme btn-block" type="submit">
+                        <i class="fa fa-user-plus"></i> RESET PASSWORD
+                    </button>
+                    <hr>
+        
+                </div>
+              </form>	  	
+          
+          </div>
+      </div>
+<!--       <div th:insert="~{fragments/user/footer}"></div> -->
+<footer class="site-footer" style="position:fixed;" >
+    <div class="container">
+        <div class="row">
+            <!-- Column 1: Company Info -->
+            <div class="col-md-4 " style="margin-left: 50px;">
+
+                <h3>About us</h3>
+                <p>
+                    Email: <a href="mailto:info@moosesmarthome.com">ptchc@hcmute.edu.vn</a> <br>
+                    Phone: +84 (028) 389-68641 <br>
+                    Address: So 1, Vo Van Ngan, Linh Chieu, Ho Chi Minh
+                </p>
+                <p>&copy; 2024 MOOSE SMARTHOME. All Rights Reserved.</p>
+            </div>
+            <!-- Column 2: Additional Contacts -->
+            <div class="col-md-4">
+            <h3>Our Contacts</h3>
+            <p>Le Quoc Cuong - 21146070 <a href="mailto:info@metronic.com">21146070@student.hcmute.edu.vn</a></p>
+            <p>Tran Hoang Duy - 21146073 <a href="mailto:info@metronic.com">21146073@student.hcmute.edu.vn</a></p>
+            </div>
+            
+            <div class="col-md-3">
+
+            <p style="margin-top: 55px;">Ho Xuan Huy - 21146465 <a href="mailto:info@metronic.com">21146465@student.hcmute.edu.vn</a></p>
+            <p>Vo Duy Khai - 21146474 <a href="mailto:info@metronic.com">21146474@student.hcmute.edu.vn</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <!-- JS placed at the end of the document so the pages load faster -->
+    <script src="/assets/js/jquery.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+
+    <!--BACKSTRETCH-->
+    <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+    <script type="text/javascript" src="/assets/js/jquery.backstretch.min.js"></script>
+    <script>
+        $.backstretch("/assets/img/login2.jpg", {speed: 500});
+    </script>
+
+  </body>
+</html>

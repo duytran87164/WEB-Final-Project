@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="Dashboard">
+<meta name="keyword"
+	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+
+<title>MOOSE HOME</title>
+<link rel="icon" type="image/png" th:href="@{/assets/img/smhome2.png}">
+<!-- Bootstrap core CSS -->
+<link href="/assets/css/bootstrap.css" rel="stylesheet">
+<!--external css-->
+<link href="/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="/assets/js/bootstrap-datepicker/css/datepicker.css" />
+<link rel="stylesheet" type="text/css"
+	href="/assets/js/bootstrap-daterangepicker/daterangepicker.css" />
+
+<!-- Custom styles for this template -->
+<link href="/assets/css/style.css" rel="stylesheet">
+<link href="/assets/css/style-responsive.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<section id="container">
+		<!-- **********************************************************************************************************************************************************
+      TOP BAR CONTENT & NOTIFICATIONS
+      *********************************************************************************************************************************************************** -->
+		<!--header start-->
+		<div th:insert="~{fragments/user/header}"></div>
+		<!--header end-->
+
+		<!-- **********************************************************************************************************************************************************
+      MAIN SIDEBAR MENU
+      *********************************************************************************************************************************************************** -->
+		<!--sidebar start-->
+		<!--sidebar end-->
+
+		<!-- **********************************************************************************************************************************************************
+      MAIN CONTENT
+      *********************************************************************************************************************************************************** -->
+		<!--main content start-->
+		<section id="main-content">
+			<section class="wrapper">
+				<!-- <h3><i class="fa fa-angle-right"></i> Form Components</h3> -->
+
+				<!-- BASIC FORM ELELEMNTS -->
+				<div class="row mt">
+					<div class="col-lg-12">
+						<div class="form-panel">
+							<h4 class="mb">
+								<div >
+						            <i class="fa fa-angle-right"></i> Edit Profile
+						        </div>
+							</h4>
+							<form class="form-horizontal style-form"
+								th:action="@{/user/profile/save}"
+								method="post" enctype="multipart/form-data">
+								<div class="form-group">
+									<div class="col-sm-5">
+										<input class="form-control round-form"
+											id="id" name="id" th:value="${acc?.id}"readonly type="hidden"/>
+
+										<input type="hidden" class="form-control round-form"
+											id="crDate" name="crDate" th:value="${acc?.crDate}" readonly/>
+										<input type="hidden" class="form-control round-form"
+											id="username" name="username" th:value="${acc?.username}" readonly/>		
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Full Name</label>
+									<div class="col-sm-5">
+										<!-- Hiển thị ô nhập khi thêm mới -->
+										<input type="text" class="form-control round-form"
+											id="fullName" name="fullName" th:value="${acc?.fullName}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Password</label>
+									<div class="col-sm-5">
+										<input type="password" class="form-control round-form" placeholder="Nhập nếu muốn đổi mật khẩu"	id="password" name="password" th:value="${acc?.password}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Email</label>
+									<div class="col-sm-5">
+										<!-- Hiển thị ô nhập khi thêm mới -->
+										<input type="text" class="form-control round-form"
+											id="email" name="email" th:value="${acc?.email}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-2 col-sm-2 control-label">Phone</label>
+									<div class="col-sm-5">
+										<!-- Hiển thị ô nhập khi thêm mới -->
+										<input type="text" class="form-control round-form"
+											id="phone" name="phone" th:value="${acc?.phone}" />
+									</div>
+								</div>
+								
+								<div class="form-group">
+								    <!-- Images -->
+								    <label class="col-sm-2 col-sm-2 control-label">Images</label>
+								    <div class="col-sm-5">
+								        <!-- Hiển thị hình ảnh nếu chỉnh sửa hoặc đã có -->
+								        <div th:if="${acc != null && acc.image != null}">
+								            <img th:if="${#strings.startsWith(acc.image, 'https')}" th:src="${acc.image}" 
+								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
+								            <img th:if="${!#strings.startsWith(acc.image, 'https')}" 
+								                 th:src="@{/file/image(fname=${acc.image})}" 
+								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
+								        </div>
+								        <br>
+								        <!-- Chọn file hình ảnh -->
+								        <input type="file" class="btn btn-theme02" onchange="chooseFile(this)" id="imageFile" name="imageFile" /><br>
+								        <!-- Nhập URL hình ảnh -->
+								        <label class="control-label"> Or Type URL Image</label>
+								        <input type="text" class="form-control round-form" id="imageUrl" name="image" placeholder="Type URL Image Here"
+								               th:value="${acc?.image ?: ''}" />
+								    </div>
+								</div>
+								
+
+								<script>
+									function chooseFile(input) {
+										if (input.files && input.files[0]) {
+											const reader = new FileReader();
+											reader.onload = function(e) {
+												const previewImage = document.getElementById("image");
+												previewImage.src = e.target.result;
+												previewImage.style.display = "block"; // Hiện ảnh sau khi tải
+											};
+											reader.readAsDataURL(input.files[0]);
+										}
+									}
+								</script>
+								
+					
+								<div class="form-group">
+								    <div class="col-sm-offset-3">
+								        <div>
+								            <button type="submit" class="btn btn-theme">Update</button>
+								        </div>
+								    </div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<!-- col-lg-12-->
+				</div>
+				<!-- /row -->
+			</section>
+		</section>
+		<!-- /MAIN CONTENT -->
+
+		<!--main content end-->
+		<!--footer start-->
+		<!-- <div th:insert="~{fragments/user/footer}" ></div> -->
+		<footer class="site-footer" >
+		    <div class="container" >
+		        <div class="row">
+		            <!-- Column 1: Company Info -->
+		            <div class="col-md-4 " style="margin-left: 50px;">
+		
+		                <h3>About us</h3>
+		                <p>
+		                    Email: <a href="mailto:info@moosesmarthome.com">ptchc@hcmute.edu.vn</a> <br>
+		                    Phone: +84 (028) 389-68641 <br>
+		                    Address: So 1, Vo Van Ngan, Linh Chieu, Ho Chi Minh
+		                </p>
+		                <p>&copy; 2024 MOOSE SMARTHOME. All Rights Reserved.</p>
+		            </div>
+		            <!-- Column 2: Additional Contacts -->
+		            <div class="col-md-4">
+		            <h3>Our Contacts</h3>
+		            <p>Le Quoc Cuong - 21146070 <a href="mailto:info@metronic.com">21146070@student.hcmute.edu.vn</a></p>
+		            <p>Tran Hoang Duy - 21146073 <a href="mailto:info@metronic.com">21146073@student.hcmute.edu.vn</a></p>
+		            </div>
+		            
+		            <div class="col-md-3">
+		
+		            <p style="margin-top: 55px;">Ho Xuan Huy - 21146465 <a href="mailto:info@metronic.com">21146465@student.hcmute.edu.vn</a></p>
+		            <p>Vo Duy Khai - 21146474 <a href="mailto:info@metronic.com">21146474@student.hcmute.edu.vn</a></p>
+		            </div>
+		        </div>
+		    </div>
+		</footer>
+		<!--footer end-->
+	</section>
+
+	<!-- js placed at the end of the document so the pages load faster -->
+	<script src="/assets/js/jquery.js"></script>
+	<script src="/assets/js/bootstrap.min.js"></script>
+	<script class="include" type="text/javascript"
+		src="/assets/js/jquery.dcjqaccordion.2.7.js"></script>
+	<script src="/assets/js/jquery.scrollTo.min.js"></script>
+	<script src="/assets/js/jquery.nicescroll.js" type="text/javascript"></script>
+
+
+	<!--common script for all pages-->
+	<script src="/assets/js/common-scripts.js"></script>
+
+	<!--script for this page-->
+	<script src="/assets/js/jquery-ui-1.9.2.custom.min.js"></script>
+
+	<!--custom switch-->
+	<script src="/assets/js/bootstrap-switch.js"></script>
+
+	<!--custom tagsinput-->
+	<script src="/assets/js/jquery.tagsinput.js"></script>
+
+	<!--custom checkbox & radio-->
+
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-daterangepicker/date.js"></script>
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+	<script type="text/javascript"
+		src="/assets/js/bootstrap-inputmask/bootstrap-inputmask.min.js"></script>
+
+
+	<script src="/assets/js/form-component.js"></script>
+
+
+	<script>
+		//custom select box
+
+		$(function() {
+			$('select.styled').customSelect();
+		});
+	</script>
+
+</body>
+</html>
