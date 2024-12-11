@@ -8,8 +8,8 @@
 <meta name="keyword"
 	content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-<title>DASHGUM - Bootstrap Admin Template</title>
-
+<title>MOOSE HOME</title>
+<link rel="icon" type="image/png" th:href="@{/assets/img/smhome2.png}">
 <!-- Bootstrap core CSS -->
 <link href="/assets/css/bootstrap.css" rel="stylesheet">
 <!--external css-->
@@ -105,12 +105,12 @@
 									</div>
 								</div>
 								
-								<div class="form-group">
+<!-- 								<div class="form-group">
 									<label class="col-sm-2 col-sm-2 control-label">Password</label>
 									<div class="col-sm-5">
 										<input type="password" class="form-control round-form" placeholder=""	id="password" name="password" th:value="${house?.password}" />
 									</div>
-								</div>
+								</div> -->
 								
 								<div class="form-group">
 								    <!-- Images -->
@@ -201,13 +201,7 @@
 
 		<!--main content end-->
 		<!--footer start-->
-		<footer class="site-footer">
-			<div class="text-center">
-				2014 - Alvarez.is <a href="form_component.html#" class="go-top">
-					<i class="fa fa-angle-up"></i>
-				</a>
-			</div>
-		</footer>
+		<div th:insert="~{fragments/admin/footer}"></div>
 		<!--footer end-->
 	</section>
 

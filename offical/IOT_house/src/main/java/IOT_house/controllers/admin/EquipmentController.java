@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,6 +26,7 @@ import IOT_house.entity.Equipments;
 import IOT_house.entity.Houses;
 import IOT_house.services.admin.EquipmentService;
 import IOT_house.services.admin.HouseService;
+import IOT_house.services.user.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
@@ -36,21 +39,20 @@ public class EquipmentController {
 	HouseService houseService;
 	@Autowired
     private HttpSession session;
+	@Autowired
+	UserService userService;
 	
 	
 	@GetMapping("/{id}")
 	public String find_id(@PathVariable String id, Model model) {
 		
-		
 		//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		// Trực tiếp lấy nhà theo id
 		List<Equipments> equip = equipService.findByHouseId(id); // Lấy danh sách Equipments theo id_house
 		model.addAttribute("equip", equip); // Thêm danh sách Equipments vào model
@@ -60,11 +62,18 @@ public class EquipmentController {
 
 	@GetMapping("/add/{id}")
 	public String add(@PathVariable String id,Model model) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("user", user);
+	    }
 		  Equipments listequip = new Equipments();
 		  model.addAttribute("idHouse", id);
 		  model.addAttribute("house",listequip); 
 		  listequip.setIsEdit(false);
-		  return "equip/add.html";
+		  return "equip/add_edit_equip.html";
 	}
 
 	@PostMapping("/save/{idHouse}")
@@ -85,7 +94,7 @@ public class EquipmentController {
 		Equipments equip = new Equipments();
 
 		// Define the upload path for images
-		String uploadPath = "E:\\upload";
+		String uploadPath = "D:\\upload";
 		File uploadDir = new File(uploadPath);
 		if (!uploadDir.exists()) {
 			uploadDir.mkdir(); // Create directory if not exists
@@ -115,15 +124,15 @@ public class EquipmentController {
 			// Save the house to the database
 			equipService.save(equip);
 
-			model.addAttribute("message", "Category saved successfully");
+			model.addAttribute("message", "Equipment saved successfully");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("message", "Error saving category");
+			model.addAttribute("message", "Error saving Equipment");
 		}
 
 		// Determine if the category was saved or edited
-		String message = cateModel.getIsEdit() ? "Category is EDIT" : "Category is SAVE";
+		String message = cateModel.getIsEdit() ? "Equipment is EDIT" : "Equipment is SAVE";
 		model.addAttribute("message", message);
 
 		// Redirect to the list of houses after saving the house
@@ -132,6 +141,14 @@ public class EquipmentController {
 	}
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit (ModelMap model,@PathVariable("id") Long Id) {
+		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("user", user);
+	    }
+			    
 		Optional<Equipments> optHouse =equipService.findById(Id);
 		Equipments cateModel = new Equipments();
 		
@@ -145,7 +162,7 @@ public class EquipmentController {
 			
 			model.addAttribute("equip",cateModel);
 			model.addAttribute("idHouse",id);
-			return new ModelAndView("equip/add.html",model);
+			return new ModelAndView("equip/add_edit_equip.html",model);
 		}
 		model.addAttribute("message","House is not existed");
 		return new ModelAndView("redirect:/admin/equipment",model);
@@ -162,7 +179,7 @@ public class EquipmentController {
 	        Equipments entity = optequip.get(); // Lấy entity sau khi xóa
 	        String id = entity.getHouse().getIdHouse();
 
-	        model.addAttribute("message", "Category is deleted");
+	        model.addAttribute("message", "Equipment is deleted");
 	        model.addAttribute("idHouse", id);
 	    } else {
 	        // Nếu không tìm thấy house, xử lý trường hợp lỗi

@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <title>Header Fragment</title>
 </head>
+
+<style>
+        .sidebar-menu h5 {
+        font-size: 18px; /* Điều chỉnh cỡ chữ */
+    }
+</style>
+
 <body>
 
       <header class="header black-bg">
@@ -11,30 +18,24 @@
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
             <!--logo start-->
-            <a href="/user/home	" class="logo"><b>MOOSE HOME</b></a>
+            <a href="/home/	" class="logo"><b>MOOSE HOME</b></a>
             <!--logo end-->
             <div class="top-menu">
                 <ul class="nav pull-right">
-          
+          			 <div style="margin-top: 12px;">
+			            <a href="/home/logout" class="btn btn-primary"><i class="fa fa-sign-out"></i> Logout</a>
+			    </div>
                     <!-- Profile Dropdown -->
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle profile-pic" data-toggle="dropdown">
-                            <td>
-						    <img th:if="${user.image != null && #strings.startsWith(user.image, 'https')}" 
-						         th:src="${user.image}" class="img-circle" width="40" alt="User Avatar" />
-						    <img th:if="${user.image != null && !#strings.startsWith(user.image, 'https')}" 
-						         th:src="@{/file/image(fname=${user.image})}" class="img-circle" width="40" alt="User Avatar" />
-						    <img th:if="${user.image == null}" 
-						         src="/assets/img/ui-sam.jpg" class="img-circle" width="60" alt="Default Avatar" />
-						</td>
-                            <span class="username" th:text="${fullname}">UserName</span>
-                           
+<!--                     <li class="dropdown">
+                        <a style="margin-top: 5px;" href="#" class="dropdown-toggle profile-pic dropdown-menu-end" data-toggle="dropdown">
+                            <span style="vertical-align: middle; font-size: 18px; color: #4e73df; font-weight: bold;" class="fullname" th:text="${fullname}">FullName</span>
+                           <i class="fa fa-chevron-down" style="font-size: 14px; margin-left: 5px;vertical-align: middle;"></i>
                         </a>
                         <ul class="dropdown-menu profile-menu">
                             <li><a th:href="@{/user/profile/edit/{id}(id=${user.id})}"><i class="fa fa-user"></i> Profile</a></li>
                             <li><a href="/home/logout"><i class="fa fa-sign-out"></i> Logout</a></li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
             
@@ -45,15 +46,27 @@
         <aside>
 		    <div id="sidebar" class="nav-collapse">
 		        <!-- sidebar menu start-->
-		        <ul class="sidebar-menu" id="nav-accordion">
+		        <ul class="sidebar-menu" id="nav-accordion" >
+		        <p ><a th:href="@{/user/profile/edit/{id}(id=${user.id})}">
+		        	<div class="centered">
+						    <img th:if="${user.image != null && #strings.startsWith(user.image, 'https')}" 
+						         th:src="${user.image}" class="img-circle" width="80" alt="User Avatar" />
+						    <img th:if="${user.image != null && !#strings.startsWith(user.image, 'https')}" 
+						         th:src="@{/file/image(fname=${user.image})}" class="img-circle" width="60" alt="User Avatar" />
+						    <img th:if="${user.image == null}" 
+						         src="/assets/img/ui-sam.jpg" class="img-circle" width="80" alt="Default Avatar" />
+					</div>
+		        </a></p>
+		        
+              	  <h5 class="centered" th:text="${user.fullName}">Full Name</h5>
 		            
 		            <!-- Hiển thị thông tin người dùng -->
-		            <div class="centered">
-		                <!-- Avatar -->
-		                <!-- <a href="/admin/profile">
+<!-- 		            <div class="centered" >
+		                Avatar
+		                <a href="/admin/profile">
 		                    <img th:src="${user.image != null ? user.image : '/assets/img/default-avatar.png'}" 
 		                         class="img-circle" width="60" alt="User Avatar">
-		                </a> -->
+		                </a>
 		                <div>
 						    <img th:if="${user.image != null && #strings.startsWith(user.image, 'https')}" 
 						         th:src="${user.image}" class="img-circle" width="60" alt="User Avatar" />
@@ -64,11 +77,11 @@
 						</div>
 						
 					
-		            <h5><strong>User Name:</strong> <span th:text="${user.username}">User Name</span></h5>
-		            <h5><strong>Full Name:</strong> <span th:text="${user.fullName}">Full Name</span></h5>
-	                <h5><strong>Email:</strong> <span th:text="${user.email}">user@example.com</span></h5>
-	                <h5><strong>Phone:</strong> <span th:text="${user.phone}">+123456789</span></h5>
-		            </div>
+		            <h5 ><strong>User Name:</strong><br><span style="color: #FFD700;" th:text="${user.username}">User Name</span></h5>
+		            <h5><strong>Full Name:</strong><br> <span style="color: #FFD700;" th:text="${user.fullName}">Full Name</span></h5>
+	                <h5><strong>Email:</strong><br> <span style="color: #FFD700;" th:text="${user.email}">user@example.com</span></h5>
+	                <h5><strong>Phone:</strong> <br><span style="color: #FFD700;" th:text="${user.phone}">+123456789</span></h5>
+		            </div> -->
 		            
 		        </ul>
 		        <!-- sidebar menu end-->

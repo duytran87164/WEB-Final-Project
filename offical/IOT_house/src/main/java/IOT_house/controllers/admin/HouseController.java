@@ -6,7 +6,8 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -27,6 +28,7 @@ import IOT_house.entity.Account;
 import IOT_house.entity.Houses;
 import IOT_house.services.admin.AccountService;
 import IOT_house.services.admin.HouseService;
+import IOT_house.services.user.UserService;
 
 
 @Controller
@@ -37,21 +39,23 @@ public class HouseController {
 	@Autowired
 	AccountService accService;
 	@Autowired
-    private HttpSession session;
+	UserService userService;
+
 	@GetMapping("/list-house/{id}")
 	public String all(@PathVariable Long id, Model model) {
+<<<<<<< HEAD
 		
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
+=======
 		//session
 		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+>>>>>>> 5dec53c57f841a0ff6f5c024f35820cca18357fc
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
-		
         // Kiểm tra nếu `id` tồn tại
         Optional<Account> acc = accService.findById(id);
         if (acc.isPresent()) {
@@ -67,15 +71,12 @@ public class HouseController {
 	@GetMapping("/list-house/add/{id}")
 	public String add(@PathVariable Long id,Model model) {
 		
-		//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
-		
 		  Houses listHouse = new Houses();
 		  model.addAttribute("id_acc", id);
 		  model.addAttribute("house",listHouse); 
@@ -137,15 +138,15 @@ public class HouseController {
 	        // Save the house to the database
 	        houseService.save(house);
 
-	        model.addAttribute("message", "Category saved successfully");
+	        model.addAttribute("message", "House saved successfully");
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
-	        model.addAttribute("message", "Error saving category");
+	        model.addAttribute("message", "Error saving House");
 	    }
 
 	    // Determine if the category was saved or edited
-	    String message = cateModel.getIsEdit() ? "Category is EDIT" : "Category is SAVE";
+	    String message = cateModel.getIsEdit() ? "House is EDIT" : "House is SAVE";
 	    model.addAttribute("message", message);
 
 	    // Redirect to the list of houses after saving the house
@@ -156,13 +157,11 @@ public class HouseController {
 	@GetMapping("/list-house/edit/{id}")
 	public ModelAndView edit (ModelMap model,@PathVariable("id") String houseId) {
 		
-		//session
-		Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 		Optional<Houses> optHouse =houseService.findById(houseId);
 		Houses cateModel = new Houses();
@@ -193,7 +192,7 @@ public class HouseController {
 	        Houses entity = optHouse.get(); // Lấy entity sau khi xóa
 	        Long id = entity.getAcc().getId();
 
-	        model.addAttribute("message", "Category is deleted");
+	        model.addAttribute("message", "House is deleted");
 	        model.addAttribute("id_acc", id);
 	    } else {
 	        // Nếu không tìm thấy house, xử lý trường hợp lỗi
@@ -205,45 +204,34 @@ public class HouseController {
 	
 	@GetMapping("/house")
 	public String home(HttpSession session, Model model) {
-	    Account user = (Account) session.getAttribute("user"); // Lấy đối tượng user từ session
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
-	        model.addAttribute("fullname",user.getFullName());
 	        model.addAttribute("user", user);
-	    } else {
-	        model.addAttribute("fullname", "err");
 	    }
 	    
 	    List<Houses> houses = houseService.findAll();
 	    model.addAttribute("houses", houses);
 
-	    return "admin/home_admin_temp.html"; // Trả về view tên "index.html"
+	    return "list-house/home_admin_temp.html"; // Trả về view tên "index.html"
+	}
+	
+	@GetMapping("/house/find")
+	public String findidhouse(Model model, @RequestParam String idhousefind) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username=authentication.getName();
+	    Account user = userService.findbyUser(username);
+	    if (user != null && user instanceof Account) {
+	        model.addAttribute("user", user);
+	    }
+	    
+	    Optional<Houses> houses = houseService.findById(idhousefind);
+	    houses.ifPresentOrElse(
+	    		house -> model.addAttribute("houses", house),() -> model.addAttribute("houses", null) );
+
+	    return "list-house/home_admin_temp.html"; // Trả về view tên "index.html"
 	}
 
-//	@RequestMapping("/searchpaginated")
-//	  
-//	  public String search(ModelMap model,
-//	  
-//	  @RequestParam(name="name",required = false) String name,
-//	  
-//	  @RequestParam("page") Optional<Integer> page,
-//	  
-//	  @RequestParam("size") Optional<Integer> size) {
-//	  
-//	  int count = (int) categoryService.count(); int currentPage = page.orElse(1);
-//	  
-//	  int pageSize = size.orElse(3);
-//	  
-//	  Pageable pageable = PageRequest.of(currentPage-1, pageSize, Sort.by("name"));
-//	  Page<Category> resultPage = null; if(StringUtils.hasText(name)) { resultPage
-//	  = categoryService.findByNameContaining(name,pageable);
-//	  model.addAttribute("name",name); } else { resultPage =
-//	  categoryService.findAll(pageable); } int totalPages =
-//	  resultPage.getTotalPages(); if(totalPages > 0) { int start = Math.max(1,
-//	  currentPage-2); int end = Math.min(currentPage + 2, totalPages);
-//	  if(totalPages > count) { if(end == totalPages) start = end - count; else if
-//	  (start == 1) end = start + count; } List<Integer> pageNumbers =
-//	  IntStream.rangeClosed(start, end) .boxed() .collect(Collectors.toList());
-//	  model.addAttribute("pageNumbers",pageNumbers); }
-//	  model.addAttribute("categoryPage",resultPage); return
-//	  "admin/category/searchpaginated"; }
+
 }
