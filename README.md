@@ -16,7 +16,7 @@ MooseHome là một ứng dụng web tương tác và thân thiện với ngư�
 - **Tích Hợp Phần Cứng**: [ESP32](https://www.espressif.com/en/products/socs/esp32)
 
 ## **Yêu Cầu Cài Đặt** 📋
-- **Java Development Kit (JDK)**: Phiên bản 11 trở lên
+- **Java Development Kit (JDK)**: Phiên bản 17 trở lên
 - **Maven**: Quản lý dự án và xây dựng
-- **Cơ Sở Dữ Liệu**: SQL Server, MySQL hoặc PostgreSQL
+- **Cơ Sở Dữ Liệu**: MySQL
 - **Thiết Bị ESP32**: Thiết bị phần cứng hỗ trợ IoT
