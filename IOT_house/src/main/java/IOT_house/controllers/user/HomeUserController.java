@@ -34,12 +34,11 @@ public class HomeUserController {
 	UserService userService;
 	@Autowired
 	EquipmentService equipService;
-	private boolean ledStatus = false; // LED OFF ban đầu
+	private boolean ledStatus = false;
 	
 	
 	@GetMapping("/home")
 	public String home(Model model) {
-	    // Lấy thông tin người dùng từ SecurityContext
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    if (authentication != null && authentication.isAuthenticated()) {
 	        String username = authentication.getName();
@@ -50,10 +49,9 @@ public class HomeUserController {
 
 	            long id = user.getId();
 
-	            // Kiểm tra nếu `id` tồn tại
 	            Optional<Account> acc = accService.findById(id);
 	            if (acc.isPresent()) {
-	                List<Houses> houses = houseService.findByAccount(acc.get());  // Sử dụng hàm findByAccount đã tạo trước đó
+	                List<Houses> houses = houseService.findByAccount(acc.get());
 	                model.addAttribute("houses", houses);
 	                model.addAttribute("id_acc", id);
 	            } else {
@@ -67,9 +65,6 @@ public class HomeUserController {
 	    return "list-house/list_house_of_user.html";
 	}
 
-
-	
-	
 	@GetMapping("/equipments/{id}")
 	public String find_id(@PathVariable String id, Model model) {
 		
@@ -80,15 +75,13 @@ public class HomeUserController {
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
-		// Trực tiếp lấy nhà theo id
-		List<Equipments> equip = equipService.findByHouseId(id); // Lấy danh sách Equipments theo id_house
-		model.addAttribute("equip", equip); // Thêm danh sách Equipments vào model
-		model.addAttribute("idHouse", id); // Thêm id_house vào model
-		return "equip/list_equip_of_house_user.html"; // Trả về trang list.html
+
+		List<Equipments> equip = equipService.findByHouseId(id);
+		model.addAttribute("equip", equip);
+		model.addAttribute("idHouse", id);
+		return "equip/list_equip_of_house_user.html";
 	}
 	
-	
-	// API để trả về trang web điều khiển LED
     @GetMapping("/monitor/{idHouse}")
     public String led(Model model,@PathVariable String idHouse) {
     	

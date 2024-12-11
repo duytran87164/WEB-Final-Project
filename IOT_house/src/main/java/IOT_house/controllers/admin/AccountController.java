@@ -35,17 +35,12 @@ public class AccountController {
 
 	@RequestMapping("")
 	public String all(Model model) {
-	    // Lấy thông tin người dùng từ SecurityContext
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    // Kiểm tra nếu người dùng đã đăng nhập
 	    if (authentication != null && authentication.isAuthenticated()) {
 	        String username = authentication.getName();
-	        
-	        // Tìm tài khoản người dùng từ cơ sở dữ liệu
 	        Account user = userService.findbyUser(username);
 	        
 	        if (user != null) {
-	            // Thêm thông tin người dùng vào model
 	            model.addAttribute("fullname", user.getFullName());
 	            model.addAttribute("user", user);
 	        } else {
@@ -55,38 +50,31 @@ public class AccountController {
 	        model.addAttribute("fullname", "User not authenticated");
 	    }
 	    
-	    // Lấy danh sách tất cả tài khoản và thêm vào model
 	    List<Account> list = accService.findAll();
 	    model.addAttribute("acc", list);
 
-	    // Trả về view để hiển thị
 	    return "account/list_acc.html";
 	}
 	
 	
 	@GetMapping("/find")
 	public String findUsername(Model model, @RequestParam String userfind) {
-	    // Lấy user từ session
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null) {
 	        model.addAttribute("user", user);
 	    }
-	    // Tìm kiếm user theo username
+
 	    Optional<Account> acc = accService.findByUsername(userfind);
 	    model.addAttribute("acc", acc.get());
-//	    acc.ifPresentOrElse(
-//	        account -> model.addAttribute("acc", account),() -> model.addAttribute("acc", null) );
 	    return "account/list_acc";
 	}
-
 
 	@PostMapping("/save")
 	public ModelAndView saveOrUpdate(@RequestParam Long id, @RequestParam boolean status, ModelMap model) {
 		Optional<Account> optAcc = accService.findById(id);
 		Account acc = new Account();
-		// Lưu đối tượng vào database
 		if (optAcc.isPresent()) {
 			Account entity = optAcc.get();
 
@@ -100,9 +88,6 @@ public class AccountController {
 
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit(ModelMap model, @PathVariable("id") Long userId) {
-		
-		
-		//session
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);

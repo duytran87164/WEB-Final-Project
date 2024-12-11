@@ -13,10 +13,6 @@ import IOT_house.entity.Account;
 import IOT_house.entity.Roles;
 
 public class MyUserService implements UserDetails {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Account acc;
 	public MyUserService(Account acc) {

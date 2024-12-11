@@ -4,6 +4,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = "IOT_house") // Thay đổi nếu cần
+@ComponentScan(basePackages = "IOT_house")
 public class AppConfig {
 }

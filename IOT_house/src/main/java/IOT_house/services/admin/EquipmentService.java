@@ -7,7 +7,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import IOT_house.entity.Equipments;
-import IOT_house.entity.Houses;
 
 public interface EquipmentService {
 	<S extends Equipments> S save(S entity);

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import IOT_house.entity.Account;
 
 import IOT_house.repository.AccRepository;
-import IOT_house.services.MyUserService;
 import IOT_house.services.user.IUserService;
 import jakarta.transaction.Transactional;
 
@@ -55,7 +54,7 @@ public class UserService implements IUserService,UserDetailsService {
 	        Account account = accountOpt.get();
 	        account.setFullName(fullname);
 	        account.setPhone(phone);
-	        return userRepository.save(account); // Lưu thay đổi và trả về đối tượng đã cập nhật
+	        return userRepository.save(account);
 	    }
 	    return null;
 	}
@@ -68,7 +67,7 @@ public class UserService implements IUserService,UserDetailsService {
 	        Account account = accountOpt.get();
 	        String hashedPassword =passwordEncoder.encode(psw);
 	        account.setPassword(hashedPassword);
-	        userRepository.save(account); // Lưu mật khẩu mới
+	        userRepository.save(account);
 	    }
 	}
 
@@ -84,7 +83,7 @@ public class UserService implements IUserService,UserDetailsService {
 		Optional<Account> accountOpt = userRepository.findByEmail(email);
 	    if (accountOpt.isPresent()) {
 	        Account account = accountOpt.get();
-	        return !account.getUsername().equals(user); // Email đã tồn tại và không thuộc người dùng hiện tại
+	        return !account.getUsername().equals(user);
 	    }
 	    return false;
 	}

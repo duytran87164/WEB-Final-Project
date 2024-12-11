@@ -1,14 +1,11 @@
 package IOT_house.controllers.user;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-
 import java.io.File;
 import java.util.Collections;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -70,14 +67,12 @@ public class ProfileUserController {
 	        return new ModelAndView("account/edit_profile", model);
 	    }
 	    Account acc = new Account();
-	 // Define the upload path for images
 	    String uploadPath = "D:\\upload";
 	    File uploadDir = new File(uploadPath);
 	    if (!uploadDir.exists()) {
 	        uploadDir.mkdir();
 	    }
 	    try {
-	        // Xử lý hình ảnh nếu có
 	        if (!imageFile.isEmpty()) {
 	            String originalFilename = imageFile.getOriginalFilename();
 	            int index = originalFilename.lastIndexOf(".");
@@ -87,27 +82,23 @@ public class ProfileUserController {
 	            imageFile.transferTo(new File(uploadPath + "/" + fname));
 	            cateModel.setImage(fname);
 	        }
-	        // Sao chép thông tin từ cateModel vào đối tượng acc
+
 	        if (!cateModel.getPassword().equals(userService.findbyUser(cateModel.getUsername()).getPassword())) {
 	        	String hashedPassword = passwordEncoder.encode(cateModel.getPassword());
 				cateModel.setPassword(hashedPassword);
 			}
 	        BeanUtils.copyProperties(cateModel, acc);
 	        
-	        acc.setStatus(true); // Đảm bảo người dùng không bị khóa
+	        acc.setStatus(true);
 
-	        // Lấy role và gán cho người dùng
 	        Roles role = roleRepository.findByName("USER").get();
 	        acc.setRoles(Collections.singleton(role));
 
-	        // Lưu người dùng vào cơ sở dữ liệu
 	        accService.save(acc);
 
-	        // Cập nhật thông tin authentication trong Spring Security
 	        Authentication authentication = new UsernamePasswordAuthenticationToken(
 	                cateModel.getUsername(),cateModel.getPassword(),cateModel.getAuthorities());
 
-	        // Cập nhật authentication vào SecurityContext
 	        SecurityContextHolder.getContext().setAuthentication(authentication);
 	     
 	    } catch (Exception e) {

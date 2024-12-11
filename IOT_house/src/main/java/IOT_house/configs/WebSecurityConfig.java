@@ -54,44 +54,41 @@ public class WebSecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         final List<GlobalAuthenticationConfigurerAdapter> configurers = new ArrayList<>();
-        
-        // Cấu hình toàn cục cho xác thực
+
         configurers.add(new GlobalAuthenticationConfigurerAdapter() {
             @Override
             public void configure(AuthenticationManagerBuilder auth) throws Exception {
-                // Ví dụ: thêm một cách xác thực với UserDetailsService
                 auth.userDetailsService(customUserDetailsService);
-                // Có thể thêm các cấu hình khác như mã hóa mật khẩu, xác thực qua cơ sở dữ liệu, v.v.
             }
         });
         return authConfig.getAuthenticationManager();
     }
-    // Cấu hình SecurityFilterChain
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/home/**", "/assets/**").permitAll() // Trang công cộng
-                .requestMatchers("/user/**","/user/profile/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN") // Người dùng có quyền USER
-                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN") // Admin có quyền ADMIN
+                .requestMatchers("/home/**", "/assets/**").permitAll()
+                .requestMatchers("/user/**","/user/profile/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
                 .requestMatchers("/api/**").permitAll()
             )
             .formLogin(login -> login
-                .loginPage("/home/login") // Trang login
-                .loginProcessingUrl("/home/login") // URL xử lý đăng nhập
-                .defaultSuccessUrl("/home/waiting", true) // Thành công chuyển hướng đến /home/waiting
-                .failureUrl("/home/login?error=Invalid User or Password") // Nếu đăng nhập thất bại, quay lại trang login với lỗi
+                .loginPage("/home/login")
+                .loginProcessingUrl("/home/login")
+                .defaultSuccessUrl("/home/waiting", true)
+                .failureUrl("/home/login?error=Invalid User or Password")
                 .permitAll()
             )
             .logout(logout -> logout
-                    .logoutUrl("/home/logout") // URL để logout
-                    .logoutSuccessUrl("/home/") // Trang chuyển hướng sau khi logout thành công
-                    .clearAuthentication(true) // Xóa thông tin xác thực
-                    .deleteCookies("JSESSIONID") // Xóa cookie phiên
-                    .permitAll() )// Cho phép tất cả người dùng thực hiện logout
-            .exceptionHandling(handling -> handling.accessDeniedPage("/403")) // Truy cập bị từ chối sẽ chuyển đến /403
+                    .logoutUrl("/home/logout")
+                    .logoutSuccessUrl("/home/")
+                    .clearAuthentication(true)
+                    .deleteCookies("JSESSIONID")
+                    .permitAll() )
+            .exceptionHandling(handling -> handling.accessDeniedPage("/403"))
             .build();
     }
 }

@@ -49,16 +49,16 @@ public class HouseController {
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
-        // Kiểm tra nếu `id` tồn tại
+
         Optional<Account> acc = accService.findById(id);
         if (acc.isPresent()) {
-            List<Houses> houses = houseService.findByAccount(acc.get());  // Sử dụng hàm findByAccount đã tạo trước đó
+            List<Houses> houses = houseService.findByAccount(acc.get());
             model.addAttribute("houses", houses);
             model.addAttribute("id_acc", id);
         } else {
             model.addAttribute("message", "Account not found");
         }
-        return "list-house/list_house_of_acc.html"; // Trả về trang list.html
+        return "list-house/list_house_of_acc.html";
     }
 	
 	@GetMapping("/list-house/add/{id}")
@@ -81,52 +81,40 @@ public class HouseController {
 	        @Valid @ModelAttribute("house") Houses houseModel, BindingResult result,
 	        @RequestParam("imageFile") MultipartFile imageFile) {
 
-	    // If validation errors occur, return to the form page with error messages
 	    if (result.hasErrors()) {
 	        return new ModelAndView("admin/list-house", model);
 	    }
 
-	    // Retrieve the account by ID
 	    Optional<Account> acc = accService.findById(id_acc);
 
 	    if (!acc.isPresent()) {
 	        model.addAttribute("message", "Account not found");
 	        return new ModelAndView("/admin/list-house/{id_acc}", model);
 	    }
-	    // Create a new house object
+
 	    Houses house = new Houses();
 
-	    // Define the upload path for images
 	    String uploadPath = "D:\\upload";
 	    File uploadDir = new File(uploadPath);
 	    if (!uploadDir.exists()) {
-	        uploadDir.mkdir();  // Create directory if not exists
+	        uploadDir.mkdir();
 	    }
 
 	    try {
-	        // If the user uploaded an image, handle file upload
 	        if (!imageFile.isEmpty()) {
 	            String originalFilename = imageFile.getOriginalFilename();
 	            int index = originalFilename.lastIndexOf(".");
 	            String ext = originalFilename.substring(index + 1);
 
-	            // Generate a unique filename for the uploaded image
 	            String fname = System.currentTimeMillis() + "." + ext;
 
-	            // Save the image to the specified directory
 	            imageFile.transferTo(new File(uploadPath + "/" + fname));
 
-	            // Update the category object with the image filename
 	            houseModel.setImage(fname);
 	        }
 
-	        // Copy properties from the form data (cateModel) to the new house object
 	        BeanUtils.copyProperties(houseModel, house);
-
-	        // Set the account reference on the house object
-	        house.setAcc(acc.get());  // Linking the house to the account
-
-	        // Save the house to the database
+	        house.setAcc(acc.get());
 	        houseService.save(house);
 
 	        model.addAttribute("message", "House saved successfully");
@@ -136,12 +124,10 @@ public class HouseController {
 	        model.addAttribute("message", "Error saving House");
 	    }
 
-	    // Determine if the category was saved or edited
 	    String message = houseModel.getIsEdit() ? "House is EDIT" : "House is SAVE";
 	    model.addAttribute("message", message);
 
-	    // Redirect to the list of houses after saving the house
-	    return new ModelAndView("redirect:/admin/list-house/{id_acc}", model);  // Redirect to the list page without specific id
+	    return new ModelAndView("redirect:/admin/list-house/{id_acc}", model);
 	}
 
 	
@@ -177,16 +163,14 @@ public class HouseController {
 	    Optional<Houses> optHouse = houseService.findById(houseId);
 
 	    if (optHouse.isPresent()) {
-	        // Xóa nhà nếu tồn tại
 	        houseService.deleteById(houseId);
 	        
-	        Houses entity = optHouse.get(); // Lấy entity sau khi xóa
+	        Houses entity = optHouse.get();
 	        Long id = entity.getAcc().getId();
 
 	        model.addAttribute("message", "House is deleted");
 	        model.addAttribute("id_acc", id);
 	    } else {
-	        // Nếu không tìm thấy house, xử lý trường hợp lỗi
 	        model.addAttribute("message", "House not found");
 	    }
 
@@ -222,6 +206,4 @@ public class HouseController {
 
 	    return "list-house/home_admin_temp.html";
 	}
-
-
 }

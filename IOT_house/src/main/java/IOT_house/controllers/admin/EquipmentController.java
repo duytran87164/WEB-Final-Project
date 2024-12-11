@@ -42,24 +42,21 @@ public class EquipmentController {
 	
 	@GetMapping("/{id}")
 	public String find_id(@PathVariable String id, Model model) {
-		
-		//session
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
 	    if (user != null && user instanceof Account) {
 	        model.addAttribute("user", user);
 	    }
-		// Trực tiếp lấy nhà theo id
-		List<Equipments> equip = equipService.findByHouseId(id); // Lấy danh sách Equipments theo id_house
-		model.addAttribute("equip", equip); // Thêm danh sách Equipments vào model
-		model.addAttribute("idHouse", id); // Thêm id_house vào model
-		return "equip/list_equip_of_house.html"; // Trả về trang list.html
+
+		List<Equipments> equip = equipService.findByHouseId(id);
+		model.addAttribute("equip", equip);
+		model.addAttribute("idHouse", id);
+		return "equip/list_equip_of_house.html";
 	}
 
 	@GetMapping("/add/{id}")
 	public String add(@PathVariable String id,Model model) {
-		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username=authentication.getName();
 	    Account user = userService.findbyUser(username);
@@ -78,7 +75,6 @@ public class EquipmentController {
 			@Valid @ModelAttribute("house") Equipments cateModel, BindingResult result,
 			@RequestParam("imageFile") MultipartFile imageFile) {
 
-		// If validation errors occur, return to the form page with error messages
 		if (result.hasErrors()) {
 			return new ModelAndView("equip/add", model);
 		}
@@ -87,37 +83,30 @@ public class EquipmentController {
 	        model.addAttribute("message", "Account not found");
 	        return new ModelAndView("/admin/equiments/{idHouse}", model);
 	    }
-		// Create a new equiments object
+
 		Equipments equip = new Equipments();
 
-		// Define the upload path for images
 		String uploadPath = "D:\\upload";
 		File uploadDir = new File(uploadPath);
 		if (!uploadDir.exists()) {
-			uploadDir.mkdir(); // Create directory if not exists
+			uploadDir.mkdir();
 		}
 		try {
-			// If the user uploaded an image, handle file upload
 			if (!imageFile.isEmpty()) {
 				String originalFilename = imageFile.getOriginalFilename();
 				int index = originalFilename.lastIndexOf(".");
 				String ext = originalFilename.substring(index + 1);
 
-				// Generate a unique filename for the uploaded image
 				String fname = System.currentTimeMillis() + "." + ext;
 
-				// Save the image to the specified directory
 				imageFile.transferTo(new File(uploadPath + "/" + fname));
 
-				// Update the category object with the image filename
 				cateModel.setImage(fname);
 			}
 
-			// Copy properties from the form data (cateModel) to the new house object
 			BeanUtils.copyProperties(cateModel, equip);
 			equip.setHouse(house.get());
 			
-			// Save the house to the database
 			equipService.save(equip);
 
 			model.addAttribute("message", "Equipment saved successfully");
@@ -127,14 +116,12 @@ public class EquipmentController {
 			model.addAttribute("message", "Error saving Equipment");
 		}
 
-		// Determine if the category was saved or edited
 		String message = cateModel.getIsEdit() ? "Equipment is EDIT" : "Equipment is SAVE";
 		model.addAttribute("message", message);
 
-		// Redirect to the list of houses after saving the house
-		return new ModelAndView("redirect:/admin/equipments/{idHouse}", model); // Redirect to the list page without
-																				// specific id
+		return new ModelAndView("redirect:/admin/equipments/{idHouse}", model);
 	}
+	
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit (ModelMap model,@PathVariable("id") Long Id) {
 		
@@ -165,16 +152,14 @@ public class EquipmentController {
 	    Optional<Equipments> optequip= equipService.findById(Id);
 
 	    if (optequip.isPresent()) {
-	        // Xóa nhà nếu tồn tại
 	        equipService.deleteById(Id);
 	        
-	        Equipments entity = optequip.get(); // Lấy entity sau khi xóa
+	        Equipments entity = optequip.get();
 	        String id = entity.getHouse().getIdHouse();
 
 	        model.addAttribute("message", "Equipment is deleted");
 	        model.addAttribute("idHouse", id);
 	    } else {
-	        // Nếu không tìm thấy house, xử lý trường hợp lỗi
 	        model.addAttribute("message", "House not found");
 	    }
 

@@ -1,8 +1,5 @@
 package IOT_house.services;
 
-
-
-
 import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -18,6 +15,7 @@ import org.springframework.stereotype.Service;
 import IOT_house.entity.Account;
 import IOT_house.entity.Roles;
 import IOT_house.repository.AccRepository;
+
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 	private AccRepository accRepository;
@@ -25,34 +23,22 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public CustomUserDetailsService(AccRepository accRepository) {
 		this.accRepository = accRepository;
 	}
-	
-	    @Override
-	    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	        Account account = accRepository.getUserByUsername(username);
-	        if (account == null) {
-	            throw new UsernameNotFoundException("User not found");
-	        }
-        return new User(
-            account.getUsername(), 
-            account.getPassword(), 
-//            mapRolesToAuthorities(account.getRoles())
-            account.getAuthorities()
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Account account = accRepository.getUserByUsername(username);
+        if (account == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+	    return new User(
+	        account.getUsername(), 
+	        account.getPassword(), 
+	        account.getAuthorities()
 	        );
-	        
-	    }
+    }
 
-
-	    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Roles> roles) {
-	        return roles.stream()
-	                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))  // Đảm bảo tên vai trò có tiền tố ROLE_
-	                    .collect(Collectors.toList());
-	    }
-
-	
-//	private Collection<? extends GrantedAuthority> getAuthorities(Account account) {
-//        return account.getRoles().stream()
-//            .map(role -> new SimpleGrantedAuthority(role.getName()))
-//            .collect(Collectors.toList());
-//    }
-
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Set<Roles> roles) {
+        return roles.stream()
+                    .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+                    .collect(Collectors.toList());
+    }
 }

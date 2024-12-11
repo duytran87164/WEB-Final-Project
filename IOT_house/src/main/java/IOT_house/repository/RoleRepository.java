@@ -12,7 +12,5 @@ import IOT_house.entity.Roles;
 public interface RoleRepository extends JpaRepository<Roles, Long> {
 	@Query("SELECT u FROM Roles u WHERE u.name = :name")
 	public Roles getUserByName(@Param("name") String name);
-	
 	Optional<Roles> findByName(String name);
-	
 }

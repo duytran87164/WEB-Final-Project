@@ -12,7 +12,6 @@ public interface AccRepository extends JpaRepository<Account, Long> {
 	@Query("SELECT u FROM Account u WHERE u.username = :username")
 	 public Account getUserByUsername(@Param("username") String username);
 
-	
 	Optional<Account> findByUsername(String userName);
 	
 	Optional<Account> findByEmail(String email);
@@ -20,6 +19,4 @@ public interface AccRepository extends JpaRepository<Account, Long> {
 	boolean existsByEmail(String email);
 
 	boolean existsByUsername(String userName);
-	
-
 }

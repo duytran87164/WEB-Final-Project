@@ -2,18 +2,8 @@ package IOT_house.entity;
 
 import java.io.Serializable;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,9 +11,6 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "equipments")
 public class Equipments implements Serializable {
-	/**
-	* 
-	*/
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,9 +32,6 @@ public class Equipments implements Serializable {
 	
 	@Column(name = "image")
 	private String image;
-
-//	@Column(name = "value", columnDefinition = "VARCHAR(500)")
-//	private String value;
 	
 	@Transient
 	private Boolean isEdit = false;
