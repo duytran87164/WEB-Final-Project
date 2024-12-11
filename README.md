@@ -10,14 +10,12 @@ MooseHome là một ứng dụng web tương tác và thân thiện với ngư�
 ## **Công Nghệ Sử Dụng** 🛠️
 - **Framework**: [Spring Boot](https://spring.io/projects/spring-boot)
 - **Frontend**: [Thymeleaf](https://www.thymeleaf.org/), [Bootstrap](https://getbootstrap.com/)
-- **Cơ Sở Dữ Liệu**: [SQL Server](https://www.microsoft.com/en-us/sql-server), [MySQL](https://www.mysql.com/), [PostgreSQL](https://www.postgresql.org/) (tùy chọn)
+- **Cơ Sở Dữ Liệu**: [MySQL](https://www.mysql.com/)
 - **Bảo Mật**: [JWT (JSON Web Tokens)](https://jwt.io/)
 - **Giao Tiếp Thời Gian Thực**: [WebSocket](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API)
 - **Tích Hợp Phần Cứng**: [ESP32](https://www.espressif.com/en/products/socs/esp32)
 
-## **Hướng Dẫn Cài Đặt** 🛠️
-
-### **Yêu Cầu Trước Khi Cài Đặt** 📋
+## **Yêu Cầu Cài Đặt** 📋
 - **Java Development Kit (JDK)**: Phiên bản 11 trở lên
 - **Maven**: Quản lý dự án và xây dựng
 - **Cơ Sở Dữ Liệu**: SQL Server, MySQL hoặc PostgreSQL
