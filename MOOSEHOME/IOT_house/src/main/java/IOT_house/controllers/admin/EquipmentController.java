@@ -75,10 +75,8 @@ public class EquipmentController {
 
 	@PostMapping("/save/{idHouse}")
 	public ModelAndView saveOrUpdate(@PathVariable String idHouse,ModelMap model,
-			@Valid @ModelAttribute("house") Equipments cateModel, BindingResult result,
+			@Valid @ModelAttribute("house") Equipments equipModel, BindingResult result,
 			@RequestParam("imageFile") MultipartFile imageFile) {
-
-		// If validation errors occur, return to the form page with error messages
 		if (result.hasErrors()) {
 			return new ModelAndView("equip/add", model);
 		}
@@ -87,53 +85,33 @@ public class EquipmentController {
 	        model.addAttribute("message", "Account not found");
 	        return new ModelAndView("/admin/equiments/{idHouse}", model);
 	    }
-		// Create a new equiments object
 		Equipments equip = new Equipments();
-
-		// Define the upload path for images
 		String uploadPath = "D:\\upload";
 		File uploadDir = new File(uploadPath);
 		if (!uploadDir.exists()) {
-			uploadDir.mkdir(); // Create directory if not exists
+			uploadDir.mkdir();
 		}
 		try {
-			// If the user uploaded an image, handle file upload
 			if (!imageFile.isEmpty()) {
 				String originalFilename = imageFile.getOriginalFilename();
 				int index = originalFilename.lastIndexOf(".");
 				String ext = originalFilename.substring(index + 1);
-
-				// Generate a unique filename for the uploaded image
 				String fname = System.currentTimeMillis() + "." + ext;
-
-				// Save the image to the specified directory
 				imageFile.transferTo(new File(uploadPath + "/" + fname));
-
-				// Update the category object with the image filename
-				cateModel.setImage(fname);
+				equipModel.setImage(fname);
 			}
-
-			// Copy properties from the form data (cateModel) to the new house object
-			BeanUtils.copyProperties(cateModel, equip);
+			BeanUtils.copyProperties(equipModel, equip);
 			equip.setHouse(house.get());
-			
-			// Save the house to the database
 			equipService.save(equip);
-
 			model.addAttribute("message", "Equipment saved successfully");
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("message", "Error saving Equipment");
 		}
-
-		// Determine if the category was saved or edited
-		String message = cateModel.getIsEdit() ? "Equipment is EDIT" : "Equipment is SAVE";
+		String message = equipModel.getIsEdit() ? "Equipment is EDIT" : "Equipment is SAVE";
 		model.addAttribute("message", message);
-
-		// Redirect to the list of houses after saving the house
 		return new ModelAndView("redirect:/admin/equipments/{idHouse}", model); // Redirect to the list page without
-																				// specific id
 	}
 	@GetMapping("/edit/{id}")
 	public ModelAndView edit (ModelMap model,@PathVariable("id") Long Id) {
