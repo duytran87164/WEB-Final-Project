@@ -37,7 +37,7 @@
 		        	<div class="centered">
 						    <img th:if="${user.image != null && #strings.startsWith(user.image, 'https')}" 
 						         th:src="${user.image}" class="img-circle" width="80" alt="User Avatar" />
-						    <img th:if="${user.image != null && !#strings.startsWith(user.image, 'https')}" 
+ 						    <img th:if="${user.image != null && !#strings.startsWith(user.image, 'https')}" 
 						         th:src="@{/file/image(fname=${user.image})}" class="img-circle" width="60" alt="User Avatar" />
 						    <img th:if="${user.image == null}" 
 						         src="/assets/img/ui-sam.jpg" class="img-circle" width="80" alt="Default Avatar" />

@@ -118,13 +118,12 @@
 								    <div class="col-sm-5">
 								        <!-- Hiển thị hình ảnh nếu chỉnh sửa hoặc đã có -->
 								        <div th:if="${house != null && house.image != null}">
-								            <img th:if="${#strings.startsWith(house.image, 'https')}" th:src="${house.image}" 
+								            <img id="image" th:if="${#strings.startsWith(house.image, 'https')}" th:src="${house.image}" 
 								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
-								            <img th:if="${!#strings.startsWith(house.image, 'https')}" 
+								            <img id="image" th:if="${!#strings.startsWith(house.image, 'https')}" 
 								                 th:src="@{/file/image(fname=${house.image})}" 
 								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
 								        </div>
-								      
 								        <br>
 								        <!-- Chọn file hình ảnh -->
 								        <input type="file" class="btn btn-theme02" onchange="chooseFile(this)" id="imageFile" name="imageFile" /><br>

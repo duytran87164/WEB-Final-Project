@@ -77,6 +77,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN") // Admin có quyền ADMIN
                 .requestMatchers(HttpMethod.GET,"/api/**").permitAll()
                 .requestMatchers("/api/**").permitAll()
+                .requestMatchers("/file/**").permitAll()
             )
             .formLogin(login -> login
                 .loginPage("/home/login") // Trang login

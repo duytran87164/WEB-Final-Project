@@ -99,7 +99,7 @@
       MAIN CONTENT
       *********************************************************************************************************************************************************** -->
       <!--main content start-->
-      <section id="main-content" style="margin-left:30px;">
+      <section id="main-content" style="margin-left:30px; padding-bottom: 450px;">
         <section class="wrapper">
         <div style="flex: 1;">
             <h3>
@@ -154,6 +154,8 @@
 	                        </div>
                         </div>
                     </div>
+                    
+                    
 				</div>
 		</section><!--/wrapper -->
 
@@ -161,7 +163,36 @@
 
       <!--main content end-->
       <!--footer start-->
-      <div th:insert="~{fragments/user/footer}"></div>
+<!--       <div th:insert="~{fragments/user/footer}"></div> -->
+<footer class="site-footer" >
+    <div class="container">
+        <div class="row">
+            <!-- Column 1: Company Info -->
+            <div class="col-md-4 " style="margin-left: 50px;">
+
+                <h3>About us</h3>
+                <p>
+                    Email: <a href="mailto:info@moosesmarthome.com">ptchc@hcmute.edu.vn</a> <br>
+                    Phone: +84 (028) 389-68641 <br>
+                    Address: So 1, Vo Van Ngan, Linh Chieu, Ho Chi Minh
+                </p>
+                <p>&copy; 2024 MOOSE SMARTHOME. All Rights Reserved.</p>
+            </div>
+            <!-- Column 2: Additional Contacts -->
+            <div class="col-md-4">
+            <h3>Our Contacts</h3>
+            <p>Le Quoc Cuong - 21146070 <a href="mailto:info@metronic.com">21146070@student.hcmute.edu.vn</a></p>
+            <p>Tran Hoang Duy - 21146073 <a href="mailto:info@metronic.com">21146073@student.hcmute.edu.vn</a></p>
+            </div>
+            
+            <div class="col-md-3">
+
+            <p style="margin-top: 55px;">Ho Xuan Huy - 21146465 <a href="mailto:info@metronic.com">21146465@student.hcmute.edu.vn</a></p>
+            <p>Vo Duy Khai - 21146474 <a href="mailto:info@metronic.com">21146474@student.hcmute.edu.vn</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
       <!--footer end-->
   </section>
 
@@ -275,14 +306,13 @@
                     document.getElementById('humidityStatus').textContent = `${data.humidity} %`;
                 })
                 .catch(error => console.error('Error fetching temperature:', error));
-
         }
-
         // Làm mới trạng thái nhiệt độ và độ ẩm mỗi 500 ms
         setInterval(updateStatus, 500);
-
         // Gọi updateStatus ngay khi trang được tải
         window.onload = updateStatus;
+        
+        
     </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

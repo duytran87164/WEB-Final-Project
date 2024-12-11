@@ -118,9 +118,9 @@
 								    <div class="col-sm-5">
 								        <!-- Hiển thị hình ảnh nếu chỉnh sửa hoặc đã có -->
 								        <div th:if="${acc != null && acc.image != null}">
-								            <img th:if="${#strings.startsWith(acc.image, 'https')}" th:src="${acc.image}" 
+								            <img id="image" th:if="${#strings.startsWith(acc.image, 'https')}" th:src="${acc.image}" 
 								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
-								            <img th:if="${!#strings.startsWith(acc.image, 'https')}" 
+								            <img id="image" th:if="${!#strings.startsWith(acc.image, 'https')}" 
 								                 th:src="@{/file/image(fname=${acc.image})}" 
 								                 alt="Image Preview" style="max-width: 200px; max-height: 150px;" />
 								        </div>

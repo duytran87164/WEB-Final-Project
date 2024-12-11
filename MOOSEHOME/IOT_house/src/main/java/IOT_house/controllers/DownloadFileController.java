@@ -1,4 +1,5 @@
 package IOT_house.controllers;
+
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,7 @@ public class DownloadFileController {
     @GetMapping("/image")
     public ResponseEntity<InputStreamResource> getImage(@RequestParam("fname") String fileName) throws IOException {
         File file = new File(DIR + File.separator + fileName);
+        System.out.println("Đường dẫn tệp: " + DIR + File.separator + fileName);
 
         if (file.exists()) {
             FileInputStream fileInputStream = new FileInputStream(file);

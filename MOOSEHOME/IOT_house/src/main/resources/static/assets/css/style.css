@@ -2672,7 +2672,7 @@ label {
   
 #main-content {
     flex: 1; /* Cho phép main-content chiếm không gian còn lại */
-    padding-bottom: 300px; /* Đảm bảo footer không che mất nội dung */
+    padding-bottom: 335px; /* Đảm bảo footer không che mất nội dung */
 }
 
   
